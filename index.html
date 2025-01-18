@@ -121,7 +121,7 @@
         // Load the Excel file from the server
         function loadExcel() {
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', '/kutub.xlsx', true);
+            xhr.open('GET', 'https://github.com/deyaaelmasry1/site/raw/refs/heads/main/kutub.xlsx', true);
             xhr.responseType = 'arraybuffer';
             xhr.onload = function(event) {
                 if (xhr.status === 200) {
