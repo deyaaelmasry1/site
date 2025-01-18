@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> كتب كلود فرونت </title> <!-- Updated site name here -->
+    <title>كتب كلود فرونت</title>
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" type="image/svg+xml">
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
     <style>
@@ -12,7 +12,7 @@
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            display: block;
+            display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -94,7 +94,7 @@
 <body>
     <center>
         <div class="container">
-            <h1 id="pageTitle"> كتب كلود فرونت </h1> <!-- Updated header text here -->
+            <h1 id="pageTitle">كتب كلود فرونت</h1>
             <form id="searchForm">
                 <input type="text" id="searchInput" name="query" placeholder="أدخل نص البحث">
                 <button type="submit">بحث</button>
@@ -118,15 +118,17 @@
             document.getElementById('pageTitle').textContent = searchText;
         });
 
-        // Load the Excel file from the server
+        // Load the Excel file from GitHub
         function loadExcel() {
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', '/kutub.xlsx', true);
+            // Use the raw GitHub URL to access the Excel file
+            const fileUrl = "https://github.com/deyaaelmasry1/site/raw/refs/heads/main/kutub.xlsx";
+            xhr.open('GET', fileUrl, true);
             xhr.responseType = 'arraybuffer';
             xhr.onload = function(event) {
                 if (xhr.status === 200) {
                     const data = new Uint8Array(xhr.response);
-                    workbook = XLSX.read(data, {type: 'array'});
+                    workbook = XLSX.read(data, { type: 'array' });
                     // Check if there's a search query in the URL and perform search
                     const urlParams = new URLSearchParams(window.location.search);
                     const query = urlParams.get('query');
@@ -159,7 +161,7 @@
 
                 for (let R = range.s.r; R <= range.e.r; ++R) {
                     for (let C = range.s.c; C <= range.e.c; ++C) {
-                        const cellAddress = {c: C, r: R};
+                        const cellAddress = { c: C, r: R };
                         const cellRef = XLSX.utils.encode_cell(cellAddress);
                         const cell = sheet[cellRef];
 
