@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> كتب كلود فرونت </title> <!-- Updated site name here -->
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" type="image/svg+xml">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: block;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 600px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: right;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        #result p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        #result a {
+            color: #1e88e5;
+            text-decoration: none;
+            overflow: hidden;
+            display: inline-block;
+            max-width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        #result a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <div class="container">
+            <h1 id="pageTitle"> كتب كلود فرونت </h1> <!-- Updated header text here -->
+            <form id="searchForm">
+                <input type="text" id="searchInput" name="query" placeholder="أدخل نص البحث">
+                <button type="submit">بحث</button>
+            </form>
+            <div id="result"></div>
+        </div>
+    </center>
+
+    <script>
+        let workbook;
+
+        // Function to handle form submission
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const searchText = document.getElementById('searchInput').value;
+            searchExcel(searchText);
+            // Update URL with search query
+            history.pushState(null, null, `?query=${encodeURIComponent(searchText)}`);
+            // Update page title and h1 heading
+            document.title = `تحميل كتاب ${searchText}`;
+            document.getElementById('pageTitle').textContent = searchText;
+        });
+
+        // Load the Excel file from the server
+        function loadExcel() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/kutub.xlsx', true);
+            xhr.responseType = 'arraybuffer';
+            xhr.onload = function(event) {
+                if (xhr.status === 200) {
+                    const data = new Uint8Array(xhr.response);
+                    workbook = XLSX.read(data, {type: 'array'});
+                    // Check if there's a search query in the URL and perform search
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const query = urlParams.get('query');
+                    if (query) {
+                        document.getElementById('searchInput').value = query;
+                        searchExcel(query);
+                        // Update page title and h1 heading
+                        document.title = `تحميل كتاب ${query}`;
+                        document.getElementById('pageTitle').textContent = query;
+                    }
+                } else {
+                    console.error('فشل تحميل ملف Excel');
+                }
+            };
+            xhr.send();
+        }
+
+        function searchExcel(searchText) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+
+            if (!workbook) {
+                resultDiv.innerHTML = '<p>يرجى التأكد من تحميل ملف Excel بشكل صحيح.</p>';
+                return;
+            }
+
+            workbook.SheetNames.forEach(sheetName => {
+                const sheet = workbook.Sheets[sheetName];
+                const range = XLSX.utils.decode_range(sheet['!ref']);
+
+                for (let R = range.s.r; R <= range.e.r; ++R) {
+                    for (let C = range.s.c; C <= range.e.c; ++C) {
+                        const cellAddress = {c: C, r: R};
+                        const cellRef = XLSX.utils.encode_cell(cellAddress);
+                        const cell = sheet[cellRef];
+
+                        if (cell && cell.v && cell.v.toString().includes(searchText)) {
+                            const hyperlink = cell.l ? cell.l.Target : 'لا يوجد رابط';
+                            resultDiv.innerHTML += `<p>تحميل الكتاب ${cell.v}<br>اضغط على الرابط للقراءة وتحميل الكتاب<br><a href="${hyperlink}" target="_blank">${hyperlink}</a></p>`;
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load the Excel file when the page loads
+        window.onload = loadExcel;
+    </script>
+</body>
+</html>
