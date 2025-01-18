@@ -101,35 +101,22 @@
         <div id="result"></div>
     </div>
 
-    <script>
-        let workbook;
+   <script>
+    let workbook;
 
-        // Function to handle form submission
-        document.getElementById('searchForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const searchText = document.getElementById('searchInput').value;
-            searchExcel(searchText);
+    // Load the Excel file from the URL
+    function loadExcel() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://books.kozow.com/kutub.xlsx', true);
+        xhr.responseType = 'arraybuffer';
 
-            // Update URL with search query
-            history.pushState(null, null, `?query=${encodeURIComponent(searchText)}`);
-
-            // Update page title and heading
-            document.title = `تحميل كتاب ${searchText}`;
-            document.getElementById('pageTitle').textContent = searchText;
-        });
-
-        // Load the Excel file from the new URL
-        function loadExcel() {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://books.kozow.com/kutub.xlsx', true);
-            xhr.responseType = 'arraybuffer';
-
-            xhr.onload = function(event) {
-                if (xhr.status === 200) {
+        xhr.onload = function (event) {
+            if (xhr.status === 200) {
+                try {
                     const data = new Uint8Array(xhr.response);
-                    workbook = XLSX.read(data, {type: 'array'});
+                    workbook = XLSX.read(data, { type: 'array' });
 
-                    // Check if there's a query in the URL and perform the search
+                    // Check for search query in the URL
                     const urlParams = new URLSearchParams(window.location.search);
                     const query = urlParams.get('query');
                     if (query) {
@@ -140,50 +127,61 @@
                         document.title = `تحميل كتاب ${query}`;
                         document.getElementById('pageTitle').textContent = query;
                     }
-                } else {
-                    console.error('فشل تحميل ملف Excel');
+                } catch (error) {
+                    console.error('خطأ في معالجة ملف Excel:', error);
+                    alert('حدث خطأ أثناء قراءة ملف Excel. يرجى التحقق من صحة الملف.');
                 }
-            };
+            } else {
+                console.error('فشل تحميل ملف Excel. تأكد من صحة الرابط.');
+                alert('تعذر تحميل ملف Excel من الرابط. يرجى التحقق من توفر الملف وصحة الرابط.');
+            }
+        };
 
-            xhr.send();
+        xhr.onerror = function () {
+            console.error('خطأ في الاتصال بخادم ملف Excel.');
+            alert('حدث خطأ أثناء محاولة الاتصال بالخادم. يرجى المحاولة لاحقًا.');
+        };
+
+        xhr.send();
+    }
+
+    // Search for matching text in the Excel file
+    function searchExcel(searchText) {
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = '';
+
+        if (!workbook) {
+            resultDiv.innerHTML = '<p>يرجى التأكد من تحميل ملف Excel بشكل صحيح.</p>';
+            return;
         }
 
-        // Search for matching text in the Excel file
-        function searchExcel(searchText) {
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = '';
+        workbook.SheetNames.forEach(sheetName => {
+            const sheet = workbook.Sheets[sheetName];
+            const range = XLSX.utils.decode_range(sheet['!ref']);
 
-            if (!workbook) {
-                resultDiv.innerHTML = '<p>يرجى التأكد من تحميل ملف Excel بشكل صحيح.</p>';
-                return;
-            }
+            for (let R = range.s.r; R <= range.e.r; ++R) {
+                for (let C = range.s.c; C <= range.e.c; ++C) {
+                    const cellAddress = { c: C, r: R };
+                    const cellRef = XLSX.utils.encode_cell(cellAddress);
+                    const cell = sheet[cellRef];
 
-            workbook.SheetNames.forEach(sheetName => {
-                const sheet = workbook.Sheets[sheetName];
-                const range = XLSX.utils.decode_range(sheet['!ref']);
-
-                for (let R = range.s.r; R <= range.e.r; ++R) {
-                    for (let C = range.s.c; C <= range.e.c; ++C) {
-                        const cellAddress = {c: C, r: R};
-                        const cellRef = XLSX.utils.encode_cell(cellAddress);
-                        const cell = sheet[cellRef];
-
-                        if (cell && cell.v && cell.v.toString().includes(searchText)) {
-                            const hyperlink = cell.l ? cell.l.Target : 'لا يوجد رابط';
-                            resultDiv.innerHTML += `
-                                <p>
-                                    تحميل الكتاب: ${cell.v}<br>
-                                    اضغط على الرابط للقراءة وتحميل الكتاب:<br>
-                                    <a href="${hyperlink}" target="_blank">${hyperlink}</a>
-                                </p>`;
-                        }
+                    if (cell && cell.v && cell.v.toString().includes(searchText)) {
+                        const hyperlink = cell.l ? cell.l.Target : 'لا يوجد رابط';
+                        resultDiv.innerHTML += `
+                            <p>
+                                تحميل الكتاب: ${cell.v}<br>
+                                اضغط على الرابط للقراءة وتحميل الكتاب:<br>
+                                <a href="${hyperlink}" target="_blank">${hyperlink}</a>
+                            </p>`;
                     }
                 }
-            });
-        }
+            }
+        });
+    }
 
-        // Load the Excel file when the page loads
-        window.onload = loadExcel;
-    </script>
+    // Load the Excel file when the page loads
+    window.onload = loadExcel;
+</script>
+
 </body>
 </html>
