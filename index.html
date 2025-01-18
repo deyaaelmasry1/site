@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> كتب كلود فرونت </title> <!-- Updated site name here -->
+    <title>كتب كلود فرونت</title>
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" type="image/svg+xml">
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
     <style>
@@ -12,7 +12,7 @@
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            display: block;
+            display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -92,16 +92,14 @@
     </style>
 </head>
 <body>
-    <center>
-        <div class="container">
-            <h1 id="pageTitle"> كتب كلود فرونت </h1> <!-- Updated header text here -->
-            <form id="searchForm">
-                <input type="text" id="searchInput" name="query" placeholder="أدخل نص البحث">
-                <button type="submit">بحث</button>
-            </form>
-            <div id="result"></div>
-        </div>
-    </center>
+    <div class="container">
+        <h1 id="pageTitle">كتب كلود فرونت</h1>
+        <form id="searchForm">
+            <input type="text" id="searchInput" name="query" placeholder="أدخل نص البحث">
+            <button type="submit">بحث</button>
+        </form>
+        <div id="result"></div>
+    </div>
 
     <script>
         let workbook;
@@ -111,29 +109,34 @@
             event.preventDefault();
             const searchText = document.getElementById('searchInput').value;
             searchExcel(searchText);
+
             // Update URL with search query
             history.pushState(null, null, `?query=${encodeURIComponent(searchText)}`);
-            // Update page title and h1 heading
+
+            // Update page title and heading
             document.title = `تحميل كتاب ${searchText}`;
             document.getElementById('pageTitle').textContent = searchText;
         });
 
-        // Load the Excel file from the server
+        // Load the Excel file from a URL
         function loadExcel() {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', 'https://github.com/deyaaelmasry1/site/raw/refs/heads/main/kutub.xlsx', true);
             xhr.responseType = 'arraybuffer';
+
             xhr.onload = function(event) {
                 if (xhr.status === 200) {
                     const data = new Uint8Array(xhr.response);
                     workbook = XLSX.read(data, {type: 'array'});
-                    // Check if there's a search query in the URL and perform search
+
+                    // Check if there's a query in the URL and perform the search
                     const urlParams = new URLSearchParams(window.location.search);
                     const query = urlParams.get('query');
                     if (query) {
                         document.getElementById('searchInput').value = query;
                         searchExcel(query);
-                        // Update page title and h1 heading
+
+                        // Update page title and heading
                         document.title = `تحميل كتاب ${query}`;
                         document.getElementById('pageTitle').textContent = query;
                     }
@@ -141,9 +144,11 @@
                     console.error('فشل تحميل ملف Excel');
                 }
             };
+
             xhr.send();
         }
 
+        // Search for matching text in the Excel file
         function searchExcel(searchText) {
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = '';
@@ -165,7 +170,12 @@
 
                         if (cell && cell.v && cell.v.toString().includes(searchText)) {
                             const hyperlink = cell.l ? cell.l.Target : 'لا يوجد رابط';
-                            resultDiv.innerHTML += `<p>تحميل الكتاب ${cell.v}<br>اضغط على الرابط للقراءة وتحميل الكتاب<br><a href="${hyperlink}" target="_blank">${hyperlink}</a></p>`;
+                            resultDiv.innerHTML += `
+                                <p>
+                                    تحميل الكتاب: ${cell.v}<br>
+                                    اضغط على الرابط للقراءة وتحميل الكتاب:<br>
+                                    <a href="${hyperlink}" target="_blank">${hyperlink}</a>
+                                </p>`;
                         }
                     }
                 }
