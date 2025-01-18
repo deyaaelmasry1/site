@@ -114,9 +114,11 @@
 
             xhr.onload = function (event) {
                 if (xhr.status === 200) {
+                    console.log("File loaded successfully"); // Confirm file loaded
                     try {
                         const data = new Uint8Array(xhr.response);
                         workbook = XLSX.read(data, { type: 'array' });
+                        console.log("Workbook parsed:", workbook); // Check if the workbook is parsed correctly
 
                         // Check for search query in the URL
                         const urlParams = new URLSearchParams(window.location.search);
