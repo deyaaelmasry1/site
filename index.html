@@ -118,10 +118,10 @@
             document.getElementById('pageTitle').textContent = searchText;
         });
 
-        // Load the Excel file from a URL
+        // Load the Excel file from the new URL
         function loadExcel() {
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://github.com/deyaaelmasry1/site/raw/refs/heads/main/kutub.xlsx', true);
+            xhr.open('GET', 'https://books.kozow.com/kutub.xlsx', true);
             xhr.responseType = 'arraybuffer';
 
             xhr.onload = function(event) {
