@@ -21,35 +21,392 @@
             background-color: #f9f5f0;
             color: var(--text-color);
             font-family: 'Tajawal', sans-serif;
-            line-height: 1.8;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Lateef', cursive;
+            color: var(--primary-color);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-family: 'Lateef', cursive;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .generator-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .form-container, .preview-container {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--light-color);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .image-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .image-option img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .image-option img.selected {
+            border-color: var(--primary-color);
+        }
+        
+        .invitation-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--light-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header-image, .footer-image {
+            width: 100%;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .footer-image {
+            height: 200px;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            width: 100%;
+            padding: 0 20px;
         }
         
         .quran-verse {
             font-family: 'Lateef', cursive;
-            font-size: 1.5rem;
-            color: var(--primary-color);
+            font-size: 1.8rem;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
             line-height: 2.5;
-            margin: 20px 0;
+            margin: 10px 0;
+        }
+        
+        .verse-ref {
+            font-size: 1.3rem;
+            display: block;
+            margin-top: 10px;
+        }
+        
+        .content {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .couple-names {
+            font-family: 'Lateef', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            line-height: 1.5;
         }
         
         .dua {
             font-family: 'Lateef', cursive;
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--gold-color);
             margin: 30px 0;
-            text-align: center;
+            line-height: 1.5;
         }
-
-        /* ... [rest of your existing CSS remains the same] ... */
+        
+        .invitation-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            margin-bottom: 30px;
+        }
+        
+        .details {
+            margin: 40px 0;
+        }
+        
+        .detail-item {
+            margin-bottom: 20px;
+        }
+        
+        .detail-title {
+            font-family: 'Lateef', cursive;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .decoration {
+            margin: 40px auto;
+            width: 100px;
+            height: 20px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M10,10 Q25,20 40,10 T70,10 T100,10" fill="none" stroke="%239e6d4d" stroke-width="1"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .download-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-family: 'Lateef', cursive;
+            font-size: 1.3rem;
+            border-radius: 3px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .download-btn:hover {
+            background-color: #7a5439;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .quran-verse {
+                font-size: 1.5rem;
+            }
+            
+            .couple-names {
+                font-size: 2rem;
+            }
+            
+            .dua {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- ... [previous HTML remains the same until the invitation preview section] ... -->
+        <header>
+            <h1>منشئ دعوات زفاف</h1>
+            <p class="subtitle">اصنع دعوة زفافك المثالية في دقائق</p>
+        </header>
+        
+        <div class="generator-container">
+            <div class="form-container">
+                <h2>تخصيص الدعوة</h2>
+                
+                <div class="form-group">
+                    <label for="bride-name">اسم العروس</label>
+                    <input type="text" id="bride-name" placeholder="أدخل اسم العروس كاملاً">
+                </div>
+                
+                <div class="form-group">
+                    <label for="groom-name">اسم العريس</label>
+                    <input type="text" id="groom-name" placeholder="أدخل اسم العريس كاملاً">
+                </div>
+                
+                <div class="form-group">
+                    <label for="wedding-date">تاريخ الزفاف</label>
+                    <input type="text" id="wedding-date" placeholder="السبت، 15 يونيو 2024">
+                </div>
+                
+                <div class="form-group">
+                    <label for="wedding-time">وقت الزفاف</label>
+                    <input type="text" id="wedding-time" placeholder="الساعة الرابعة عصراً">
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">المكان</label>
+                    <textarea id="location" placeholder="قاعة الفرح الكبرى&#10;123 شارع المدينة، الرياض"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="additional-info">معلومات إضافية</label>
+                    <textarea id="additional-info" placeholder="يلي الحفل عشاء&#10;الزي الرسمي"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>صورة الرأس</label>
+                    <div class="image-options">
+                        <div class="image-option">
+                            <input type="radio" id="header1" name="header-image" value="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" checked>
+                            <label for="header1">
+                                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" class="selected">
+                            </label>
+                        </div>
+                        <div class="image-option">
+                            <input type="radio" id="header2" name="header-image" value="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80">
+                            <label for="header2">
+                                <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80">
+                            </label>
+                        </div>
+                        <div class="image-option">
+                            <input type="radio" id="header3" name="header-image" value="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80">
+                            <label for="header3">
+                                <img src="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>صورة الذيل</label>
+                    <div class="image-options">
+                        <div class="image-option">
+                            <input type="radio" id="footer1" name="footer-image" value="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" checked>
+                            <label for="footer1">
+                                <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" class="selected">
+                            </label>
+                        </div>
+                        <div class="image-option">
+                            <input type="radio" id="footer2" name="footer-image" value="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80">
+                            <label for="footer2">
+                                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80">
+                            </label>
+                        </div>
+                        <div class="image-option">
+                            <input type="radio" id="footer3" name="footer-image" value="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80">
+                            <label for="footer3">
+                                <img src="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="preview-container">
+                <h2>معاينة مباشرة</h2>
+                <div class="invitation-container" id="invitation-preview">
+                    <!-- Preview will be generated here by JavaScript -->
+                </div>
+                <button class="download-btn" id="download-btn">تحميل الدعوة</button>
+            </div>
+        </div>
+    </div>
 
-        <script>
-            // ... [previous JavaScript remains the same until the updatePreview function] ...
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all form elements
+            const formInputs = {
+                brideName: document.getElementById('bride-name'),
+                groomName: document.getElementById('groom-name'),
+                weddingDate: document.getElementById('wedding-date'),
+                weddingTime: document.getElementById('wedding-time'),
+                location: document.getElementById('location'),
+                additionalInfo: document.getElementById('additional-info'),
+                headerImages: document.querySelectorAll('input[name="header-image"]'),
+                footerImages: document.querySelectorAll('input[name="footer-image"]')
+            };
+            
+            // Get preview container and download button
+            const previewContainer = document.getElementById('invitation-preview');
+            const downloadBtn = document.getElementById('download-btn');
+            
+            // Add event listeners to all form inputs
+            Object.values(formInputs).forEach(input => {
+                if (input instanceof NodeList) {
+                    input.forEach(radio => {
+                        radio.addEventListener('change', updatePreview);
+                    });
+                } else {
+                    input.addEventListener('input', updatePreview);
+                }
+            });
+            
+            // Image selection handler
+            document.querySelectorAll('.image-option img').forEach(img => {
+                img.addEventListener('click', function() {
+                    // Remove selected class from all images in this group
+                    const parent = this.closest('.image-options');
+                    parent.querySelectorAll('img').forEach(i => {
+                        i.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked image
+                    this.classList.add('selected');
+                    
+                    // Trigger the radio button
+                    const radioId = this.closest('label').getAttribute('for');
+                    document.getElementById(radioId).click();
+                });
+            });
+            
+            // Initial preview update
+            updatePreview();
+            
+            // Function to update the preview
             function updatePreview() {
                 // Get selected header and footer images
                 let headerImage = '';
@@ -63,7 +420,7 @@
                     if (radio.checked) footerImage = radio.value;
                 });
                 
-                // Generate the invitation HTML with Quranic verse and dua
+                // Generate the invitation HTML
                 previewContainer.innerHTML = `
                     <div class="header-image" style="background-image: url('${headerImage}')">
                         <div class="overlay"></div>
@@ -71,8 +428,7 @@
                             <h1>دعوة زفاف</h1>
                             <div class="quran-verse">
                                 ﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً﴾
-                                <br>
-                                <span style="font-size: 1.2rem;">[الروم: 21]</span>
+                                <span class="verse-ref">[الروم: 21]</span>
                             </div>
                         </div>
                     </div>
@@ -95,20 +451,39 @@
                             وبداية حياتهم الجديدة معاً
                         </div>
                         
-                        <!-- ... [rest of the invitation content remains the same] ... -->
+                        <div class="details">
+                            <div class="detail-item">
+                                <div class="detail-title">التاريخ</div>
+                                <div class="detail-info">${formInputs.weddingDate.value || "السبت، 15 يونيو 2024"}</div>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <div class="detail-title">الوقت</div>
+                                <div class="detail-info">${formInputs.weddingTime.value || "الساعة الرابعة عصراً"}</div>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <div class="detail-title">المكان</div>
+                                <div class="detail-info">${formInputs.location.value.replace(/\n/g, '<br>') || "قاعة الفرح الكبرى<br>123 شارع المدينة، الرياض"}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="decoration"></div>
+                        
+                        <div class="invitation-text">
+                            ${formInputs.additionalInfo.value.replace(/\n/g, '<br>') || "يلي الحفل عشاء<br>الزي الرسمي"}
+                        </div>
                     </div>
                     
                     <div class="footer-image" style="background-image: url('${footerImage}')"></div>
-                    
-                    <div class="rsvp">
-                        <p>نرجو التأكيد قبل 1 مايو 2024</p>
-                        <a href="#rsvp" class="rsvp-button">تأكيد الحضور</a>
-                    </div>
                 `;
             }
-
-            // ... [rest of your existing JavaScript] ...
-        </script>
-    </div>
+            
+            // Download button handler
+            downloadBtn.addEventListener('click', function() {
+                alert('في التنفيذ الكامل، هذا سيقوم بتحميل دعوتك كصورة أو PDF. في الوقت الحالي، يمكنك التقاط لقطة شاشة للتصميم.');
+            });
+        });
+    </script>
 </body>
 </html>
