@@ -91,7 +91,7 @@
             text-decoration: underline;
         }
 
-        /* أنماط الإعلانات الجديدة */
+        /* أنماط الإعلانات المتبقية */
         .ad-container {
             background-color: #f8f9fa;
             border: 1px dashed #6c757d;
@@ -132,21 +132,11 @@
             margin-bottom: 30px;
             background-color: #e9ecef;
         }
-
-        .result-ad {
-            margin: 15px 0;
-            background-color: #f1f8fe;
-        }
-
-        .bottom-ad {
-            margin-top: 30px;
-            background-color: #e9ecef;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- إعلان رئيسي في أعلى الصفحة -->
+        <!-- إعلان رئيسي في أعلى الصفحة فقط -->
         <div class="ad-container top-ad">
             <div class="ad-title">إعلان مميز</div>
             <div class="ad-content">هذا المساحة مخصصة للإعلانات. يمكنك استبدال هذا النص بكود الإعلان الخاص بك.</div>
@@ -159,28 +149,7 @@
             <button type="submit">بحث</button>
         </form>
 
-        <!-- إعلان قبل ظهور النتائج -->
-        <div class="ad-container" id="preResultAd" style="display:none;">
-            <div class="ad-title">إعلان قبل النتائج</div>
-            <div class="ad-content">إعلان يظهر فقط عند عرض نتائج البحث.</div>
-            <a href="#" class="ad-link">عرض التفاصيل</a>
-        </div>
-
         <div id="result"></div>
-
-        <!-- إعلان أسفل كل نتيجة -->
-        <div class="ad-container result-ad" id="postResultAd" style="display:none;">
-            <div class="ad-title">هل تبحث عن المزيد؟</div>
-            <div class="ad-content">تصفح مجموعتنا الكاملة من الكتب والإصدارات الجديدة.</div>
-            <a href="#" class="ad-link">استكشف الكتب</a>
-        </div>
-
-        <!-- إعلان في أسفل الصفحة -->
-        <div class="ad-container bottom-ad">
-            <div class="ad-title">إعلان ختامي</div>
-            <div class="ad-content">تابعنا على وسائل التواصل الاجتماعي لمزيد من العروض والتحديثات.</div>
-            <a href="#" class="ad-link">تابعنا الآن</a>
-        </div>
     </div>
 
     <script>
@@ -239,9 +208,6 @@
                 return;
             }
 
-            // عرض الإعلان قبل النتائج
-            document.getElementById('preResultAd').style.display = 'block';
-
             workbook.SheetNames.forEach(sheetName => {
                 const sheet = workbook.Sheets[sheetName];
                 const range = XLSX.utils.decode_range(sheet['!ref']);
@@ -254,36 +220,17 @@
 
                         if (cell && cell.v && cell.v.toString().includes(searchText)) {
                             const hyperlink = cell.l ? cell.l.Target : 'لا يوجد رابط';
-                            
-                            // إنشاء عنصر النتيجة
-                            const resultItem = document.createElement('div');
-                            resultItem.innerHTML = `
+                            resultDiv.innerHTML += `
                                 <p>
                                     تحميل الكتاب: ${cell.v}<br>
                                     اضغط على الرابط للقراءة وتحميل الكتاب:<br>
                                     <a href="${hyperlink}" target="_blank">${hyperlink}</a>
                                 </p>
                             `;
-                            resultDiv.appendChild(resultItem);
-
-                            // إضافة إعلان أسفل كل نتيجة
-                            const adAfterResult = document.createElement('div');
-                            adAfterResult.className = 'ad-container result-ad';
-                            adAfterResult.innerHTML = `
-                                <div class="ad-title">إعلان ممول</div>
-                                <div class="ad-content">إعلان يظهر أسفل نتيجة البحث مباشرة.</div>
-                                <a href="#" class="ad-link">زيارة الموقع</a>
-                            `;
-                            resultDiv.appendChild(adAfterResult);
                         }
                     }
                 }
             });
-
-            // عرض الإعلان بعد النتائج إذا كانت هناك نتائج
-            if (resultDiv.innerHTML !== '') {
-                document.getElementById('postResultAd').style.display = 'block';
-            }
         }
 
         // Handle form submission
