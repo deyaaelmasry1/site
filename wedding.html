@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منشئ دعوات زفاف</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Lateef:wght@400;700&display=swap');
+        
+        :root {
+            --primary-color: #9e6d4d;
+            --secondary-color: #f8f1e9;
+            --text-color: #333;
+            --light-color: #fff;
+            --gold-color: #d4af37;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f9f5f0;
+            color: var(--text-color);
+            font-family: 'Tajawal', sans-serif;
+            line-height: 1.8;
+        }
+        
+        .quran-verse {
+            font-family: 'Lateef', cursive;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            line-height: 2.5;
+            margin: 20px 0;
+        }
+        
+        .dua {
+            font-family: 'Lateef', cursive;
+            font-size: 1.8rem;
+            color: var(--gold-color);
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        /* ... [rest of your existing CSS remains the same] ... */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ... [previous HTML remains the same until the invitation preview section] ... -->
+
+        <script>
+            // ... [previous JavaScript remains the same until the updatePreview function] ...
+
+            function updatePreview() {
+                // Get selected header and footer images
+                let headerImage = '';
+                let footerImage = '';
+                
+                formInputs.headerImages.forEach(radio => {
+                    if (radio.checked) headerImage = radio.value;
+                });
+                
+                formInputs.footerImages.forEach(radio => {
+                    if (radio.checked) footerImage = radio.value;
+                });
+                
+                // Generate the invitation HTML with Quranic verse and dua
+                previewContainer.innerHTML = `
+                    <div class="header-image" style="background-image: url('${headerImage}')">
+                        <div class="overlay"></div>
+                        <div class="title">
+                            <h1>دعوة زفاف</h1>
+                            <div class="quran-verse">
+                                ﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً﴾
+                                <br>
+                                <span style="font-size: 1.2rem;">[الروم: 21]</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content">
+                        <div class="couple-names">
+                            ${formInputs.brideName.value || "اسم العروس"}<br>
+                            و<br>
+                            ${formInputs.groomName.value || "اسم العريس"}
+                        </div>
+                        
+                        <div class="dua">
+                            اللهم بارك لهما وبارك عليهما واجمع بينهما في خير
+                        </div>
+                        
+                        <div class="decoration"></div>
+                        
+                        <div class="invitation-text">
+                            يتشرفون بدعوتكم لحضور حفل زفافهم<br>
+                            وبداية حياتهم الجديدة معاً
+                        </div>
+                        
+                        <!-- ... [rest of the invitation content remains the same] ... -->
+                    </div>
+                    
+                    <div class="footer-image" style="background-image: url('${footerImage}')"></div>
+                    
+                    <div class="rsvp">
+                        <p>نرجو التأكيد قبل 1 مايو 2024</p>
+                        <a href="#rsvp" class="rsvp-button">تأكيد الحضور</a>
+                    </div>
+                `;
+            }
+
+            // ... [rest of your existing JavaScript] ...
+        </script>
+    </div>
+</body>
+</html>
