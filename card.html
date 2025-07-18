@@ -7,66 +7,692 @@
     <meta name="keywords" content="كرت عمل, بطاقة شخصية, تصميم كرت, نموذج كرت شخصي, بطاقة عمل إلكترونية">
     <title>مولد بطاقة عمل احترافية مجاني - تصميم كروت شخصية أونلاين</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=El+Messiri:wght@500;600&display=swap" rel="stylesheet">
-    <!-- باقي الhead كما هو -->
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --dark-blue: #1e40af;
+            --dark-gray: #1f2937;
+            --light-gray: #f3f4f6;
+            --gold-accent: #d97706;
+            --white: #ffffff;
+            --border-color: #e5e7eb;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f9fafb;
+            color: #111827;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'El Messiri', sans-serif;
+            color: var(--dark-gray);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            font-size: 2rem;
+        }
+        
+        h2 {
+            color: var(--dark-blue);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .card-creator {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .form-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .preview-section {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            text-align: right;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        button {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        button:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-1px);
+        }
+        
+        #downloadBtn, #shareBtn {
+            background-color: var(--dark-gray);
+        }
+        
+        #downloadBtn:hover, #shareBtn:hover {
+            background-color: #111827;
+        }
+        
+        .card-preview {
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            background-color: #f9fafb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* التسويق */
+        .marketing-section {
+            background-color: #f8fafc;
+            padding: 3rem 0;
+            margin-top: 3rem;
+            border-top: 3px solid var(--primary-blue);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .feature-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .seo-content {
+            margin-top: 2.5rem;
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        
+        ol {
+            color: #4b5563;
+            line-height: 1.7;
+            padding-right: 1rem;
+        }
+        
+        ol li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .seo-tags {
+            color: #4b5563;
+            line-height: 1.7;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .card-creator {
+                flex-direction: column;
+            }
+            
+            .card-actions {
+                flex-direction: column;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- ... الأقسام السابقة كما هي ... -->
-
-    <!-- القسم التسويقي الجديد -->
-    <div class="marketing-section" style="background-color: #f8fafc; padding: 2rem; border-radius: 12px; margin-top: 3rem; border-top: 3px solid #2563eb;">
-        <div class="container" style="max-width: 1200px; margin: 0 auto;">
-            <h2 style="font-family: 'El Messiri', sans-serif; color: #1e40af; text-align: center; margin-bottom: 1.5rem;">
-                لماذا تختار مولد البطاقات الخاص بنا؟
-            </h2>
+    <div class="container">
+        <h1>مولد بطاقة عمل احترافية</h1>
+        
+        <div class="card-creator">
+            <div class="form-section">
+                <form id="cardForm">
+                    <div class="form-group">
+                        <label for="name">الاسم الكامل</label>
+                        <input type="text" id="name" placeholder="محمد أحمد" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="title">المسمى الوظيفي</label>
+                        <input type="text" id="title" placeholder="مطور برمجيات">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company">الشركة</label>
+                        <input type="text" id="company" placeholder="شركة التقنية المحدودة">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">العنوان</label>
+                        <input type="text" id="address" placeholder="شارع الملك فهد، الرياض">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">رقم الجوال</label>
+                        <input type="tel" id="phone" placeholder="+966501234567">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" placeholder="example@company.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="website">الموقع الإلكتروني</label>
+                        <input type="url" id="website" placeholder="https://company.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="photo">رفع الصورة الشخصية (مربعة)</label>
+                        <input type="file" id="photo" accept="image/*">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="logo">رفع الشعار (اختياري)</label>
+                        <input type="file" id="logo" accept="image/*">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="template">اختر التصميم</label>
+                        <select id="template">
+                            <option value="modern-blue">أزرق احترافي</option>
+                            <option value="professional-dark">داكن أنيق</option>
+                            <option value="minimal-white">أبيض بسيط</option>
+                            <option value="gold-accent">ذهبي مميز</option>
+                            <option value="corporate">تصميم مؤسسي</option>
+                        </select>
+                    </div>
+                    
+                    <button type="button" id="generateBtn">إنشاء البطاقة</button>
+                </form>
+            </div>
             
-            <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-                <div class="feature-card" style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                    <h3 style="color: #2563eb; font-family: 'Tajawal'; margin-bottom: 0.5rem;">🛡️ خصوصية مضمونة</h3>
-                    <p style="color: #4b5563; line-height: 1.7;">جميع البيانات تبقى في جهازك، لا نقوم بحفظ أو تخزين أي معلومات تقدمها. التصميم يتم معالجته مباشرة في متصفحك دون الحاجة لرفع الملفات لخوادمنا.</p>
+            <div class="preview-section">
+                <div class="card-preview">
+                    <canvas id="cardCanvas" width="600" height="380"></canvas>
+                </div>
+                <div class="card-actions">
+                    <button id="downloadBtn" disabled>تحميل البطاقة</button>
+                    <button id="shareBtn" disabled>مشاركة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- القسم التسويقي -->
+    <div class="marketing-section">
+        <div class="container">
+            <h2>لماذا تختار مولد البطاقات الخاص بنا؟</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🛡️ خصوصية مضمونة</h3>
+                    <p>جميع البيانات تبقى في جهازك، لا نقوم بحفظ أو تخزين أي معلومات تقدمها. التصميم يتم معالجته مباشرة في متصفحك دون الحاجة لرفع الملفات لخوادمنا.</p>
                 </div>
                 
-                <div class="feature-card" style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                    <h3 style="color: #2563eb; font-family: 'Tajawal'; margin-bottom: 0.5rem;">🎨 تصاميم احترافية</h3>
-                    <p style="color: #4b5563; line-height: 1.7;">اختر من بين مجموعة من القوالب المصممة بعناية لتلبي مختلف الأذواق والمجالات المهنية. تحدث بطاقتك مع كل تفصيل.</p>
+                <div class="feature-card">
+                    <h3>🎨 تصاميم احترافية</h3>
+                    <p>اختر من بين مجموعة من القوالب المصممة بعناية لتلبي مختلف الأذواق والمجالات المهنية. تحدث بطاقتك مع كل تفصيل.</p>
                 </div>
                 
-                <div class="feature-card" style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                    <h3 style="color: #2563eb; font-family: 'Tajawal'; margin-bottom: 0.5rem;">⚡ سريع وسهل</h3>
-                    <p style="color: #4b5563; line-height: 1.7;">لا حاجة لتسجيل دخول أو عمليات معقدة. أنشئ بطاقتك في دقائق واحصل على ملف جاهز للطباعة أو المشاركة.</p>
+                <div class="feature-card">
+                    <h3>⚡ سريع وسهل</h3>
+                    <p>لا حاجة لتسجيل دخول أو عمليات معقدة. أنشئ بطاقتك في دقائق واحصل على ملف جاهز للطباعة أو المشاركة.</p>
                 </div>
                 
-                <div class="feature-card" style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                    <h3 style="color: #2563eb; font-family: 'Tajawal'; margin-bottom: 0.5rem;">💼 متعدد الأغراض</h3>
-                    <p style="color: #4b5563; line-height: 1.7;">مناسب للمهنيين، رواد الأعمال، الطلاب، وأي شخص يحتاج لعرض معلوماته بشكل أنيق ومهني.</p>
+                <div class="feature-card">
+                    <h3>💼 متعدد الأغراض</h3>
+                    <p>مناسب للمهنيين، رواد الأعمال، الطلاب، وأي شخص يحتاج لعرض معلوماته بشكل أنيق ومهني.</p>
                 </div>
                 
-                <div class="feature-card" style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                    <h3 style="color: #2563eb; font-family: 'Tajawal'; margin-bottom: 0.5rem;">💰 مجاني بالكامل</h3>
-                    <p style="color: #4b5563; line-height: 1.7;">خدمة مجانية بدون رسوم خفية أو اشتراكات. أنشئ عدد غير محدود من البطاقات دون أي تكلفة.</p>
+                <div class="feature-card">
+                    <h3>💰 مجاني بالكامل</h3>
+                    <p>خدمة مجانية بدون رسوم خفية أو اشتراكات. أنشئ عدد غير محدود من البطاقات دون أي تكلفة.</p>
                 </div>
                 
-                <div class="feature-card" style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                    <h3 style="color: #2563eb; font-family: 'Tajawal'; margin-bottom: 0.5rem;">📱 متوافق مع جميع الأجهزة</h3>
-                    <p style="color: #4b5563; line-height: 1.7;">يعمل على الحواسيب، الأجهزة اللوحية والهواتف الذكية. تصميم متجاوب يضمن تجربة ممتازة على جميع الشاشات.</p>
+                <div class="feature-card">
+                    <h3>📱 متوافق مع جميع الأجهزة</h3>
+                    <p>يعمل على الحواسيب، الأجهزة اللوحية والهواتف الذكية. تصميم متجاوب يضمن تجربة ممتازة على جميع الشاشات.</p>
                 </div>
             </div>
             
-            <div class="seo-content" style="margin-top: 2.5rem; background: white; padding: 1.5rem; border-radius: 8px;">
-                <h3 style="font-family: 'El Messiri'; color: #1e40af; margin-bottom: 1rem;">كيفية إنشاء كرت شخصي مميز:</h3>
-                <ol style="color: #4b5563; line-height: 1.7; padding-right: 1rem;">
-                    <li style="margin-bottom: 0.5rem;">أدخل معلوماتك الأساسية (الاسم، الوظيفة، جهة العمل)</li>
-                    <li style="margin-bottom: 0.5rem;">أضف معلومات الاتصال (هاتف، بريد إلكتروني، موقع)</li>
-                    <li style="margin-bottom: 0.5rem;">اختر تصميماً يناسب مجال عملك</li>
-                    <li style="margin-bottom: 0.5rem;">قم برفع صورتك الشخصية وشعار المؤسسة (اختياري)</li>
-                    <li style="margin-bottom: 0.5rem;">انقر على "إنشاء البطاقة" ثم حملها أو شاركها مباشرة</li>
+            <div class="seo-content">
+                <h3>كيفية إنشاء كرت شخصي مميز:</h3>
+                <ol>
+                    <li>أدخل معلوماتك الأساسية (الاسم، الوظيفة، جهة العمل)</li>
+                    <li>أضف معلومات الاتصال (هاتف، بريد إلكتروني، موقع)</li>
+                    <li>اختر تصميماً يناسب مجال عملك</li>
+                    <li>قم برفع صورتك الشخصية وشعار المؤسسة (اختياري)</li>
+                    <li>انقر على "إنشاء البطاقة" ثم حملها أو شاركها مباشرة</li>
                 </ol>
-                <p style="color: #4b5563; line-height: 1.7; margin-top: 1rem;">
+                <p class="seo-tags">
                     <strong>محرك البحث:</strong> كروت عمل - تصميم بطاقة شخصية أونلاين - مولد كروت مجاني - نموذج كرت شخصي جاهز - إنشاء بطاقة عمل إلكترونية - كرت شخصي احترافي
                 </p>
             </div>
         </div>
     </div>
-
-    <!-- باقي الfooter إن وجد -->
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generateBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const shareBtn = document.getElementById('shareBtn');
+            const canvas = document.getElementById('cardCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            let cardGenerated = false;
+            let photoImg = null;
+            let logoImg = null;
+            
+            // Image loading handlers
+            document.getElementById('photo').addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        photoImg = new Image();
+                        photoImg.onload = function() {
+                            if (document.getElementById('name').value) {
+                                generateBtn.click();
+                            }
+                        };
+                        photoImg.src = event.target.result;
+                    };
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+            
+            document.getElementById('logo').addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        logoImg = new Image();
+                        logoImg.onload = function() {
+                            if (document.getElementById('name').value) {
+                                generateBtn.click();
+                            }
+                        };
+                        logoImg.src = event.target.result;
+                    };
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+            
+            // Generate card
+            generateBtn.addEventListener('click', function() {
+                const name = document.getElementById('name').value;
+                const title = document.getElementById('title').value;
+                const company = document.getElementById('company').value;
+                const address = document.getElementById('address').value;
+                const phone = document.getElementById('phone').value;
+                const email = document.getElementById('email').value;
+                const website = document.getElementById('website').value;
+                const template = document.getElementById('template').value;
+                
+                if (!name) {
+                    alert('الرجاء إدخال الاسم');
+                    return;
+                }
+                
+                drawProfessionalCard({
+                    name,
+                    title,
+                    company,
+                    address,
+                    phone,
+                    email,
+                    website,
+                    template
+                });
+                
+                cardGenerated = true;
+                downloadBtn.disabled = false;
+                shareBtn.disabled = false;
+            });
+            
+            // Professional card drawing function
+            function drawProfessionalCard(data) {
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Apply template background
+                applyTemplateDesign(data.template);
+                
+                // Draw all elements
+                drawCardElements(data);
+            }
+            
+            function applyTemplateDesign(template) {
+                const width = canvas.width;
+                const height = canvas.height;
+                
+                switch(template) {
+                    case 'modern-blue':
+                        // Blue gradient background
+                        const blueGradient = ctx.createLinearGradient(width, 0, 0, height);
+                        blueGradient.addColorStop(0, '#2563eb');
+                        blueGradient.addColorStop(1, '#1e40af');
+                        ctx.fillStyle = blueGradient;
+                        ctx.fillRect(0, 0, width, height);
+                        
+                        // Decorative elements
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+                        drawGeometricPattern();
+                        break;
+                        
+                    case 'professional-dark':
+                        // Dark background
+                        ctx.fillStyle = '#1f2937';
+                        ctx.fillRect(0, 0, width, height);
+                        
+                        // Gold accent line
+                        ctx.fillStyle = '#d97706';
+                        ctx.fillRect(0, 0, 8, height);
+                        break;
+                        
+                    case 'minimal-white':
+                        // White background with border
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillRect(0, 0, width, height);
+                        ctx.strokeStyle = '#e5e7eb';
+                        ctx.lineWidth = 2;
+                        ctx.strokeRect(10, 10, width - 20, height - 20);
+                        break;
+                        
+                    case 'gold-accent':
+                        // Gold accent design
+                        ctx.fillStyle = '#1f2937';
+                        ctx.fillRect(0, 0, width, height);
+                        
+                        // Gold right sidebar
+                        ctx.fillStyle = 'rgba(217, 119, 6, 0.2)';
+                        ctx.fillRect(width - 100, 0, 100, height);
+                        break;
+                        
+                    case 'corporate':
+                        // Corporate style with left third for photo
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillRect(0, 0, width, height);
+                        
+                        // Blue left sidebar
+                        ctx.fillStyle = '#2563eb';
+                        ctx.fillRect(0, 0, width * 0.33, height);
+                        break;
+                        
+                    default:
+                        ctx.fillStyle = '#2563eb';
+                        ctx.fillRect(0, 0, width, height);
+                }
+            }
+            
+            function drawGeometricPattern() {
+                const size = 80;
+                const width = canvas.width;
+                const height = canvas.height;
+                
+                for (let y = 0; y < height + size; y += size) {
+                    for (let x = 0; x < width + size; x += size) {
+                        ctx.beginPath();
+                        ctx.moveTo(x, y);
+                        ctx.lineTo(x - size/2, y + size/2);
+                        ctx.lineTo(x, y + size);
+                        ctx.lineTo(x + size/2, y + size/2);
+                        ctx.closePath();
+                        ctx.fill();
+                    }
+                }
+            }
+            
+            function drawCardElements(data) {
+                const width = canvas.width;
+                const height = canvas.height;
+                const template = data.template;
+                
+                // Determine colors based on template
+                let textColor, secondaryTextColor, accentColor;
+                
+                if (template === 'minimal-white' || template === 'corporate') {
+                    textColor = '#1f2937';
+                    secondaryTextColor = '#4b5563';
+                    accentColor = '#2563eb';
+                } else {
+                    textColor = '#ffffff';
+                    secondaryTextColor = 'rgba(255, 255, 255, 0.8)';
+                    accentColor = '#fbbf24';
+                }
+                
+                // Corporate layout has special styling
+                const isCorporateLayout = template === 'corporate';
+                
+                // Draw logo (if exists) - top left
+                if (logoImg) {
+                    const logoWidth = 80;
+                    const logoHeight = logoWidth * (logoImg.height / logoImg.width);
+                    const logoX = isCorporateLayout ? 20 : 30;
+                    const logoY = 30;
+                    
+                    ctx.drawImage(logoImg, logoX, logoY, logoWidth, logoHeight);
+                }
+                
+                // Draw photo (if exists) - left third
+                if (photoImg) {
+                    const photoSize = isCorporateLayout ? 150 : 120;
+                    const photoX = isCorporateLayout ? width * 0.165 - photoSize/2 : 40;
+                    const photoY = isCorporateLayout ? height/2 - photoSize/2 : 100;
+                    
+                    // Circular photo mask
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(
+                        photoX + photoSize/2, 
+                        photoY + photoSize/2, 
+                        photoSize/2, 
+                        0, 
+                        Math.PI * 2
+                    );
+                    ctx.closePath();
+                    ctx.clip();
+                    
+                    ctx.drawImage(photoImg, photoX, photoY, photoSize, photoSize);
+                    ctx.restore();
+                    
+                    // Photo border
+                    ctx.beginPath();
+                    ctx.arc(
+                        photoX + photoSize/2, 
+                        photoY + photoSize/2, 
+                        photoSize/2, 
+                        0, 
+                        Math.PI * 2
+                    );
+                    ctx.strokeStyle = isCorporateLayout ? '#ffffff' : accentColor;
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                }
+                
+                // Text positioning - right two thirds
+                const textX = isCorporateLayout ? width * 0.4 : width * 0.35;
+                let textY = isCorporateLayout ? 100 : 120;
+                
+                // Name
+                ctx.font = `bold ${isCorporateLayout ? '28px' : '26px'} 'El Messiri', sans-serif`;
+                ctx.fillStyle = isCorporateLayout ? '#1f2937' : textColor;
+                ctx.textAlign = 'right';
+                ctx.fillText(data.name, width - 40, textY);
+                textY += isCorporateLayout ? 40 : 35;
+                
+                // Title
+                if (data.title) {
+                    ctx.font = `600 ${isCorporateLayout ? '16px' : '15px'} 'Tajawal', sans-serif`;
+                    ctx.fillStyle = isCorporateLayout ? '#4b5563' : accentColor;
+                    ctx.fillText(data.title, width - 40, textY);
+                    textY += isCorporateLayout ? 30 : 28;
+                }
+                
+                // Company
+                if (data.company) {
+                    ctx.font = `600 ${isCorporateLayout ? '16px' : '15px'} 'Tajawal', sans-serif`;
+                    ctx.fillStyle = isCorporateLayout ? '#1f2937' : textColor;
+                    ctx.fillText(data.company, width - 40, textY);
+                    textY += isCorporateLayout ? 30 : 28;
+                }
+                
+                // Divider line
+                ctx.strokeStyle = isCorporateLayout ? '#d1d5db' : accentColor;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(width - 200, textY - 10);
+                ctx.lineTo(width - 40, textY - 10);
+                ctx.stroke();
+                textY += 20;
+                
+                // Contact info
+                ctx.font = `500 ${isCorporateLayout ? '13px' : '14px'} 'Tajawal', sans-serif`;
+                ctx.fillStyle = isCorporateLayout ? '#4b5563' : secondaryTextColor;
+                
+                if (data.phone) {
+                    ctx.fillText(`📱 ${data.phone}`, width - 40, textY);
+                    textY += 25;
+                }
+                
+                if (data.email) {
+                    ctx.fillText(`✉️ ${data.email}`, width - 40, textY);
+                    textY += 25;
+                }
+                
+                if (data.website) {
+                    ctx.fillText(`🌐 ${data.website.replace(/^https?:\/\//, '')}`, width - 40, textY);
+                    textY += 25;
+                }
+                
+                if (data.address) {
+                    ctx.fillText(`📍 ${data.address}`, width - 40, textY);
+                }
+            }
+            
+            // Download functionality
+            downloadBtn.addEventListener('click', function() {
+                if (!cardGenerated) return;
+                
+                const link = document.createElement('a');
+                link.download = `${document.getElementById('name').value || 'business'}-card.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+            
+            // Share functionality
+            shareBtn.addEventListener('click', function() {
+                if (!cardGenerated) return;
+                
+                if (navigator.share) {
+                    canvas.toBlob(function(blob) {
+                        const fileName = `${document.getElementById('name').value || 'business'}-card.png`;
+                        const file = new File([blob], fileName, { type: 'image/png' });
+                        
+                        navigator.share({
+                            title: 'بطاقة العمل الخاصة بي',
+                            text: 'اطلع على بطاقة عملي الاحترافية!',
+                            files: [file]
+                        }).catch(err => {
+                            console.log('Error sharing:', err);
+                            alert('فشلت المشاركة. يمكنك تحميل البطاقة ومشاركتها يدوياً.');
+                        });
+                    });
+                } else {
+                    alert('ميزة المشاركة غير متاحة. يرجى تحميل البطاقة أولاً.');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
