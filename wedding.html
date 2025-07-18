@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منشئ دعوات زفاف</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Lateef:wght@400;700&display=swap');
         
@@ -479,9 +480,19 @@
                 `;
             }
             
-            // Download button handler
+            // Download button handler with html2canvas
             downloadBtn.addEventListener('click', function() {
-                alert('في التنفيذ الكامل، هذا سيقوم بتحميل دعوتك كصورة أو PDF. في الوقت الحالي، يمكنك التقاط لقطة شاشة للتصميم.');
+                html2canvas(document.getElementById('invitation-preview'), {
+                    scale: 2,
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'دعوة-زفاف.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
             });
         });
     </script>
