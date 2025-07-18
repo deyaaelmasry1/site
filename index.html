@@ -132,57 +132,7 @@
             margin-bottom: 30px;
             background-color: #e9ecef;
         }
-
-        /* أنماط عداد الزوار */
-        .counter-box {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #12c2e9, #c471ed, #f64f59);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            text-align: center;
-            width: 300px;
-            margin: 50px auto;
-            position: relative;
-            overflow: hidden;
-        }
-        .counter-number {
-            font-size: 60px;
-            font-weight: bold;
-            margin: 20px 0;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
     </style>
-    <!-- مكتبة العد المدمجة في الكود -->
-    <script>
-        // مكتبة العد الذاتية
-        class VisitorCounter {
-            constructor() {
-                this.count = this.loadCount();
-            }
-            
-            loadCount() {
-                // البدء من الصفر
-                return 0;
-            }
-            
-            increment() {
-                this.count++;
-                return this.count;
-            }
-            
-            getCount() {
-                return this.count;
-            }
-        }
-    </script>
 </head>
 <body>
     <div class="container">
@@ -207,23 +157,10 @@
         <div id="result"></div>
     </div>
 
-    <!-- عداد الزوار في أسفل الصفحة -->
-    <div class="counter-box">
-        <h2>عدد الزوار الفريدون</h2>
-        <div class="counter-number" id="visitorCount"></div>
-        <p>شكراً لزيارتكم</p>
-    </div>
+    <a href='http://www.freevisitorcounters.com'>more on freevisitorcounters.com</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=8ff256a8a162379ff10c6f0f4d63c47568960452'></script>
+<script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1367102/t/5"></script>
 
     <script>
-        // إنشاء عداد جديد
-        const counter = new VisitorCounter();
-        
-        // زيادة العداد عند كل زيارة
-        counter.increment();
-        
-        // عرض العداد
-        document.getElementById('visitorCount').textContent = counter.getCount().toLocaleString();
-
         let workbook;
 
         // Load the Excel file from the repository's relative path
