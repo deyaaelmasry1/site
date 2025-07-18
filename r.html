@@ -53,18 +53,20 @@
             border-radius: 5px;
             word-break: break-all;
         }
+        .error {
+            color: #f44336;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="ad">
-            <!-- إعلان أعلى -->
             <h3>إعلان أعلى</h3>
             <p>هذا مكان للإعلان العلوي</p>
-            <!-- يمكن استبدال هذا الجزء بكود الإعلان الفعلي -->
         </div>
 
-        <h1>جاري إعادة التوجيه...</h1>
+        <h1 id="page-title">جاري إعادة التوجيه...</h1>
         
         <div class="url-display">
             <p>سيتم توجيهك إلى:</p>
@@ -78,41 +80,52 @@
         <button class="redirect-btn" onclick="redirectNow()">اضغط هنا للانتقال الآن</button>
         
         <div class="ad">
-            <!-- إعلان أسفل -->
             <h3>إعلان أسفل</h3>
             <p>هذا مكان للإعلان السفلي</p>
-            <!-- يمكن استبدال هذا الجزء بكود الإعلان الفعلي -->
         </div>
     </div>
 
     <script>
-        // استخراج الرابط الهدف من URL الصفحة الحالية
+        // استخراج الرابط الهدف من query parameter
         function getTargetUrl() {
-            const currentUrl = window.location.href;
-            // البحث عن الجزء بعد علامة / الثانية
-            const parts = currentUrl.split('/');
-            if (parts.length > 3) {
-                // أخذ كل الأجزاء بعد الجزء الثالث (الذي يحتوي على النطاق)
-                return parts.slice(3).join('/');
+            const params = new URLSearchParams(window.location.search);
+            const urlParam = params.get('url');
+            
+            if (urlParam) {
+                // التأكد من وجود بروتوكول في الرابط
+                if (!urlParam.startsWith('http://') && !urlParam.startsWith('https://')) {
+                    return 'https://' + urlParam;
+                }
+                return urlParam;
             }
-            return null;
+            
+            // إذا لم يوجد parameter نعيد false
+            return false;
         }
         
         // تنفيذ إعادة التوجيه
         function redirectNow() {
             const targetUrl = getTargetUrl();
             if (targetUrl) {
-                window.location.href = 'https://' + targetUrl;
+                window.location.href = targetUrl;
             } else {
-                alert('الرابط الهدف غير صحيح');
+                document.getElementById('page-title').textContent = 'حدث خطأ';
+                document.getElementById('target-url').innerHTML = 
+                    '<span class="error">لم يتم تحديد رابط الهدف</span>';
+                document.getElementById('countdown').style.display = 'none';
             }
         }
         
         // عد تنازلي وإعادة توجيه تلقائية
         function startCountdown() {
             const targetUrl = getTargetUrl();
+            
             if (!targetUrl) {
-                document.getElementById('countdown').textContent = 'خطأ في الرابط';
+                document.getElementById('page-title').textContent = 'رابط غير صحيح';
+                document.getElementById('target-url').innerHTML = 
+                    '<span class="error">الرجاء استخدام الرابط بالشكل الصحيح: ?url=الرابط_الهدف</span>';
+                document.getElementById('countdown').style.display = 'none';
+                document.querySelector('.redirect-btn').style.display = 'none';
                 return;
             }
             
