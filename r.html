@@ -5,95 +5,231 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إعادة توجيه</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #f5f5f5;
-            padding: 20px;
+            padding: 15px;
             direction: rtl;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .container {
+        
+        .main-content {
+            width: 100%;
             max-width: 600px;
-            margin: 0 auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
             background-color: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            flex: 1;
         }
+        
         .ad {
-            margin: 20px 0;
+            margin: 15px 0;
             padding: 10px;
             background-color: #f0f0f0;
             border: 1px dashed #ccc;
+            border-radius: 8px;
         }
+        
         .redirect-btn {
             background-color: #4CAF50;
             color: white;
-            padding: 15px 30px;
+            padding: 12px 25px;
             border: none;
             border-radius: 5px;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
-            margin: 20px 0;
+            margin: 15px 0;
             transition: background-color 0.3s;
+            width: 100%;
+            max-width: 250px;
         }
+        
         .redirect-btn:hover {
             background-color: #45a049;
         }
+        
         .countdown {
-            font-size: 24px;
-            margin: 20px 0;
+            font-size: 20px;
+            margin: 15px 0;
             color: #333;
         }
+        
         .url-display {
-            margin: 20px 0;
+            margin: 15px 0;
             padding: 10px;
             background-color: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 5px;
             word-break: break-all;
+            font-size: 14px;
         }
+        
         .error {
             color: #f44336;
             font-weight: bold;
         }
+        
+        h1 {
+            font-size: 22px;
+            margin: 10px 0;
+        }
+        
+        /* أنماط عداد الزوار - متجاوبة */
+        .counter-box {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #12c2e9, #c471ed, #f64f59);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .counter-box h2 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        
+        .counter-number {
+            font-size: 40px;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        .counter-box p {
+            font-size: 14px;
+            margin: 10px 0 0;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .counter-box {
+                padding: 25px;
+            }
+            
+            .counter-number {
+                font-size: 50px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .url-display {
+                font-size: 16px;
+            }
+        }
     </style>
+    <!-- مكتبة العد المدمجة في الكود -->
+    <script>
+        // مكتبة العد الذاتية
+        class VisitorCounter {
+            constructor() {
+                this.count = this.loadCount();
+            }
+            
+            loadCount() {
+                // البدء من الصفر
+                return 0;
+            }
+            
+            increment() {
+                this.count++;
+                return this.count;
+            }
+            
+            getCount() {
+                return this.count;
+            }
+        }
+    </script>
 </head>
 <body>
-    <div class="container">
-        <div class="ad">
-           <div style="background: linear-gradient(135deg, #ffc107, #ff9800); padding: 20px; border-radius: 15px; text-align: center; font-family: 'Cairo', sans-serif; color: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-  <h2 style="font-size: 28px; margin-bottom: 10px;">🎉 خصومات نون الرهيبة وصلت!</h2>
-  <p style="font-size: 20px; margin: 0 0 15px;">وفر الآن على كل طلباتك من <strong>نون مصر</strong> 🛍️</p>
-  <div style="font-size: 24px; background: #fff; color: #d84315; display: inline-block; padding: 10px 25px; border-radius: 12px; font-weight: bold; letter-spacing: 1px;">
-    استخدم الكود: RZ1421
-  </div>
+    <div class="main-content">
+        <div class="container">
+            <div class="ad">
+               <div style="background: linear-gradient(135deg, #ffc107, #ff9800); padding: 15px; border-radius: 12px; text-align: center; font-family: 'Cairo', sans-serif; color: #fff; box-shadow: 0 3px 10px rgba(0,0,0,0.2);">
+      <h2 style="font-size: 22px; margin-bottom: 8px;">🎉 خصومات نون الرهيبة وصلت!</h2>
+      <p style="font-size: 16px; margin: 0 0 10px;">وفر الآن على كل طلباتك من <strong>نون مصر</strong> 🛍️</p>
+      <div style="font-size: 20px; background: #fff; color: #d84315; display: inline-block; padding: 8px 20px; border-radius: 10px; font-weight: bold; letter-spacing: 1px;">
+        استخدم الكود: RZ1421
+      </div>
+            </div>
+
+            <h1 id="page-title">جاري إعادة التوجيه...</h1>
+            
+            <div class="url-display">
+                <p>سيتم توجيهك إلى:</p>
+                <p id="target-url"></p>
+            </div>
+            
+            <div class="countdown">
+                سيتم التوجيه تلقائياً خلال: <span id="countdown">10</span> ثانية
+            </div>
+            
+            <button class="redirect-btn" onclick="redirectNow()">اضغط هنا للانتقال الآن</button>
+            
+            <div class="ad">
+               <div style="background: linear-gradient(135deg, #ffc107, #ff9800); padding: 15px; border-radius: 12px; text-align: center; font-family: 'Cairo', sans-serif; color: #fff; box-shadow: 0 3px 10px rgba(0,0,0,0.2);">
+      <h2 style="font-size: 22px; margin-bottom: 8px;">🎉 خصومات نون الرهيبة وصلت!</h2>
+      <p style="font-size: 16px; margin: 0 0 10px;">وفر الآن على كل طلباتك من <strong>نون مصر</strong> 🛍️</p>
+      <div style="font-size: 20px; background: #fff; color: #d84315; display: inline-block; padding: 8px 20px; border-radius: 10px; font-weight: bold; letter-spacing: 1px;">
+        استخدم الكود: RZ1421
+      </div>
+            </div>
         </div>
 
-        <h1 id="page-title">جاري إعادة التوجيه...</h1>
-        
-        <div class="url-display">
-            <p>سيتم توجيهك إلى:</p>
-            <p id="target-url"></p>
-        </div>
-        
-        <div class="countdown">
-            سيتم التوجيه تلقائياً خلال: <span id="countdown">10</span> ثانية
-        </div>
-        
-        <button class="redirect-btn" onclick="redirectNow()">اضغط هنا للانتقال الآن</button>
-        
-        <div class="ad">
-           <div style="background: linear-gradient(135deg, #ffc107, #ff9800); padding: 20px; border-radius: 15px; text-align: center; font-family: 'Cairo', sans-serif; color: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-  <h2 style="font-size: 28px; margin-bottom: 10px;">🎉 خصومات نون الرهيبة وصلت!</h2>
-  <p style="font-size: 20px; margin: 0 0 15px;">وفر الآن على كل طلباتك من <strong>نون مصر</strong> 🛍️</p>
-  <div style="font-size: 24px; background: #fff; color: #d84315; display: inline-block; padding: 10px 25px; border-radius: 12px; font-weight: bold; letter-spacing: 1px;">
-    استخدم الكود: RZ1421
-  </div>
+        <!-- عداد الزوار في أسفل الصفحة -->
+        <div class="counter-box">
+            <h2>عدد الزوار الفريدون</h2>
+            <div class="counter-number" id="visitorCount"></div>
+            <p>شكراً لزيارتكم</p>
         </div>
     </div>
 
     <script>
+        // إنشاء عداد جديد
+        const counter = new VisitorCounter();
+        
+        // زيادة العداد عند كل زيارة
+        counter.increment();
+        
+        // عرض العداد
+        document.getElementById('visitorCount').textContent = counter.getCount().toLocaleString();
+
         // استخراج الرابط الهدف من معلمة url
         function getTargetUrl() {
             const params = new URLSearchParams(window.location.search);
@@ -161,4 +297,4 @@
         window.onload = startCountdown;
     </script>
 </body>
-</html>
+        </html>
