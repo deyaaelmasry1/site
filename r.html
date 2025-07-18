@@ -90,36 +90,6 @@
             font-size: 22px;
             margin: 10px 0;
         }
-
-        /* New Counter Styles */
-        .counter-container {
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            max-width: 300px;
-            margin: 20px auto;
-            padding: 25px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .counter-value {
-            font-size: 42px;
-            font-weight: 700;
-            color: #2c3e50;
-            margin: 15px 0;
-            transition: all 0.3s ease;
-        }
-        .counter-label {
-            color: #7f8c8d;
-            font-size: 16px;
-            letter-spacing: 1px;
-        }
-        .error-state {
-            color: #e74c3c;
-        }
-        .loading {
-            opacity: 0.6;
-        }
         
         @media (min-width: 768px) {
             .container {
@@ -172,11 +142,9 @@
             </div>
         </div>
 
-        <!-- New Counter -->
-        <div class="counter-container">
-            <div class="counter-label">TOTAL PAGE VIEWS</div>
-            <div class="counter-value" id="viewCounter">0</div>
-        </div>
+        <!-- العداد الجديد -->
+        <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=8ff256a8a162379ff10c6f0f4d63c47568960452'></script>
+        <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1367102/t/5"></script>
     </div>
 
     <script>
@@ -242,82 +210,9 @@
                 }
             }, 1000);
         }
-
-        // New Counter Script
-        async function updateViewCounter() {
-            try {
-                // Show loading state
-                counterElement.textContent = '...';
-                counterElement.classList.add('loading');
-                
-                // Get current count
-                const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                    headers: { 'X-Master-Key': API_KEY }
-                });
-                
-                let currentCount = 0;
-                
-                // Process response
-                if (response.ok) {
-                    const data = await response.json();
-                    currentCount = data.record?.count || 0;
-                } else if (response.status === 404) {
-                    // Bin exists but is empty - initialize
-                    currentCount = 0;
-                } else {
-                    throw new Error(`API Error: ${response.status}`);
-                }
-                
-                // Increment count
-                currentCount++;
-                
-                // Update bin
-                const updateResponse = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Master-Key': API_KEY
-                    },
-                    body: JSON.stringify({ 
-                        count: currentCount,
-                        lastUpdated: new Date().toISOString()
-                    })
-                });
-                
-                if (!updateResponse.ok) {
-                    throw new Error('Failed to update counter');
-                }
-                
-                // Display new count with animation
-                counterElement.classList.remove('loading', 'error-state');
-                counterElement.textContent = currentCount.toLocaleString();
-                
-            } catch (error) {
-                console.error('Counter error:', error);
-                counterElement.classList.remove('loading');
-                counterElement.classList.add('error-state');
-                counterElement.textContent = 'Error';
-                
-                // Fallback to local storage
-                const localCount = localStorage.getItem('viewCountFallback') || 0;
-                counterElement.textContent = localCount;
-                localStorage.setItem('viewCountFallback', parseInt(localCount) + 1);
-            }
-        }
-        
-        // Initialize counter
-        const BIN_ID = '687aa0dc2de0201b319ca748';
-        const API_KEY = '$2a$10$YOUR_API_KEY'; // Replace with your actual key
-        const counterElement = document.getElementById('viewCounter');
         
         // بدء العد التنازلي عند تحميل الصفحة
-        window.onload = function() {
-            startCountdown();
-            updateViewCounter();
-        };
-        
-        // Optional: Refresh counter every 5 minutes
-        setInterval(updateViewCounter, 300000);
+        window.onload = startCountdown;
     </script>
 </body>
         </html>
