@@ -11,6 +11,7 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ar_AR">
     <title>كوزو كتب - موقع البحث والتحميل المجاني للكتب الإلكترونية</title>
+    <link rel="canonical" href="https://yourwebsite.com">
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -388,9 +389,56 @@
         let workbook;
         let visitorCount = 0;
 
+        // Function to update meta tags dynamically
+        function updateMetaTags(searchQuery) {
+            // Update meta description
+            document.querySelector('meta[name="description"]').content = 
+                `تحميل كتاب ${searchQuery} مجاناً | بحث عن ${searchQuery} في مكتبة كوزو كتب`;
+            
+            // Update meta keywords
+            document.querySelector('meta[name="keywords"]').content = 
+                `تحميل ${searchQuery}, كتاب ${searchQuery} PDF, ${searchQuery} مجاناً, قراءة ${searchQuery} online`;
+            
+            // Update OpenGraph tags
+            document.querySelector('meta[property="og:title"]').content = 
+                `تحميل كتاب ${searchQuery} - كوزو كتب`;
+            document.querySelector('meta[property="og:description"]').content = 
+                `ابحث وتصفح وتحميل كتاب ${searchQuery} مجاناً من مكتبة كوزو كتب`;
+            
+            // Update canonical URL
+            let link = document.querySelector('link[rel="canonical"]');
+            if (!link) {
+                link = document.createElement('link');
+                link.rel = 'canonical';
+                document.head.appendChild(link);
+            }
+            link.href = window.location.origin + window.location.pathname + '?query=' + encodeURIComponent(searchQuery);
+        }
+
+        // Function to reset meta tags to default
+        function resetMetaTags() {
+            document.querySelector('meta[name="description"]').content = 
+                "موقع كوزو كتب للبحث عن الكتب الإلكترونية وتحميلها مجانًا. ابحث عن آلاف الكتب العربية في مختلف المجالات.";
+            
+            document.querySelector('meta[name="keywords"]').content = 
+                "كتب إلكترونية, تحميل كتب, كتب عربية, قراءة مجانية, كتب PDF, تنزيل كتب";
+            
+            document.querySelector('meta[property="og:title"]').content = 
+                "كوزو كتب - موقع البحث عن الكتب الإلكترونية";
+            
+            document.querySelector('meta[property="og:description"]').content = 
+                "ابحث وتصفح وتحميل آلاف الكتب الإلكترونية العربية مجانًا";
+            
+            document.title = "كوزو كتب - موقع البحث والتحميل المجاني للكتب الإلكترونية";
+            
+            const link = document.querySelector('link[rel="canonical"]');
+            if (link) {
+                link.href = window.location.origin + window.location.pathname;
+            }
+        }
+
         // Function to update visitor count
         function updateVisitorCount() {
-            // Simulate increasing visitor count (in a real app, you'd use the actual counter)
             visitorCount = Math.floor(Math.random() * 100) + 50;
             document.getElementById('visitorCount').textContent = visitorCount;
         }
@@ -424,7 +472,10 @@
 
                             // Update page title and heading
                             document.title = `${query} - تحميل كتاب | كوزو كتب`;
-                            document.querySelector('.logo').textContent = `تحميل كتاب: ${query}`;
+                            document.querySelector('.logo').innerHTML = `
+                                <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="كوزو كتب">
+                                نتائج البحث عن: ${query}
+                            `;
                         }
                     } catch (error) {
                         console.error('خطأ في معالجة ملف Excel:', error);
@@ -453,6 +504,18 @@
             resultDiv.innerHTML = '';
             loadingIndicator.style.display = 'block';
             
+            // Update meta tags for this search
+            updateMetaTags(searchText);
+            
+            // Update page title
+            document.title = `${searchText} - تحميل كتاب | كوزو كتب`;
+            
+            // Update logo text
+            document.querySelector('.logo').innerHTML = `
+                <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="كوزو كتب">
+                نتائج البحث عن: ${searchText}
+            `;
+
             // Simulate delay for better UX (remove in production)
             setTimeout(() => {
                 try {
@@ -524,11 +587,6 @@
             const searchText = document.getElementById('searchInput').value.trim();
             if (searchText) {
                 searchExcel(searchText);
-                document.title = `${searchText} - تحميل كتاب | كوزو كتب`;
-                document.querySelector('.logo').innerHTML = `
-                    <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="كوزو كتب">
-                    نتائج البحث عن: ${searchText}
-                `;
                 
                 // Update URL without reloading the page
                 history.pushState(null, null, `?query=${encodeURIComponent(searchText)}`);
@@ -537,11 +595,39 @@
                 console.log(`User searched for: ${searchText}`);
             } else {
                 showError('يرجى إدخال نص للبحث');
+                resetMetaTags();
             }
         });
 
-        // Load the Excel file and update visitor count when the page loads
+        // Handle back/forward navigation
+        window.addEventListener('popstate', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('query');
+            
+            if (query) {
+                document.getElementById('searchInput').value = query;
+                searchExcel(query);
+            } else {
+                resetMetaTags();
+                document.getElementById('searchInput').value = '';
+                document.getElementById('result').innerHTML = '';
+                document.querySelector('.logo').innerHTML = `
+                    <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="كوزو كتب">
+                    كوزو كتب
+                `;
+            }
+        });
+
+        // Initialize dynamic SEO and load the Excel file when the page loads
         window.onload = function() {
+            // Set initial canonical URL
+            if (!document.querySelector('link[rel="canonical"]')) {
+                const link = document.createElement('link');
+                link.rel = 'canonical';
+                link.href = window.location.href.split('?')[0];
+                document.head.appendChild(link);
+            }
+            
             loadExcel();
             updateVisitorCount();
             
