@@ -53,14 +53,16 @@
   button:hover {
     background-color: #45a049;
   }
+  #message {
+    color: red;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 18px;
+  }
   #result {
     margin-top: 20px;
     text-align: right;
-  }
-  #result p {
     font-size: 18px;
-    margin-bottom: 12px;
-    word-break: break-word;
   }
   #result a {
     color: #1e88e5;
@@ -70,64 +72,31 @@
   #result a:hover {
     text-decoration: underline;
   }
-  /* إعلان رئيسي */
-  .ad-container {
-    background-color: #f8f9fa;
-    border: 1px dashed #6c757d;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-  .top-ad {
-    background: linear-gradient(135deg, #ffc107, #ff9800);
-    padding: 20px;
-    border-radius: 15px;
-    color: #fff;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    font-family: 'Cairo', sans-serif;
-  }
-  .top-ad h2 {
-    font-size: 28px;
-    margin-bottom: 10px;
-  }
-  .top-ad p {
-    font-size: 20px;
-    margin: 0 0 15px;
-  }
-  .top-ad .code-box {
-    font-size: 24px;
-    background: #fff;
-    color: #d84315;
+  #backToSearch {
     display: inline-block;
-    padding: 10px 25px;
-    border-radius: 12px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #1976d2;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
     font-weight: bold;
-    letter-spacing: 1px;
   }
-  .top-ad small {
-    margin-top: 15px;
-    display: block;
-    font-size: 16px;
+  #backToSearch:hover {
+    background-color: #115293;
   }
 </style>
 </head>
 <body>
   <div class="container">
-    <div class="ad-container top-ad">
-      <h2>🎉 خصومات نون الرهيبة وصلت!</h2>
-      <p>وفر الآن على كل طلباتك من <strong>نون مصر</strong> 🛍️</p>
-      <div class="code-box">استخدم الكود: RZ1421</div>
-      <small>ادخل الكود عند الدفع واستمتع بالتخفيض فورًا ✅</small>
-    </div>
-
-    <h1>كوزو كتب</h1>
+    <h1 id="pageTitle">كوزو كتب</h1>
 
     <form id="searchForm">
       <input type="text" id="searchInput" name="query" placeholder="أدخل نص البحث" autocomplete="off" />
       <button type="submit">بحث</button>
     </form>
 
+    <div id="message"></div>
     <div id="result"></div>
   </div>
 
@@ -157,94 +126,103 @@
     });
   }
 
-  function searchExcel(searchText) {
-    const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = '';
+  // ابحث عن أول كتاب مطابق وأرجع كائن يحتوي على التفاصيل
+  async function findBookDetails(searchText) {
+    if (!workbook) return null;
 
-    if (!workbook) {
-      resultDiv.innerHTML = '<p>يرجى التأكد من تحميل ملف Excel بشكل صحيح.</p>';
-      return;
-    }
-
-    if (!searchText) {
-      resultDiv.innerHTML = '<p>الرجاء إدخال نص للبحث.</p>';
-      return;
-    }
-
-    let foundCount = 0;
-    workbook.SheetNames.forEach(sheetName => {
-      if (foundCount > 50) return;
+    for (const sheetName of workbook.SheetNames) {
       const sheet = workbook.Sheets[sheetName];
       const range = XLSX.utils.decode_range(sheet['!ref']);
 
       for (let R = range.s.r; R <= range.e.r; ++R) {
-        if (foundCount > 50) break;
         for (let C = range.s.c; C <= range.e.c; ++C) {
           const cellAddress = { c: C, r: R };
           const cellRef = XLSX.utils.encode_cell(cellAddress);
           const cell = sheet[cellRef];
 
           if (cell && cell.v && cell.v.toString().includes(searchText)) {
+            // لنفترض هنا أن:
+            // عنوان الكتاب في الخلية الحالية (cell.v)
+            // الرابط في الخلية التالية في نفس الصف (C+1)
+            // يمكنك تعديل هذا حسب ملف Excel لديك
+
             const title = cell.v.toString();
-            foundCount++;
-            resultDiv.innerHTML += `
-              <p>
-                <a href="book.html?title=${encodeURIComponent(title)}">${title}</a>
-              </p>
-            `;
-            break; // لمنع تكرار نفس الكتاب في الصف الواحد
+            const linkCellRef = XLSX.utils.encode_cell({c: C + 1, r: R});
+            const linkCell = sheet[linkCellRef];
+            const link = linkCell && linkCell.v ? linkCell.v.toString() : 'لا يوجد رابط';
+
+            return { title, link };
           }
         }
       }
-    });
+    }
+    return null;
+  }
 
-    if (foundCount === 0) {
-      resultDiv.innerHTML = `<p>لم يتم العثور على نتائج تطابق "${searchText}".</p>`;
+  function showBookDetails(book) {
+    document.getElementById('message').textContent = '';
+    document.getElementById('searchForm').style.display = 'none';
+    document.getElementById('pageTitle').textContent = book.title;
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = `
+      <p>تحميل الكتاب: <strong>${book.title}</strong></p>
+      <p>اضغط على الرابط للقراءة وتحميل الكتاب:</p>
+      <p><a href="${book.link}" target="_blank" rel="noopener">${book.link}</a></p>
+      <div id="backToSearch">بحث جديد</div>
+    `;
+
+    document.title = `تحميل كتاب ${book.title}`;
+
+    document.getElementById('backToSearch').addEventListener('click', () => {
+      resetToSearch();
+    });
+  }
+
+  function resetToSearch() {
+    document.getElementById('message').textContent = '';
+    document.getElementById('result').innerHTML = '';
+    document.getElementById('searchForm').style.display = 'flex';
+    document.getElementById('pageTitle').textContent = 'كوزو كتب';
+    document.getElementById('searchInput').value = '';
+    document.title = 'كوزو كتب';
+
+    // إزالة query من الرابط URL
+    history.replaceState(null, '', window.location.pathname);
+  }
+
+  async function searchAndShow(searchText) {
+    try {
+      if (!workbook) await loadExcel();
+
+      const book = await findBookDetails(searchText);
+      if (book) {
+        showBookDetails(book);
+        // تحديث الرابط بالباراميتر query
+        history.replaceState(null, '', `?query=${encodeURIComponent(searchText)}`);
+      } else {
+        document.getElementById('message').textContent = `لم يتم العثور على كتاب مطابق لـ "${searchText}".`;
+      }
+    } catch (err) {
+      document.getElementById('message').textContent = `حدث خطأ: ${err}`;
     }
   }
 
-  function updateURL(searchText) {
-    history.replaceState(null, '', `?query=${encodeURIComponent(searchText)}`);
-  }
-
-  function onSearch(searchText) {
-    searchExcel(searchText);
-    document.title = `تحميل كتاب ${searchText}`;
-    updateURL(searchText);
-  }
-
-  document.getElementById('searchForm').addEventListener('submit', function(e) {
+  document.getElementById('searchForm').addEventListener('submit', e => {
     e.preventDefault();
     const searchText = document.getElementById('searchInput').value.trim();
     if (searchText) {
-      onSearch(searchText);
-    }
-  });
-
-  window.addEventListener('popstate', () => {
-    const params = new URLSearchParams(window.location.search);
-    const query = params.get('query');
-    if (query) {
-      document.getElementById('searchInput').value = query;
-      onSearch(query);
-    } else {
-      document.getElementById('searchInput').value = '';
-      document.getElementById('result').innerHTML = '';
-      document.title = 'كوزو كتب';
+      searchAndShow(searchText);
     }
   });
 
   window.onload = () => {
-    loadExcel().then(() => {
-      const params = new URLSearchParams(window.location.search);
-      const query = params.get('query');
-      if (query) {
-        document.getElementById('searchInput').value = query;
-        onSearch(query);
-      }
-    }).catch(err => {
-      document.getElementById('result').innerHTML = `<p>خطأ: ${err}</p>`;
-    });
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get('query');
+    if (query) {
+      document.getElementById('searchInput').value = query;
+      searchAndShow(query);
+    }
   };
 </script>
 </body>
