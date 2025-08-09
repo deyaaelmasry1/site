@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>كوزو كتب</title>
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" type="image/svg+xml">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" type="image/svg+xml" />
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
     <style>
         body {
@@ -12,36 +12,33 @@
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            display: block;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             direction: rtl;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
-
         .container {
             max-width: 800px;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             padding: 20px;
-            text-align: center;
-            margin: 20px auto;
+            margin: 20px;
+            text-align: right;
+            width: 100%;
         }
-
         h1 {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 20px;
             color: #333;
+            text-align: center;
         }
-
         form {
             display: flex;
             justify-content: center;
-            align-items: center;
             margin-bottom: 20px;
         }
-
         #searchInput {
             flex: 1;
             padding: 10px;
@@ -50,7 +47,6 @@
             font-size: 16px;
             text-align: right;
         }
-
         button {
             padding: 10px 20px;
             background-color: #4CAF50;
@@ -60,163 +56,110 @@
             cursor: pointer;
             font-size: 16px;
             margin-right: 10px;
+            transition: background-color 0.3s ease;
         }
-
         button:hover {
             background-color: #45a049;
         }
-
-        #result {
-            margin-top: 20px;
-            text-align: right;
+        #message {
+            color: red;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 18px;
         }
-
-        #result p {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-
-        #result a {
-            color: #1e88e5;
-            text-decoration: none;
-            overflow: hidden;
-            display: inline-block;
-            max-width: 100%;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-
-        #result a:hover {
-            text-decoration: underline;
-        }
-
-        /* أنماط الإعلانات المتبقية */
+        /* إعلان رئيسي */
         .ad-container {
             background-color: #f8f9fa;
             border: 1px dashed #6c757d;
             border-radius: 8px;
             padding: 15px;
-            margin: 20px 0;
+            margin-bottom: 30px;
             text-align: center;
         }
-
-        .ad-title {
-            color: #495057;
-            font-weight: bold;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        .ad-content {
-            color: #6c757d;
-            font-size: 14px;
-        }
-
-        .ad-link {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 15px;
-            background-color: #4361ee;
-            color: white;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .ad-link:hover {
-            background-color: #3a56d0;
-        }
-
         .top-ad {
-            margin-bottom: 30px;
-            background-color: #e9ecef;
+            background: linear-gradient(135deg, #ffc107, #ff9800);
+            padding: 20px;
+            border-radius: 15px;
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-family: 'Cairo', sans-serif;
+        }
+        .top-ad h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .top-ad p {
+            font-size: 20px;
+            margin: 0 0 15px;
+        }
+        .top-ad .code-box {
+            font-size: 24px;
+            background: #fff;
+            color: #d84315;
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .top-ad small {
+            margin-top: 15px;
+            display: block;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- إعلان رئيسي في أعلى الصفحة فقط -->
         <div class="ad-container top-ad">
-          <div style="background: linear-gradient(135deg, #ffc107, #ff9800); padding: 20px; border-radius: 15px; text-align: center; font-family: 'Cairo', sans-serif; color: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-  <h2 style="font-size: 28px; margin-bottom: 10px;">🎉 خصومات نون الرهيبة وصلت!</h2>
-  <p style="font-size: 20px; margin: 0 0 15px;">وفر الآن على كل طلباتك من <strong>نون مصر</strong> 🛍️</p>
-  <div style="font-size: 24px; background: #fff; color: #d84315; display: inline-block; padding: 10px 25px; border-radius: 12px; font-weight: bold; letter-spacing: 1px;">
-    استخدم الكود: RZ1421
-  </div>
-  <p style="margin-top: 15px; font-size: 16px;">ادخل الكود عند الدفع واستمتع بالتخفيض فورًا ✅</p>
-</div>
+            <h2>🎉 خصومات نون الرهيبة وصلت!</h2>
+            <p>وفر الآن على كل طلباتك من <strong>نون مصر</strong> 🛍️</p>
+            <div class="code-box">استخدم الكود: RZ1421</div>
+            <small>ادخل الكود عند الدفع واستمتع بالتخفيض فورًا ✅</small>
         </div>
 
-        <h1 id="pageTitle">كوزو كتب</h1>
+        <h1>كوزو كتب</h1>
+
         <form id="searchForm">
-            <input type="text" id="searchInput" name="query" placeholder="أدخل نص البحث">
+            <input type="text" id="searchInput" name="query" placeholder="أدخل نص البحث" autocomplete="off" />
             <button type="submit">بحث</button>
         </form>
 
-        <div id="result"></div>
+        <div id="message"></div>
     </div>
-
-    <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=8ff256a8a162379ff10c6f0f4d63c47568960452'></script>
-<script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1367102/t/5"></script>
 
     <script>
         let workbook;
 
-        // Load the Excel file from the repository's relative path
         function loadExcel() {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', './kutub.xlsx', true);
-            xhr.responseType = 'arraybuffer';
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', './kutub.xlsx', true);
+                xhr.responseType = 'arraybuffer';
 
-            xhr.onload = function (event) {
-                if (xhr.status === 200) {
-                    console.log("File loaded successfully");
-                    try {
-                        const data = new Uint8Array(xhr.response);
-                        workbook = XLSX.read(data, { type: 'array' });
-                        console.log("Workbook parsed:", workbook);
-
-                        // Check for search query in the URL
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const query = urlParams.get('query');
-                        if (query) {
-                            document.getElementById('searchInput').value = query;
-                            searchExcel(query);
-
-                            // Update page title and heading
-                            document.title = `تحميل كتاب ${query}`;
-                            document.getElementById('pageTitle').textContent = query;
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        try {
+                            const data = new Uint8Array(xhr.response);
+                            workbook = XLSX.read(data, { type: 'array' });
+                            resolve(workbook);
+                        } catch (e) {
+                            reject('خطأ في معالجة ملف Excel');
                         }
-                    } catch (error) {
-                        console.error('خطأ في معالجة ملف Excel:', error);
-                        alert('حدث خطأ أثناء قراءة ملف Excel. يرجى التحقق من صحة الملف.');
+                    } else {
+                        reject('تعذر تحميل ملف Excel');
                     }
-                } else {
-                    console.error('فشل تحميل ملف Excel. تأكد من صحة الرابط.');
-                    alert('تعذر تحميل ملف Excel من الرابط. يرجى التحقق من توفر الملف وصحة الرابط.');
-                }
-            };
+                };
 
-            xhr.onerror = function () {
-                console.error('خطأ في الاتصال بخادم ملف Excel.');
-                alert('حدث خطأ أثناء محاولة الاتصال بالخادم. يرجى المحاولة لاحقًا.');
-            };
-
-            xhr.send();
+                xhr.onerror = () => reject('خطأ في الاتصال بخادم Excel');
+                xhr.send();
+            });
         }
 
-        // Search for matching text in the Excel file
-        function searchExcel(searchText) {
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = '';
+        async function findFirstMatch(searchText) {
+            if (!workbook) return null;
 
-            if (!workbook) {
-                resultDiv.innerHTML = '<p>يرجى التأكد من تحميل ملف Excel بشكل صحيح.</p>';
-                return;
-            }
-
-            workbook.SheetNames.forEach(sheetName => {
+            for (const sheetName of workbook.SheetNames) {
                 const sheet = workbook.Sheets[sheetName];
                 const range = XLSX.utils.decode_range(sheet['!ref']);
 
@@ -227,36 +170,38 @@
                         const cell = sheet[cellRef];
 
                         if (cell && cell.v && cell.v.toString().includes(searchText)) {
-                            const hyperlink = cell.l ? cell.l.Target : 'لا يوجد رابط';
-                            resultDiv.innerHTML += `
-                                <p>
-                                    تحميل الكتاب: ${cell.v}<br>
-                                    اضغط على الرابط للقراءة وتحميل الكتاب:<br>
-                                    <a href="http://blogs.giize.com/?file=${hyperlink}" target="_blank">${hyperlink}</a>
-                                </p>
-                            `;
+                            return cell.v.toString();
                         }
                     }
                 }
-            });
+            }
+            return null;
         }
 
-        // Handle form submission
-        document.getElementById('searchForm').addEventListener('submit', function(e) {
+        document.getElementById('searchForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            document.getElementById('message').textContent = '';
             const searchText = document.getElementById('searchInput').value.trim();
-            if (searchText) {
-                searchExcel(searchText);
-                document.title = `تحميل كتاب ${searchText}`;
-                document.getElementById('pageTitle').textContent = searchText;
-                
-                // Update URL without reloading the page
-                history.pushState(null, null, `?query=${encodeURIComponent(searchText)}`);
+
+            if (!searchText) {
+                document.getElementById('message').textContent = 'يرجى إدخال نص للبحث.';
+                return;
+            }
+
+            try {
+                if (!workbook) await loadExcel();
+
+                const match = await findFirstMatch(searchText);
+                if (match) {
+                    // تحويل المستخدم مباشرة لصفحة تفاصيل الكتاب
+                    window.location.href = `book.html?title=${encodeURIComponent(match)}`;
+                } else {
+                    document.getElementById('message').textContent = `لم يتم العثور على كتاب مطابق لـ "${searchText}".`;
+                }
+            } catch (error) {
+                document.getElementById('message').textContent = `حدث خطأ: ${error}`;
             }
         });
-
-        // Load the Excel file when the page loads
-        window.onload = loadExcel;
     </script>
 </body>
 </html>
