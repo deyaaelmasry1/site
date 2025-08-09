@@ -150,11 +150,45 @@
         box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
 
-    .book-title {
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: #1a237e; /* تحسين تباين عنوان الكتاب */
-        margin-bottom: 10px;
+    /* تحسين عناوين الكتب والعناوين الأخرى */
+    .book-title, 
+    .ad-title,
+    .popular-title {
+        word-wrap: break-word;    /* كسر الكلمات الطويلة */
+        overflow-wrap: break-word; /* كسر الكلمات عند الضرورة */
+        hyphens: auto;           /* إضافة شرطة عند كسر الكلمات */
+        white-space: normal;     /* السماح بعمل سطور جديدة */
+        display: block;          /* التأكد من أن العنوان يأخذ مساحته */
+        width: 100%;            /* ملء المساحة المتاحة */
+        margin-bottom: 10px;    /* مسافة مناسبة */
+    }
+
+    /* تحسين خاص للعناوين الطويلة في نتائج البحث */
+    .book-result .book-title {
+        font-size: clamp(1.1rem, 3vw, 1.3rem); /* حجم خط متجاوب */
+        line-height: 1.4;       /* تباعد أسطر أفضل */
+        padding-right: 0;       /* إزالة أي حواف غير ضرورية */
+    }
+
+    /* التأكد من أن الحاويات تتصرف بشكل صحيح */
+    .book-result,
+    .ad-container,
+    .popular-searches {
+        overflow: hidden;       /* منع أي محتوى من الخروج */
+        word-break: break-word; /* كسر الكلمات الطويلة */
+    }
+
+    /* تحسينات خاصة للجوال */
+    @media (max-width: 768px) {
+        .book-title, 
+        .ad-title {
+            font-size: 1.2rem;  /* حجم خط أكبر قليلاً للجوال */
+            line-height: 1.5;   /* تباعد أسوق أكثر وضوحاً */
+        }
+        
+        .ad-container .ad-title {
+            font-size: 1.3rem;  /* عناوين الإعلانات أكبر قليلاً */
+        }
     }
 
     .book-link {
