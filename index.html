@@ -249,7 +249,44 @@
         background-color: rgba(255,255,255,0.9);
         transform: scale(1.05);
     }
+/* إعلان سفلي - تحسين التباين */
+    .ad-container:not(.top-ad) {
+        background-color: #f5f5f5;  /* خلفية أغمق قليلاً من الأبيض النقي */
+        border: 1px solid #e0e0e0; /* حد أكثر وضوحاً */
+        border-radius: var(--border-radius);
+        padding: 20px;            /* زيادة المساحة الداخلية */
+        margin: 30px 0;
+        text-align: center;
+    }
 
+    .ad-container:not(.top-ad) .ad-title {
+        color: #1a237e;           /* لون أزرق داكن للعنوان */
+        font-weight: 700;         /* سمك خط أكبر */
+        margin-bottom: 15px;      /* مساحة أكبر تحت العنوان */
+        font-size: 1.4rem;        /* حجم خط أكبر قليلاً */
+    }
+
+    .ad-container:not(.top-ad) .ad-content {
+        color: #424242;           /* لون رمادي داكن للنص */
+        font-size: 1.1rem;
+        margin-bottom: 20px;      /* مساحة أكبر فوق الزر */
+        line-height: 1.7;         /* تباعد أسطر أفضل */
+    }
+
+    .ad-container:not(.top-ad) .ad-link {
+        background-color: #3f51b5; /* لون أزرق غامق */
+        color: white !important;  /* نص أبيض */
+        padding: 12px 25px;       /* حجم أكبر للزر */
+        border: 2px solid #303f9f; /* حد أغمق للزر */
+        font-size: 1rem;
+        font-weight: 600;         /* سمك خط متوسط */
+    }
+
+    .ad-container:not(.top-ad) .ad-link:hover {
+        background-color: #303f9f; /* لون أغمق عند التمرير */
+        transform: translateY(-2px); /* تأثير حركي بسيط */
+        box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* إضافة ظل */
+    }
     /* Popular searches - تحسين تباين عمليات البحث الشائعة */
     .popular-searches {
         margin: 30px 0;
