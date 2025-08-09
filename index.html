@@ -1,23 +1,554 @@
-<div class="container">
-    <!-- Keep your existing ad container -->
-    
-    <h1>كوزو كتب</h1>
-    
-    <form id="searchForm">
-        <div style="display: flex; gap: 10px; width: 100%;">
-            <input type="text" id="searchInput" name="query" placeholder="أدخل نص البحث" autocomplete="off" />
-            <button type="submit">بحث</button>
-            <button type="button" id="clearBtn" class="clear-btn">مسح</button>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="موقع كوزو كتب للبحث عن الكتب الإلكترونية وتحميلها مجانًا. ابحث عن آلاف الكتب العربية في مختلف المجالات.">
+    <meta name="keywords" content="كتب إلكترونية, تحميل كتب, كتب عربية, قراءة مجانية, كتب PDF, تنزيل كتب">
+    <meta name="author" content="كوزو كتب">
+    <meta property="og:title" content="كوزو كتب - موقع البحث عن الكتب الإلكترونية">
+    <meta property="og:description" content="ابحث وتصفح وتحميل آلاف الكتب الإلكترونية العربية مجانًا">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_AR">
+    <title>كوزو كتب - موقع البحث والتحميل المجاني للكتب الإلكترونية</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a56d0;
+            --accent-color: #4cc9f0;
+            --text-color: #333;
+            --light-text: #6c757d;
+            --bg-color: #f8f9fa;
+            --card-bg: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            direction: rtl;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .tagline {
+            color: var(--light-text);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .search-section {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        #searchInput {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-family: 'Tajawal', sans-serif;
+            transition: var(--transition);
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        button {
+            padding: 15px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: 'Tajawal', sans-serif;
+            transition: var(--transition);
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        #result {
+            margin-top: 30px;
+        }
+
+        .book-result {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .book-result:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .book-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .book-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .book-link:hover {
+            background-color: #3aa8d8;
+            text-decoration: none;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: var(--light-text);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary-color);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Ad styles */
+        .ad-container {
+            background-color: #f8f9fa;
+            border: 1px dashed #6c757d;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .top-ad {
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffc107, #ff9800);
+            color: white;
+            border: none;
+            padding: 25px;
+        }
+
+        .ad-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .ad-content {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .ad-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: white;
+            color: #ff9800;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .ad-link:hover {
+            background-color: rgba(255,255,255,0.9);
+            transform: scale(1.05);
+        }
+
+        /* Popular searches */
+        .popular-searches {
+            margin: 30px 0;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .popular-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            padding: 8px 15px;
+            background-color: #e9ecef;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .search-form {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Ad -->
+        <div class="ad-container top-ad">
+            <div class="ad-title">🎉 خصومات نون الرهيبة وصلت!</div>
+            <div class="ad-content">وفر الآن على كل طلباتك من <strong>نون مصر</strong> 🛍️</div>
+            <div style="font-size: 1.5rem; background: #fff; color: #d84315; display: inline-block; padding: 10px 25px; border-radius: 12px; font-weight: bold; margin: 10px 0;">
+                استخدم الكود: RZ1421
+            </div>
+            <p style="margin-top: 10px;">ادخل الكود عند الدفع واستمتع بالتخفيض فورًا ✅</p>
+            <a href="https://www.non.sa" class="ad-link" target="_blank">تسوق الآن</a>
         </div>
-    </form>
-    
-    <div class="loading">
-        <div class="loading-spinner"></div>
-        <p>جاري البحث...</p>
+
+        <!-- Header -->
+        <header>
+            <h1 class="logo">
+                <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="كوزو كتب">
+                كوزو كتب
+            </h1>
+            <p class="tagline">ابحث وتصفح وتحميل آلاف الكتب الإلكترونية العربية مجانًا</p>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <form id="searchForm" class="search-form">
+                <input type="text" id="searchInput" name="query" placeholder="أدخل اسم الكتاب أو المؤلف..." aria-label="بحث عن الكتب">
+                <button type="submit" id="searchButton">بحث</button>
+            </form>
+        </section>
+
+        <!-- Popular Searches -->
+        <section class="popular-searches">
+            <h2 class="popular-title">أكثر الكتب بحثًا:</h2>
+            <div class="tags">
+                <div class="tag" onclick="searchTag('روايات')">روايات</div>
+                <div class="tag" onclick="searchTag('تطوير الذات')">تطوير الذات</div>
+                <div class="tag" onclick="searchTag('تاريخ')">تاريخ</div>
+                <div class="tag" onclick="searchTag('أدب')">أدب</div>
+                <div class="tag" onclick="searchTag('علوم')">علوم</div>
+                <div class="tag" onclick="searchTag('فلسفة')">فلسفة</div>
+                <div class="tag" onclick="searchTag('شعر')">شعر</div>
+                <div class="tag" onclick="searchTag('سير ذاتية')">سير ذاتية</div>
+            </div>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div class="loading" id="loadingIndicator">
+            <div class="spinner"></div>
+            <p>جاري البحث عن الكتب...</p>
+        </div>
+
+        <!-- Results Section -->
+        <section id="result"></section>
+
+        <!-- Bottom Ad -->
+        <div class="ad-container">
+            <div class="ad-title">📚 اكتشف أحدث الإصدارات</div>
+            <div class="ad-content">تصفح أحدث الكتب المضافة إلى مكتبتنا هذا الأسبوع</div>
+            <a href="#" class="ad-link">عرض الكتب الجديدة</a>
+        </div>
     </div>
-    
-    <div id="message"></div>
-    
-    <!-- Add this for potential multiple results -->
-    <div id="searchResults" class="search-results" style="display: none;"></div>
-</div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2023 كوزو كتب - جميع الحقوق محفوظة</p>
+        <p>المتصفحون الآن: <span id="visitorCount">0</span></p>
+    </footer>
+
+    <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=8ff256a8a162379ff10c6f0f4d63c47568960452'></script>
+    <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1367102/t/5"></script>
+
+    <script>
+        let workbook;
+        let visitorCount = 0;
+
+        // Function to update visitor count
+        function updateVisitorCount() {
+            // Simulate increasing visitor count (in a real app, you'd use the actual counter)
+            visitorCount = Math.floor(Math.random() * 100) + 50;
+            document.getElementById('visitorCount').textContent = visitorCount;
+        }
+
+        // Function to search when clicking on popular tags
+        function searchTag(tag) {
+            document.getElementById('searchInput').value = tag;
+            document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+        }
+
+        // Load the Excel file from the repository's relative path
+        function loadExcel() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', './kutub.xlsx', true);
+            xhr.responseType = 'arraybuffer';
+
+            xhr.onload = function (event) {
+                if (xhr.status === 200) {
+                    console.log("File loaded successfully");
+                    try {
+                        const data = new Uint8Array(xhr.response);
+                        workbook = XLSX.read(data, { type: 'array' });
+                        console.log("Workbook parsed:", workbook);
+
+                        // Check for search query in the URL
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const query = urlParams.get('query');
+                        if (query) {
+                            document.getElementById('searchInput').value = query;
+                            searchExcel(query);
+
+                            // Update page title and heading
+                            document.title = `${query} - تحميل كتاب | كوزو كتب`;
+                            document.querySelector('.logo').textContent = `نتائج البحث عن: ${query}`;
+                        }
+                    } catch (error) {
+                        console.error('خطأ في معالجة ملف Excel:', error);
+                        showError('حدث خطأ أثناء قراءة ملف الكتب. يرجى المحاولة لاحقًا.');
+                    }
+                } else {
+                    console.error('فشل تحميل ملف Excel. تأكد من صحة الرابط.');
+                    showError('تعذر تحميل قاعدة بيانات الكتب. يرجى التحقق من اتصال الإنترنت والمحاولة لاحقًا.');
+                }
+            };
+
+            xhr.onerror = function () {
+                console.error('خطأ في الاتصال بخادم ملف Excel.');
+                showError('حدث خطأ في الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت.');
+            };
+
+            xhr.send();
+        }
+
+        // Search for matching text in the Excel file
+        function searchExcel(searchText) {
+            const resultDiv = document.getElementById('result');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            
+            // Show loading indicator
+            resultDiv.innerHTML = '';
+            loadingIndicator.style.display = 'block';
+            
+            // Simulate delay for better UX (remove in production)
+            setTimeout(() => {
+                try {
+                    if (!workbook) {
+                        showError('لم يتم تحميل قاعدة بيانات الكتب بعد. يرجى المحاولة لاحقًا.');
+                        loadingIndicator.style.display = 'none';
+                        return;
+                    }
+
+                    let foundResults = false;
+                    resultDiv.innerHTML = '';
+
+                    workbook.SheetNames.forEach(sheetName => {
+                        const sheet = workbook.Sheets[sheetName];
+                        const range = XLSX.utils.decode_range(sheet['!ref']);
+
+                        for (let R = range.s.r; R <= range.e.r; ++R) {
+                            for (let C = range.s.c; C <= range.e.c; ++C) {
+                                const cellAddress = { c: C, r: R };
+                                const cellRef = XLSX.utils.encode_cell(cellAddress);
+                                const cell = sheet[cellRef];
+
+                                if (cell && cell.v && cell.v.toString().includes(searchText)) {
+                                    foundResults = true;
+                                    const hyperlink = cell.l ? cell.l.Target : 'لا يوجد رابط';
+                                    const bookHTML = `
+                                        <div class="book-result">
+                                            <h3 class="book-title">${cell.v}</h3>
+                                            <p>اضغط على الرابط أدناه لقراءة وتحميل الكتاب:</p>
+                                            <a href="http://blogs.giize.com/?file=${hyperlink}" class="book-link" target="_blank">تحميل الكتاب</a>
+                                        </div>
+                                    `;
+                                    resultDiv.innerHTML += bookHTML;
+                                }
+                            }
+                        }
+                    });
+
+                    if (!foundResults) {
+                        resultDiv.innerHTML = `
+                            <div class="no-results">
+                                <p>⚠️ لم يتم العثور على نتائج لـ "${searchText}"</p>
+                                <p>حاول استخدام كلمات بحث أخرى أو تصفح الكتب الشائعة أعلاه.</p>
+                            </div>
+                        `;
+                    }
+                } catch (error) {
+                    console.error('Error during search:', error);
+                    showError('حدث خطأ غير متوقع أثناء البحث. يرجى المحاولة مرة أخرى.');
+                } finally {
+                    loadingIndicator.style.display = 'none';
+                }
+            }, 800); // Simulate network delay
+        }
+
+        // Show error message
+        function showError(message) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <div class="no-results">
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+
+        // Handle form submission
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchText = document.getElementById('searchInput').value.trim();
+            if (searchText) {
+                searchExcel(searchText);
+                document.title = `${searchText} - تحميل كتاب | كوزو كتب`;
+                document.querySelector('.logo').innerHTML = `
+                    <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="كوزو كتب">
+                    نتائج البحث عن: ${searchText}
+                `;
+                
+                // Update URL without reloading the page
+                history.pushState(null, null, `?query=${encodeURIComponent(searchText)}`);
+                
+                // Track search in analytics (simulated)
+                console.log(`User searched for: ${searchText}`);
+            } else {
+                showError('يرجى إدخال نص للبحث');
+            }
+        });
+
+        // Load the Excel file and update visitor count when the page loads
+        window.onload = function() {
+            loadExcel();
+            updateVisitorCount();
+            
+            // Update count every minute (simulated)
+            setInterval(updateVisitorCount, 60000);
+        };
+    </script>
+</body>
+</html>
