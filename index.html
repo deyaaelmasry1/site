@@ -1,207 +1,251 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>كوزو كتب</title>
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" type="image/svg+xml" />
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            direction: rtl;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-        .container {
-            max-width: 800px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            padding: 20px;
-            margin: 20px;
-            text-align: right;
-            width: 100%;
-        }
-        h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #333;
-            text-align: center;
-        }
-        form {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        #searchInput {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            text-align: right;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-right: 10px;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        #message {
-            color: red;
-            text-align: center;
-            margin-top: 15px;
-            font-size: 18px;
-        }
-        /* إعلان رئيسي */
-        .ad-container {
-            background-color: #f8f9fa;
-            border: 1px dashed #6c757d;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        .top-ad {
-            background: linear-gradient(135deg, #ffc107, #ff9800);
-            padding: 20px;
-            border-radius: 15px;
-            color: #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            font-family: 'Cairo', sans-serif;
-        }
-        .top-ad h2 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .top-ad p {
-            font-size: 20px;
-            margin: 0 0 15px;
-        }
-        .top-ad .code-box {
-            font-size: 24px;
-            background: #fff;
-            color: #d84315;
-            display: inline-block;
-            padding: 10px 25px;
-            border-radius: 12px;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-        .top-ad small {
-            margin-top: 15px;
-            display: block;
-            font-size: 16px;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>كوزو كتب</title>
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" type="image/svg+xml" />
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0; padding: 0;
+    direction: rtl;
+    min-height: 100vh;
+    display: flex; justify-content: center; align-items: flex-start;
+  }
+  .container {
+    max-width: 800px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin: 20px;
+    text-align: right;
+    width: 100%;
+  }
+  h1 {
+    font-size: 28px; margin-bottom: 20px; color: #333; text-align: center;
+  }
+  form {
+    display: flex; justify-content: center; margin-bottom: 20px;
+  }
+  #searchInput {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: right;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  #result {
+    margin-top: 20px;
+    text-align: right;
+  }
+  #result p {
+    font-size: 18px;
+    margin-bottom: 12px;
+    word-break: break-word;
+  }
+  #result a {
+    color: #1e88e5;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  #result a:hover {
+    text-decoration: underline;
+  }
+  /* إعلان رئيسي */
+  .ad-container {
+    background-color: #f8f9fa;
+    border: 1px dashed #6c757d;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .top-ad {
+    background: linear-gradient(135deg, #ffc107, #ff9800);
+    padding: 20px;
+    border-radius: 15px;
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    font-family: 'Cairo', sans-serif;
+  }
+  .top-ad h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  .top-ad p {
+    font-size: 20px;
+    margin: 0 0 15px;
+  }
+  .top-ad .code-box {
+    font-size: 24px;
+    background: #fff;
+    color: #d84315;
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  .top-ad small {
+    margin-top: 15px;
+    display: block;
+    font-size: 16px;
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="ad-container top-ad">
-            <h2>🎉 خصومات نون الرهيبة وصلت!</h2>
-            <p>وفر الآن على كل طلباتك من <strong>نون مصر</strong> 🛍️</p>
-            <div class="code-box">استخدم الكود: RZ1421</div>
-            <small>ادخل الكود عند الدفع واستمتع بالتخفيض فورًا ✅</small>
-        </div>
-
-        <h1>كوزو كتب</h1>
-
-        <form id="searchForm">
-            <input type="text" id="searchInput" name="query" placeholder="أدخل نص البحث" autocomplete="off" />
-            <button type="submit">بحث</button>
-        </form>
-
-        <div id="message"></div>
+  <div class="container">
+    <div class="ad-container top-ad">
+      <h2>🎉 خصومات نون الرهيبة وصلت!</h2>
+      <p>وفر الآن على كل طلباتك من <strong>نون مصر</strong> 🛍️</p>
+      <div class="code-box">استخدم الكود: RZ1421</div>
+      <small>ادخل الكود عند الدفع واستمتع بالتخفيض فورًا ✅</small>
     </div>
 
-    <script>
-        let workbook;
+    <h1>كوزو كتب</h1>
 
-        function loadExcel() {
-            return new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                xhr.open('GET', './kutub.xlsx', true);
-                xhr.responseType = 'arraybuffer';
+    <form id="searchForm">
+      <input type="text" id="searchInput" name="query" placeholder="أدخل نص البحث" autocomplete="off" />
+      <button type="submit">بحث</button>
+    </form>
 
-                xhr.onload = function () {
-                    if (xhr.status === 200) {
-                        try {
-                            const data = new Uint8Array(xhr.response);
-                            workbook = XLSX.read(data, { type: 'array' });
-                            resolve(workbook);
-                        } catch (e) {
-                            reject('خطأ في معالجة ملف Excel');
-                        }
-                    } else {
-                        reject('تعذر تحميل ملف Excel');
-                    }
-                };
+    <div id="result"></div>
+  </div>
 
-                xhr.onerror = () => reject('خطأ في الاتصال بخادم Excel');
-                xhr.send();
-            });
+<script>
+  let workbook;
+
+  function loadExcel() {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', './kutub.xlsx', true);
+      xhr.responseType = 'arraybuffer';
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          try {
+            const data = new Uint8Array(xhr.response);
+            workbook = XLSX.read(data, { type: 'array' });
+            resolve(workbook);
+          } catch (e) {
+            reject('خطأ في معالجة ملف Excel');
+          }
+        } else {
+          reject('تعذر تحميل ملف Excel');
         }
+      };
+      xhr.onerror = () => reject('خطأ في الاتصال بخادم Excel');
+      xhr.send();
+    });
+  }
 
-        async function findFirstMatch(searchText) {
-            if (!workbook) return null;
+  function searchExcel(searchText) {
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = '';
 
-            for (const sheetName of workbook.SheetNames) {
-                const sheet = workbook.Sheets[sheetName];
-                const range = XLSX.utils.decode_range(sheet['!ref']);
+    if (!workbook) {
+      resultDiv.innerHTML = '<p>يرجى التأكد من تحميل ملف Excel بشكل صحيح.</p>';
+      return;
+    }
 
-                for (let R = range.s.r; R <= range.e.r; ++R) {
-                    for (let C = range.s.c; C <= range.e.c; ++C) {
-                        const cellAddress = { c: C, r: R };
-                        const cellRef = XLSX.utils.encode_cell(cellAddress);
-                        const cell = sheet[cellRef];
+    if (!searchText) {
+      resultDiv.innerHTML = '<p>الرجاء إدخال نص للبحث.</p>';
+      return;
+    }
 
-                        if (cell && cell.v && cell.v.toString().includes(searchText)) {
-                            return cell.v.toString();
-                        }
-                    }
-                }
-            }
-            return null;
+    let foundCount = 0;
+    workbook.SheetNames.forEach(sheetName => {
+      if (foundCount > 50) return;
+      const sheet = workbook.Sheets[sheetName];
+      const range = XLSX.utils.decode_range(sheet['!ref']);
+
+      for (let R = range.s.r; R <= range.e.r; ++R) {
+        if (foundCount > 50) break;
+        for (let C = range.s.c; C <= range.e.c; ++C) {
+          const cellAddress = { c: C, r: R };
+          const cellRef = XLSX.utils.encode_cell(cellAddress);
+          const cell = sheet[cellRef];
+
+          if (cell && cell.v && cell.v.toString().includes(searchText)) {
+            const title = cell.v.toString();
+            foundCount++;
+            resultDiv.innerHTML += `
+              <p>
+                <a href="book.html?title=${encodeURIComponent(title)}">${title}</a>
+              </p>
+            `;
+            break; // لمنع تكرار نفس الكتاب في الصف الواحد
+          }
         }
+      }
+    });
 
-        document.getElementById('searchForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            document.getElementById('message').textContent = '';
-            const searchText = document.getElementById('searchInput').value.trim();
+    if (foundCount === 0) {
+      resultDiv.innerHTML = `<p>لم يتم العثور على نتائج تطابق "${searchText}".</p>`;
+    }
+  }
 
-            if (!searchText) {
-                document.getElementById('message').textContent = 'يرجى إدخال نص للبحث.';
-                return;
-            }
+  function updateURL(searchText) {
+    history.replaceState(null, '', `?query=${encodeURIComponent(searchText)}`);
+  }
 
-            try {
-                if (!workbook) await loadExcel();
+  function onSearch(searchText) {
+    searchExcel(searchText);
+    document.title = `تحميل كتاب ${searchText}`;
+    updateURL(searchText);
+  }
 
-                const match = await findFirstMatch(searchText);
-                if (match) {
-                    // تحويل المستخدم مباشرة لصفحة تفاصيل الكتاب
-                    window.location.href = `book.html?title=${encodeURIComponent(match)}`;
-                } else {
-                    document.getElementById('message').textContent = `لم يتم العثور على كتاب مطابق لـ "${searchText}".`;
-                }
-            } catch (error) {
-                document.getElementById('message').textContent = `حدث خطأ: ${error}`;
-            }
-        });
-    </script>
+  document.getElementById('searchForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const searchText = document.getElementById('searchInput').value.trim();
+    if (searchText) {
+      onSearch(searchText);
+    }
+  });
+
+  window.addEventListener('popstate', () => {
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get('query');
+    if (query) {
+      document.getElementById('searchInput').value = query;
+      onSearch(query);
+    } else {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('result').innerHTML = '';
+      document.title = 'كوزو كتب';
+    }
+  });
+
+  window.onload = () => {
+    loadExcel().then(() => {
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get('query');
+      if (query) {
+        document.getElementById('searchInput').value = query;
+        onSearch(query);
+      }
+    }).catch(err => {
+      document.getElementById('result').innerHTML = `<p>خطأ: ${err}</p>`;
+    });
+  };
+</script>
 </body>
 </html>
