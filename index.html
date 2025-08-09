@@ -385,230 +385,82 @@
     <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=8ff256a8a162379ff10c6f0f4d63c47568960452'></script>
     <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1367102/t/5"></script>
 
-    <script>
-        let workbook;
-        let visitorCount = 0;
-
-        // Function to update meta tags dynamically
-        function updateMetaTags(searchQuery) {
-            // Update meta description
-            document.querySelector('meta[name="description"]').content = 
-                `تحميل كتاب ${searchQuery} مجاناً | بحث عن ${searchQuery} في مكتبة كوزو كتب`;
-            
-            // Update meta keywords
-            document.querySelector('meta[name="keywords"]').content = 
-                `تحميل ${searchQuery}, كتاب ${searchQuery} PDF, ${searchQuery} مجاناً, قراءة ${searchQuery} online`;
-            
-            // Update OpenGraph tags
-            document.querySelector('meta[property="og:title"]').content = 
-                `تحميل كتاب ${searchQuery} - كوزو كتب`;
-            document.querySelector('meta[property="og:description"]').content = 
-                `ابحث وتصفح وتحميل كتاب ${searchQuery} مجاناً من مكتبة كوزو كتب`;
-            
-            // Update canonical URL
-            let link = document.querySelector('link[rel="canonical"]');
-            if (!link) {
-                link = document.createElement('link');
-                link.rel = 'canonical';
-                document.head.appendChild(link);
-            }
-            link.href = window.location.origin + window.location.pathname + '?query=' + encodeURIComponent(searchQuery);
-        }
-
-        // Function to reset meta tags to default
-        function resetMetaTags() {
-            document.querySelector('meta[name="description"]').content = 
-                "موقع كوزو كتب للبحث عن الكتب الإلكترونية وتحميلها مجانًا. ابحث عن آلاف الكتب العربية في مختلف المجالات.";
-            
-            document.querySelector('meta[name="keywords"]').content = 
-                "كتب إلكترونية, تحميل كتب, كتب عربية, قراءة مجانية, كتب PDF, تنزيل كتب";
-            
-            document.querySelector('meta[property="og:title"]').content = 
-                "كوزو كتب - موقع البحث عن الكتب الإلكترونية";
-            
-            document.querySelector('meta[property="og:description"]').content = 
-                "ابحث وتصفح وتحميل آلاف الكتب الإلكترونية العربية مجانًا";
-            
-            document.title = "كوزو كتب - موقع البحث والتحميل المجاني للكتب الإلكترونية";
-            
-            const link = document.querySelector('link[rel="canonical"]');
-            if (link) {
-                link.href = window.location.origin + window.location.pathname;
+   <script>
+        // MODIFIED SEO FUNCTIONS
+        function updateMetaTagsForSearch(searchQuery) {
+            // Only update if there's a search query
+            if (searchQuery && searchQuery.trim() !== "") {
+                // Create new meta tags for search results
+                const newMetaTags = `
+                    <title>${searchQuery} - تحميل كتاب | كوزو كتب</title>
+                    <meta name="description" content="تحميل كتاب ${searchQuery} مجاناً | بحث عن ${searchQuery} في مكتبة كوزو كتب">
+                    <meta name="keywords" content="تحميل ${searchQuery}, كتاب ${searchQuery} PDF, ${searchQuery} مجاناً, قراءة ${searchQuery} online">
+                    <meta property="og:title" content="تحميل كتاب ${searchQuery} - كوزو كتب">
+                    <meta property="og:description" content="ابحث وتصفح وتحميل كتاب ${searchQuery} مجاناً من مكتبة كوزو كتب">
+                    <link rel="canonical" href="${window.location.origin}${window.location.pathname}?query=${encodeURIComponent(searchQuery)}">
+                `;
+                
+                // Remove existing meta tags
+                document.querySelector('title').remove();
+                document.querySelector('meta[name="description"]').remove();
+                document.querySelector('meta[name="keywords"]').remove();
+                document.querySelector('meta[property="og:title"]').remove();
+                document.querySelector('meta[property="og:description"]').remove();
+                document.querySelector('link[rel="canonical"]').remove();
+                
+                // Add new meta tags
+                document.head.insertAdjacentHTML('beforeend', newMetaTags);
             }
         }
 
-        // Function to update visitor count
-        function updateVisitorCount() {
-            visitorCount = Math.floor(Math.random() * 100) + 50;
-            document.getElementById('visitorCount').textContent = visitorCount;
+        function resetToDefaultSEO() {
+            // Only reset if we're on the homepage (no query)
+            if (!new URLSearchParams(window.location.search).get('query')) {
+                const defaultMetaTags = `
+                    <title>كوزو كتب - موقع البحث والتحميل المجاني للكتب الإلكترونية</title>
+                    <meta name="description" content="موقع كوزو كتب للبحث عن الكتب الإلكترونية وتحميلها مجانًا. ابحث عن آلاف الكتب العربية في مختلف المجالات.">
+                    <meta name="keywords" content="كتب إلكترونية, تحميل كتب, كتب عربية, قراءة مجانية, كتب PDF, تنزيل كتب">
+                    <meta property="og:title" content="كوزو كتب - موقع البحث عن الكتب الإلكترونية">
+                    <meta property="og:description" content="ابحث وتصفح وتحميل آلاف الكتب الإلكترونية العربية مجانًا">
+                    <link rel="canonical" href="${window.location.origin}${window.location.pathname}">
+                `;
+                
+                // Remove existing meta tags
+                document.querySelector('title')?.remove();
+                document.querySelector('meta[name="description"]')?.remove();
+                document.querySelector('meta[name="keywords"]')?.remove();
+                document.querySelector('meta[property="og:title"]')?.remove();
+                document.querySelector('meta[property="og:description"]')?.remove();
+                document.querySelector('link[rel="canonical"]')?.remove();
+                
+                // Add default meta tags
+                document.head.insertAdjacentHTML('beforeend', defaultMetaTags);
+            }
         }
 
-        // Function to search when clicking on popular tags
-        function searchTag(tag) {
-            document.getElementById('searchInput').value = tag;
-            document.getElementById('searchForm').dispatchEvent(new Event('submit'));
-        }
-
-        // Load the Excel file from the repository's relative path
-        function loadExcel() {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', './kutub.xlsx', true);
-            xhr.responseType = 'arraybuffer';
-
-            xhr.onload = function (event) {
-                if (xhr.status === 200) {
-                    console.log("File loaded successfully");
-                    try {
-                        const data = new Uint8Array(xhr.response);
-                        workbook = XLSX.read(data, { type: 'array' });
-                        console.log("Workbook parsed:", workbook);
-
-                        // Check for search query in the URL
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const query = urlParams.get('query');
-                        if (query) {
-                            document.getElementById('searchInput').value = query;
-                            searchExcel(query);
-
-                            // Update page title and heading
-                            document.title = `${query} - تحميل كتاب | كوزو كتب`;
-                            document.querySelector('.logo').innerHTML = `
-                                <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="كوزو كتب">
-                                نتائج البحث عن: ${query}
-                            `;
-                        }
-                    } catch (error) {
-                        console.error('خطأ في معالجة ملف Excel:', error);
-                        showError('حدث خطأ أثناء قراءة ملف الكتب. يرجى المحاولة لاحقًا.');
-                    }
-                } else {
-                    console.error('فشل تحميل ملف Excel. تأكد من صحة الرابط.');
-                    showError('تعذر تحميل قاعدة بيانات الكتب. يرجى التحقق من اتصال الإنترنت والمحاولة لاحقًا.');
-                }
-            };
-
-            xhr.onerror = function () {
-                console.error('خطأ في الاتصال بخادم ملف Excel.');
-                showError('حدث خطأ في الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت.');
-            };
-
-            xhr.send();
-        }
-
-        // Search for matching text in the Excel file
+        // MODIFIED SEARCH FUNCTION
         function searchExcel(searchText) {
-            const resultDiv = document.getElementById('result');
-            const loadingIndicator = document.getElementById('loadingIndicator');
+            // ... (keep all your existing search logic)
             
-            // Show loading indicator
-            resultDiv.innerHTML = '';
-            loadingIndicator.style.display = 'block';
-            
-            // Update meta tags for this search
-            updateMetaTags(searchText);
-            
-            // Update page title
-            document.title = `${searchText} - تحميل كتاب | كوزو كتب`;
-            
-            // Update logo text
-            document.querySelector('.logo').innerHTML = `
-                <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="كوزو كتب">
-                نتائج البحث عن: ${searchText}
-            `;
-
-            // Simulate delay for better UX (remove in production)
-            setTimeout(() => {
-                try {
-                    if (!workbook) {
-                        showError('لم يتم تحميل قاعدة بيانات الكتب بعد. يرجى المحاولة لاحقًا.');
-                        loadingIndicator.style.display = 'none';
-                        return;
-                    }
-
-                    let foundResults = false;
-                    resultDiv.innerHTML = '';
-
-                    workbook.SheetNames.forEach(sheetName => {
-                        const sheet = workbook.Sheets[sheetName];
-                        const range = XLSX.utils.decode_range(sheet['!ref']);
-
-                        for (let R = range.s.r; R <= range.e.r; ++R) {
-                            for (let C = range.s.c; C <= range.e.c; ++C) {
-                                const cellAddress = { c: C, r: R };
-                                const cellRef = XLSX.utils.encode_cell(cellAddress);
-                                const cell = sheet[cellRef];
-
-                                if (cell && cell.v && cell.v.toString().includes(searchText)) {
-                                    foundResults = true;
-                                    const hyperlink = cell.l ? cell.l.Target : 'لا يوجد رابط';
-                                    const bookHTML = `
-                                        <div class="book-result">
-                                            <h3 class="book-title">${cell.v}</h3>
-                                            <p>اضغط على الرابط أدناه لقراءة وتحميل الكتاب:</p>
-                                            <a href="http://blogs.giize.com/?file=${hyperlink}" class="book-link" target="_blank">تحميل الكتاب</a>
-                                        </div>
-                                    `;
-                                    resultDiv.innerHTML += bookHTML;
-                                }
-                            }
-                        }
-                    });
-
-                    if (!foundResults) {
-                        resultDiv.innerHTML = `
-                            <div class="no-results">
-                                <p>⚠️ لم يتم العثور على نتائج لـ "${searchText}"</p>
-                                <p>حاول استخدام كلمات بحث أخرى أو تصفح الكتب الشائعة أعلاه.</p>
-                            </div>
-                        `;
-                    }
-                } catch (error) {
-                    console.error('Error during search:', error);
-                    showError('حدث خطأ غير متوقع أثناء البحث. يرجى المحاولة مرة أخرى.');
-                } finally {
-                    loadingIndicator.style.display = 'none';
-                }
-            }, 800); // Simulate network delay
-        }
-
-        // Show error message
-        function showError(message) {
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `
-                <div class="no-results">
-                    <p>${message}</p>
-                </div>
-            `;
-        }
-
-        // Handle form submission
-        document.getElementById('searchForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const searchText = document.getElementById('searchInput').value.trim();
-            if (searchText) {
-                searchExcel(searchText);
-                
-                // Update URL without reloading the page
-                history.pushState(null, null, `?query=${encodeURIComponent(searchText)}`);
-                
-                // Track search in analytics (simulated)
-                console.log(`User searched for: ${searchText}`);
+            // Update SEO for search results
+            if (searchText && searchText.trim() !== "") {
+                updateMetaTagsForSearch(searchText);
             } else {
-                showError('يرجى إدخال نص للبحث');
-                resetMetaTags();
+                resetToDefaultSEO();
             }
-        });
+            
+            // ... (rest of your search function)
+        }
 
-        // Handle back/forward navigation
+        // UPDATE POPSTATE HANDLER
         window.addEventListener('popstate', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const query = urlParams.get('query');
+            const query = new URLSearchParams(window.location.search).get('query');
             
             if (query) {
                 document.getElementById('searchInput').value = query;
                 searchExcel(query);
             } else {
-                resetMetaTags();
+                resetToDefaultSEO();
                 document.getElementById('searchInput').value = '';
                 document.getElementById('result').innerHTML = '';
                 document.querySelector('.logo').innerHTML = `
@@ -618,21 +470,19 @@
             }
         });
 
-        // Initialize dynamic SEO and load the Excel file when the page loads
+        // INITIAL LOAD CHECK
         window.onload = function() {
-            // Set initial canonical URL
-            if (!document.querySelector('link[rel="canonical"]')) {
-                const link = document.createElement('link');
-                link.rel = 'canonical';
-                link.href = window.location.href.split('?')[0];
-                document.head.appendChild(link);
+            const query = new URLSearchParams(window.location.search).get('query');
+            
+            if (query) {
+                document.getElementById('searchInput').value = query;
+                searchExcel(query);
+            } else {
+                resetToDefaultSEO();
             }
             
             loadExcel();
             updateVisitorCount();
-            
-            // Update count every minute (simulated)
-            setInterval(updateVisitorCount, 60000);
         };
     </script>
 </body>
