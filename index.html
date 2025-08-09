@@ -17,303 +17,307 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
-    <style>
-        :root {
-            --primary-color: #4361ee;
-            --secondary-color: #3a56d0;
-            --accent-color: #4cc9f0;
-            --text-color: #333;
-            --light-text: #6c757d;
-            --bg-color: #f8f9fa;
-            --card-bg: #fff;
-            --border-radius: 8px;
-            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            --transition: all 0.3s ease;
-        }
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3a56d0;
+        --accent-color: #4cc9f0;
+        --text-color: #222222; /* تحسين التباين من #333 */
+        --light-text: #555555; /* تحسين التباين من #6c757d */
+        --bg-color: #f8f9fa;
+        --card-bg: #ffffff;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        --transition: all 0.3s ease;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-        body {
-            font-family: 'Tajawal', Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            direction: rtl;
-            min-height: 100vh;
-        }
+    body {
+        font-family: 'Tajawal', Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        direction: rtl;
+        min-height: 100vh;
+    }
 
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 20px 0;
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+    }
+
+    .logo {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a237e; /* تحسين تباين اللون الأساسي */
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .logo img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .tagline {
+        color: #444444; /* تحسين التباين من var(--light-text) */
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+    }
+
+    .search-section {
+        background-color: var(--card-bg);
+        padding: 30px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        margin-bottom: 30px;
+    }
+
+    .search-form {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    #searchInput {
+        flex: 1;
+        padding: 15px;
+        border: 2px solid #ddd;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        font-family: 'Tajawal', sans-serif;
+        transition: var(--transition);
+        color: #111111; /* لون نص أدخل للبحث أكثر قتامة */
+    }
+
+    #searchInput:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+
+    button {
+        padding: 15px 25px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        font-family: 'Tajawal', sans-serif;
+        transition: var(--transition);
+    }
+
+    button:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-2px);
+    }
+
+    #result {
+        margin-top: 30px;
+    }
+
+    .book-result {
+        background-color: var(--card-bg);
+        padding: 20px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        margin-bottom: 20px;
+        transition: var(--transition);
+    }
+
+    .book-result:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .book-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #1a237e; /* تحسين تباين عنوان الكتاب */
+        margin-bottom: 10px;
+    }
+
+    .book-link {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 20px;
+        background-color: #0077cc; /* تحسين لون الخلفية للتباين */
+        color: white;
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+    }
+
+    .book-link:hover {
+        background-color: #005fa3; /* تحسين لون hover */
+        text-decoration: none;
+    }
+
+    .no-results {
+        text-align: center;
+        padding: 40px;
+        font-size: 1.2rem;
+        color: #555555; /* تحسين لون النص عند عدم وجود نتائج */
+    }
+
+    .loading {
+        display: none;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top: 4px solid var(--primary-color);
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Ad styles - تحسين تباين الإعلانات */
+    .ad-container {
+        background-color: #ffffff;
+        border: 1px solid #6c757d; /* تغيير من dashed إلى solid لتحسين الرؤية */
+        border-radius: var(--border-radius);
+        padding: 15px;
+        margin: 30px 0;
+        text-align: center;
+    }
+
+    .top-ad {
+        margin-bottom: 30px;
+        background: linear-gradient(135deg, #e65100, #bf360c); /* ألوان أكثر تباينًا */
+        color: white;
+        border: none;
+        padding: 25px;
+    }
+
+    .ad-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    .ad-content {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        color: #f5f5f5;
+    }
+
+    .ad-link {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: white;
+        color: #e65100;
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        font-weight: bold;
+        transition: var(--transition);
+    }
+
+    .ad-link:hover {
+        background-color: rgba(255,255,255,0.9);
+        transform: scale(1.05);
+    }
+
+    /* Popular searches - تحسين تباين عمليات البحث الشائعة */
+    .popular-searches {
+        margin: 30px 0;
+        background-color: var(--card-bg);
+        padding: 20px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+    }
+
+    .popular-title {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        color: #1a237e; /* تحسين تباين العنوان */
+        font-weight: 600;
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .tag {
+        padding: 8px 15px;
+        background-color: #e0e0e0;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: var(--transition);
+        color: #333333; /* تحسين لون النص على العلامات */
+    }
+
+    .tag:hover {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    /* Footer - تحسين تباين التذييل */
+    footer {
+        text-align: center;
+        padding: 20px;
+        margin-top: 50px;
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        color: #555555; /* تحسين لون النص */
+        font-size: 0.9rem;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
         .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
+            padding: 15px;
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px 0;
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-        }
-
+        
         .logo {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            font-size: 2rem;
         }
-
-        .logo img {
-            width: 50px;
-            height: 50px;
-        }
-
-        .tagline {
-            color: var(--light-text);
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-
-        .search-section {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            margin-bottom: 30px;
-        }
-
+        
         .search-form {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            flex-direction: column;
         }
-
-        #searchInput {
-            flex: 1;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            font-family: 'Tajawal', sans-serif;
-            transition: var(--transition);
-        }
-
-        #searchInput:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-        }
-
+        
         button {
-            padding: 15px 25px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            font-family: 'Tajawal', sans-serif;
-            transition: var(--transition);
+            width: 100%;
         }
-
-        button:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
-        #result {
-            margin-top: 30px;
-        }
-
-        .book-result {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            margin-bottom: 20px;
-            transition: var(--transition);
-        }
-
-        .book-result:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .book-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .book-link {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background-color: var(--accent-color);
-            color: white;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .book-link:hover {
-            background-color: #3aa8d8;
-            text-decoration: none;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 40px;
-            font-size: 1.2rem;
-            color: var(--light-text);
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            border-top: 4px solid var(--primary-color);
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Ad styles */
-        .ad-container {
-            background-color: #f8f9fa;
-            border: 1px dashed #6c757d;
-            border-radius: var(--border-radius);
-            padding: 15px;
-            margin: 30px 0;
-            text-align: center;
-        }
-
-        .top-ad {
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #ffc107, #ff9800);
-            color: white;
-            border: none;
-            padding: 25px;
-        }
-
-        .ad-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-            font-size: 1.5rem;
-        }
-
-        .ad-content {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-        }
-
-        .ad-link {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: white;
-            color: #ff9800;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            font-weight: bold;
-            transition: var(--transition);
-        }
-
-        .ad-link:hover {
-            background-color: rgba(255,255,255,0.9);
-            transform: scale(1.05);
-        }
-
-        /* Popular searches */
-        .popular-searches {
-            margin: 30px 0;
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-        }
-
-        .popular-title {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .tag {
-            padding: 8px 15px;
-            background-color: #e9ecef;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .tag:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            color: var(--light-text);
-            font-size: 0.9rem;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .logo {
-                font-size: 2rem;
-            }
-            
-            .search-form {
-                flex-direction: column;
-            }
-            
-            button {
-                width: 100%;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
     <div class="container">
