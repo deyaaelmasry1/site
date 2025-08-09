@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="موقع كوزو كتب للبحث عن الكتب الإلكترونية وتحميلها مجانًا. ابحث عن آلاف الكتب العربية في مختلف المجالات.">
+    <meta name="description" content="موقع بوكتاب للبحث عن الكتب الإلكترونية وتحميلها مجانًا. ابحث عن آلاف الكتب العربية في مختلف المجالات.">
     <meta name="keywords" content="كتب إلكترونية, تحميل كتب, كتب عربية, قراءة مجانية, كتب PDF, تنزيل كتب">
-    <meta name="author" content="كوزو كتب">
-    <meta property="og:title" content="كوزو كتب - موقع البحث عن الكتب الإلكترونية">
+    <meta name="author" content="بوكتاب">
+    <meta property="og:title" content="بوكتاب - موقع البحث عن الكتب الإلكترونية">
     <meta property="og:description" content="ابحث وتصفح وتحميل آلاف الكتب الإلكترونية العربية مجانًا">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ar_AR">
-    <title>كوزو كتب - موقع البحث والتحميل المجاني للكتب الإلكترونية</title>
+    <title>بوكتاب - تحميل مجاني للكتب الإلكترونية</title>
     <link rel="canonical" href="https://yourwebsite.com">
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -331,8 +331,8 @@
         <!-- Header -->
         <header>
             <h1 class="logo">
-                <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="كوزو كتب">
-                كوزو كتب
+                <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="بوكتاب">
+                بوكتاب
             </h1>
             <p class="tagline">ابحث وتصفح وتحميل آلاف الكتب الإلكترونية العربية مجانًا</p>
         </header>
@@ -378,7 +378,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>© 2023 كوزو كتب - جميع الحقوق محفوظة</p>
+        <p>© 2023 بوكتاب - جميع الحقوق محفوظة</p>
         <p>المتصفحون الآن: <span id="visitorCount">0</span></p>
     </footer>
 
@@ -393,7 +393,7 @@
         function updateMetaTags(searchQuery) {
             // Update meta description
             document.querySelector('meta[name="description"]').content = 
-                `تحميل كتاب ${searchQuery} مجاناً | بحث عن ${searchQuery} في مكتبة كوزو كتب`;
+                `تحميل كتاب ${searchQuery} مجاناً | بحث عن ${searchQuery} في مكتبة بوكتاب`;
             
             // Update meta keywords
             document.querySelector('meta[name="keywords"]').content = 
@@ -401,9 +401,9 @@
             
             // Update OpenGraph tags
             document.querySelector('meta[property="og:title"]').content = 
-                `تحميل كتاب ${searchQuery} - كوزو كتب`;
+                `تحميل كتاب ${searchQuery} - بوكتاب`;
             document.querySelector('meta[property="og:description"]').content = 
-                `ابحث وتصفح وتحميل كتاب ${searchQuery} مجاناً من مكتبة كوزو كتب`;
+                `ابحث وتصفح وتحميل كتاب ${searchQuery} مجاناً من مكتبة بوكتاب`;
             
             // Update canonical URL
             let link = document.querySelector('link[rel="canonical"]');
@@ -418,18 +418,18 @@
         // Function to reset meta tags to default
         function resetMetaTags() {
             document.querySelector('meta[name="description"]').content = 
-                "موقع كوزو كتب للبحث عن الكتب الإلكترونية وتحميلها مجانًا. ابحث عن آلاف الكتب العربية في مختلف المجالات.";
+                "موقع بوكتاب للبحث عن الكتب الإلكترونية وتحميلها مجانًا. ابحث عن آلاف الكتب العربية في مختلف المجالات.";
             
             document.querySelector('meta[name="keywords"]').content = 
                 "كتب إلكترونية, تحميل كتب, كتب عربية, قراءة مجانية, كتب PDF, تنزيل كتب";
             
             document.querySelector('meta[property="og:title"]').content = 
-                "كوزو كتب - موقع البحث عن الكتب الإلكترونية";
+                "بوكتاب - موقع البحث عن الكتب الإلكترونية";
             
             document.querySelector('meta[property="og:description"]').content = 
                 "ابحث وتصفح وتحميل آلاف الكتب الإلكترونية العربية مجانًا";
             
-            document.title = "كوزو كتب - موقع البحث والتحميل المجاني للكتب الإلكترونية";
+            document.title = "بوكتاب - موقع البحث والتحميل المجاني للكتب الإلكترونية";
             
             const link = document.querySelector('link[rel="canonical"]');
             if (link) {
@@ -471,9 +471,9 @@
                             searchExcel(query);
 
                             // Update page title and heading
-                            document.title = `${query} - تحميل كتاب | كوزو كتب`;
+                            document.title = `${query} - تحميل كتاب | بوكتاب`;
                             document.querySelector('.logo').innerHTML = `
-                                <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="كوزو كتب">
+                                <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="بوكتاب">
                                 تحميل كتاب: ${query}
                             `;
                         }
@@ -508,11 +508,11 @@
             updateMetaTags(searchText);
             
             // Update page title
-            document.title = `${searchText} - تحميل كتاب | كوزو كتب`;
+            document.title = `${searchText} - تحميل كتاب | بوكتاب`;
             
             // Update logo text
             document.querySelector('.logo').innerHTML = `
-                <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="كوزو كتب">
+                <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="بوكتاب">
                 نتائج البحث عن: ${searchText}
             `;
 
@@ -612,8 +612,8 @@
                 document.getElementById('searchInput').value = '';
                 document.getElementById('result').innerHTML = '';
                 document.querySelector('.logo').innerHTML = `
-                    <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="كوزو كتب">
-                    كوزو كتب
+                    <img src="https://cdn-icons-png.flaticon.com/128/18600/18600824.png" alt="بوكتاب">
+                    بوكتاب
                 `;
             }
         });
