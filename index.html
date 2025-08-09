@@ -349,13 +349,12 @@
             <h2 class="popular-title">أكثر الكتب بحثًا:</h2>
             <div class="tags">
                 <div class="tag" onclick="searchTag('روايات')">روايات</div>
-                <div class="tag" onclick="searchTag('تطوير الذات')">تطوير الذات</div>
+                <div class="tag" onclick="searchTag('جغرافيا')">جغرافيا</div>
                 <div class="tag" onclick="searchTag('تاريخ')">تاريخ</div>
                 <div class="tag" onclick="searchTag('أدب')">أدب</div>
                 <div class="tag" onclick="searchTag('علوم')">علوم</div>
                 <div class="tag" onclick="searchTag('فلسفة')">فلسفة</div>
                 <div class="tag" onclick="searchTag('شعر')">شعر</div>
-                <div class="tag" onclick="searchTag('سير ذاتية')">سير ذاتية</div>
             </div>
         </section>
 
@@ -425,7 +424,7 @@
 
                             // Update page title and heading
                             document.title = `${query} - تحميل كتاب | كوزو كتب`;
-                            document.querySelector('.logo').textContent = `نتائج البحث عن: ${query}`;
+                            document.querySelector('.logo').textContent = `تحميل كتاب: ${query}`;
                         }
                     } catch (error) {
                         console.error('خطأ في معالجة ملف Excel:', error);
