@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة الأرشيف - تحميل الكتب المجانية</title>
+    <meta name="description" content="ابحث عن الكتب وتصفحها وتحميلها مجاناً من أرشيف الإنترنت">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-bottom: 5px solid #8e44ad;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            margin-left: 10px;
+            color: #8e44ad;
+        }
+        
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .search-box {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .search-input {
+            width: 70%;
+            max-width: 600px;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            font-size: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+        
+        .search-btn {
+            padding: 15px 25px;
+            background: #8e44ad;
+            color: white;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-btn:hover {
+            background: #6c3483;
+        }
+        
+        .share-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            gap: 10px;
+        }
+        
+        .share-btn {
+            padding: 10px 20px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.3s;
+        }
+        
+        .share-btn:hover {
+            background: #219653;
+        }
+        
+        .share-link {
+            padding: 10px 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            flex-grow: 1;
+            max-width: 400px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: #8e44ad;
+            color: white;
+            border-color: #8e44ad;
+        }
+        
+        .results-info {
+            text-align: center;
+            margin: 20px 0;
+            color: #2c3e50;
+            font-size: 1.2rem;
+        }
+        
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .book-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .book-cover {
+            height: 200px;
+            overflow: hidden;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .book-card:hover .book-cover img {
+            transform: scale(1.05);
+        }
+        
+        .book-cover .placeholder {
+            font-size: 4rem;
+            color: #8e44ad;
+        }
+        
+        .book-details {
+            padding: 20px;
+        }
+        
+        .book-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            height: 3.2rem;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .book-author {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .book-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #7f8c8d;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+        
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #8e44ad;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .download-btn:hover {
+            background: #6c3483;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+        
+        .loading i {
+            animation: spin 1s linear infinite;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #8e44ad;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #8e44ad;
+        }
+        
+        .copyright {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #8e44ad;
+        }
+        
+        .cache-info {
+            text-align: center;
+            margin: 10px 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .search-input {
+                width: 60%;
+            }
+            
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            
+            .share-section {
+                flex-direction: column;
+            }
+            
+            .share-link {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .search-input {
+                width: 50%;
+            }
+            
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <h1 id="main-heading">مكتبة الأرشيف</h1>
+            </div>
+            
+            <div class="search-box">
+                <input type="text" class="search-input" id="search-input" placeholder="ابحث عن كتاب أو مؤلف...">
+                <button class="search-btn" id="search-btn">بحث</button>
+            </div>
+            
+            <div class="share-section" id="share-section" style="display: none;">
+                <div class="share-link" id="share-link"></div>
+                <button class="share-btn" id="copy-btn">
+                    <i class="fas fa-copy"></i> نسخ
+                </button>
+            </div>
+            
+            <div class="filters">
+                <button class="filter-btn active">جميع الكتب</button>
+                <button class="filter-btn">الأكثر شيوعاً</button>
+                <button class="filter-btn">الأحدث</button>
+                <button class="filter-btn">الأقدم</button>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="results-info" id="results-info">
+            <p>ابحث عن الكتاب الذي تريده من خلال الأرشيف العالمي</p>
+        </div>
+        
+        <div class="cache-info" id="cache-info" style="display: none;">
+            <p>يتم عرض النتائج من الذاكرة المؤقتة</p>
+        </div>
+        
+        <div class="books-grid" id="books-container">
+            <!-- سيتم ملء هذا القسم بالنتائج من archive.org -->
+        </div>
+        
+        <div class="loading" id="loading" style="display: none;">
+            <i class="fas fa-spinner"></i>
+            <p>جاري البحث في الأرشيف، يرجى الانتظار...</p>
+        </div>
+        
+        <div class="no-results" id="no-results" style="display: none;">
+            <i class="fas fa-search"></i>
+            <p>لم يتم العثور على نتائج للبحث</p>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#">عن الموقع</a>
+                    <a href="#">الشروط والأحكام</a>
+                    <a href="#">اتصل بنا</a>
+                </div>
+                <p class="copyright">جميع الحقوق محفوظة © 2023 مكتبة الأرشيف</p>
+                <p class="copyright">هذا الموقع يستخدم API المقدم من archive.org</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // كود JavaScript سيتم تنفيذه على الخادم
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBtn = document.getElementById('search-btn');
+            const searchInput = document.getElementById('search-input');
+            const booksContainer = document.getElementById('books-container');
+            const loading = document.getElementById('loading');
+            const resultsInfo = document.getElementById('results-info');
+            const shareSection = document.getElementById('share-section');
+            const shareLink = document.getElementById('share-link');
+            const copyBtn = document.getElementById('copy-btn');
+            const noResults = document.getElementById('no-results');
+            const mainHeading = document.getElementById('main-heading');
+            const cacheInfo = document.getElementById('cache-info');
+            
+            // دالة لتخزين البيانات في localStorage
+            function cacheResults(query, data) {
+                try {
+                    const cache = {
+                        data: data,
+                        timestamp: new Date().getTime()
+                    };
+                    localStorage.setItem(`bookSearch_${query}`, JSON.stringify(cache));
+                } catch (e) {
+                    console.error('Failed to cache results:', e);
+                }
+            }
+            
+            // دالة لاسترجاع البيانات من localStorage
+            function getCachedResults(query) {
+                try {
+                    const cached = localStorage.getItem(`bookSearch_${query}`);
+                    if (!cached) return null;
+                    
+                    const cache = JSON.parse(cached);
+                    const now = new Date().getTime();
+                    // تحقق إذا كانت البيانات قديمة (أكثر من 24 ساعة)
+                    if (now - cache.timestamp > 24 * 60 * 60 * 1000) {
+                        localStorage.removeItem(`bookSearch_${query}`);
+                        return null;
+                    }
+                    
+                    return cache.data;
+                } catch (e) {
+                    console.error('Failed to retrieve cached results:', e);
+                    return null;
+                }
+            }
+            
+            // التحقق من وجود معامل بحث في URL عند تحميل الصفحة
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('q');
+            
+            if (searchQuery) {
+                searchInput.value = searchQuery;
+                // البحث تلقائياً عند تحميل الصفحة إذا كان هناك معامل بحث
+                setTimeout(() => {
+                    searchBooks(searchQuery, true);
+                }, 100);
+            } else {
+                // عرض بعض الكتب الشائعة عند تحميل الصفحة بدون بحث
+                displayPopularBooks();
+            }
+            
+            // دالة لتحديث عنوان الصفحة ووصفها
+            function updatePageMetadata(query, resultsCount) {
+                if (query) {
+                    document.title = `نتائج البحث عن: ${query} - مكتبة الأرشيف`;
+                    document.querySelector('meta[name="description"]').setAttribute('content', 
+                        `نتائج البحث عن ${query} في مكتبة الأرشيف. ${resultsCount > 0 ? `عرض ${resultsCount} كتاب للتحميل المجاني` : 'لم يتم العثور على نتائج'}`);
+                    mainHeading.textContent = `نتائج البحث عن: ${query}`;
+                } else {
+                    document.title = 'مكتبة الأرشيف - تحميل الكتب المجانية';
+                    document.querySelector('meta[name="description"]').setAttribute('content', 
+                        'ابحث عن الكتب وتصفحها وتحميلها مجاناً من أرشيف الإنترنت');
+                    mainHeading.textContent = 'مكتبة الأرشيف';
+                }
+            }
+            
+            // دالة لعرض الكتب الشائعة
+            function displayPopularBooks() {
+                booksContainer.innerHTML = `
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <div class="placeholder">
+                                <i class="fas fa-book"></i>
+                            </div>
+                        </div>
+                        <div class="book-details">
+                            <h3 class="book-title">مقدمة في علم النفس</h3>
+                            <p class="book-author">علي أحمد</p>
+                            <div class="book-meta">
+                                <span>2015</span>
+                                <span>300 صفحة</span>
+                            </div>
+                            <a href="#" class="download-btn">تحميل الكتاب</a>
+                        </div>
+                    </div>
+                    
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <div class="placeholder">
+                                <i class="fas fa-book"></i>
+                            </div>
+                        </div>
+                        <div class="book-details">
+                            <h3 class="book-title">قصة الحضارة</h3>
+                            <p class="book-author">ول ديورانت</p>
+                            <div class="book-meta">
+                                <span>1935</span>
+                                <span>450 صفحة</span>
+                            </div>
+                            <a href="#" class="download-btn">تحميل الكتاب</a>
+                        </div>
+                    </div>
+                    
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <div class="placeholder">
+                                <i class="fas fa-book"></i>
+                            </div>
+                        </div>
+                        <div class="book-details">
+                            <h3 class="book-title">الأسس العلمية للطبخ</h3>
+                            <p class="book-author">محمد السيد</p>
+                            <div class="book-meta">
+                                <span>2020</span>
+                                <span>250 صفحة</span>
+                            </div>
+                            <a href="#" class="download-btn">تحميل الكتاب</a>
+                        </div>
+                    </div>
+                    
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <div class="placeholder">
+                                <i class="fas fa-book"></i>
+                            </div>
+                        </div>
+                        <div class="book-details">
+                            <h3 class="book-title">تعلم البرمجة بلغة Python</h3>
+                            <p class="book-author">أحمد محمد</p>
+                            <div class="book-meta">
+                                <span>2019</span>
+                                <span>400 صفحة</span>
+                            </div>
+                            <a href="#" class="download-btn">تحميل الكتاب</a>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // دالة للبحث باستخدام API
+            async function searchBooks(query, isInitialLoad = false) {
+                // التحقق من وجود نتائج مخزنة مسبقاً
+                const cachedResults = getCachedResults(query);
+                let fromCache = false;
+                
+                if (cachedResults && !isInitialLoad) {
+                    // استخدام النتائج المخزنة
+                    displayResults(cachedResults, query);
+                    fromCache = true;
+                    cacheInfo.style.display = 'block';
+                    return;
+                }
+                
+                // تحديث URL بإضافة معامل البحث
+                const newUrl = window.location.origin + window.location.pathname + '?q=' + encodeURIComponent(query);
+                window.history.pushState({ path: newUrl }, '', newUrl);
+                
+                // عرض رابط المشاركة
+                shareLink.textContent = newUrl;
+                shareSection.style.display = 'flex';
+                
+                // إظهار رسالة التحمين
+                booksContainer.style.display = 'none';
+                noResults.style.display = 'none';
+                cacheInfo.style.display = 'none';
+                loading.style.display = 'block';
+                resultsInfo.textContent = `جاري البحث عن: "${query}"`;
+                
+                try {
+                    // استخدام API الخاص بـ archive.org للبحث
+                    const response = await fetch(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(query)}&fl[]=identifier,title,creator,date,item_size,mediatype&output=json&rows=20`);
+                    
+                    if (!response.ok) {
+                        throw new Error('فشل في جلب البيانات من الأرشيف');
+                    }
+                    
+                    const data = await response.json();
+                    
+                    // تخزين النتائج في الذاكرة المؤقتة
+                    cacheResults(query, data);
+                    
+                    // عرض النتائج
+                    displayResults(data, query);
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    resultsInfo.textContent = `حدث خطأ أثناء البحث: ${error.message}`;
+                    updatePageMetadata(query, 0);
+                } finally {
+                    // إخفاء رسالة التحمين
+                    loading.style.display = 'none';
+                    booksContainer.style.display = 'grid';
+                }
+            }
+            
+            // دالة لعرض النتائج
+            function displayResults(data, query) {
+                // مسح المحتوى القديم
+                booksContainer.innerHTML = '';
+                
+                // عرض النتائج
+                if (data.response.docs.length === 0) {
+                    resultsInfo.textContent = `لم يتم العثور على نتائج لـ: "${query}"`;
+                    noResults.style.display = 'block';
+                    updatePageMetadata(query, 0);
+                } else {
+                    // تصفية النتائج للحصول على الكتب فقط (mediatype = texts)
+                    const books = data.response.docs.filter(item => item.mediatype === 'texts');
+                    
+                    if (books.length === 0) {
+                        resultsInfo.textContent = `لم يتم العثور على كتب لـ: "${query}"`;
+                        noResults.style.display = 'block';
+                        updatePageMetadata(query, 0);
+                    } else {
+                        resultsInfo.textContent = `عرض ${books.length} نتيجة لـ: "${query}"`;
+                        updatePageMetadata(query, books.length);
+                        
+                        books.forEach(book => {
+                            const bookCard = createBookCard(book);
+                            booksContainer.appendChild(bookCard);
+                        });
+                    }
+                }
+            }
+            
+            // إنشاء بطاقة كتاب
+            function createBookCard(book) {
+                const card = document.createElement('div');
+                card.className = 'book-card';
+                
+                // رابط التحميل المباشر لملف PDF
+                const downloadUrl = `https://archive.org/download/${book.identifier}/${book.identifier}.pdf`;
+                
+                // حجم الملف بشكل مقروء
+                let fileSize = 'غير معروف';
+                if (book.item_size) {
+                    const sizeInMB = Math.round(parseInt(book.item_size) / (1024 * 1024));
+                    fileSize = `${sizeInMB} MB`;
+                }
+                
+                // صورة الغلاف (إذا كانت متاحة)
+                const coverImage = book.identifier ? 
+                    `https://archive.org/services/img/${book.identifier}` : '';
+                
+                card.innerHTML = `
+                    <div class="book-cover">
+                        ${coverImage ? 
+                            `<img src="${coverImage}" alt="${book.title || 'غلاف الكتاب'}">` :
+                            `<div class="placeholder">
+                                <i class="fas fa-book"></i>
+                            </div>`
+                        }
+                    </div>
+                    <div class="book-details">
+                        <h3 class="book-title">${book.title || 'بدون عنوان'}</h3>
+                        <p class="book-author">${book.creator || 'مؤلف غير معروف'}</p>
+                        <div class="book-meta">
+                            <span>${book.date || 'تاريخ غير معروف'}</span>
+                            <span>${fileSize}</span>
+                        </div>
+                        <a href="${downloadUrl}" class="download-btn" target="_blank">تحميل الكتاب</a>
+                    </div>
+                `;
+                
+                return card;
+            }
+            
+            // البحث عند النقر على زر البحث
+            searchBtn.addEventListener('click', function() {
+                if (searchInput.value.trim() !== '') {
+                    searchBooks(searchInput.value);
+                }
+            });
+            
+            // البحث عند الضغط على Enter في حقل البحث
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && searchInput.value.trim() !== '') {
+                    searchBooks(searchInput.value);
+                }
+            });
+            
+            // نسخ رابط المشاركة
+            copyBtn.addEventListener('click', function() {
+                navigator.clipboard.writeText(shareLink.textContent).then(() => {
+                    // تغيير نص الزر مؤقتاً للإشارة إلى أن الرابط تم نسخه
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    alert('فشل في نسخ الرابط. يرجى المحاولة مرة أخرى.');
+                });
+            });
+            
+            // تفعيل/إلغاء تفعيل أزرار التصفية
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
