@@ -540,7 +540,7 @@
                                 <span>2015</span>
                                 <span>300 pages</span>
                             </div>
-                            <a href="https://archive.org/details/introduction-to-psychology" class="view-btn" target="_blank">View on Archive</a>
+                            <a href="https://blogs.giize.com/?r=https://archive.org/details/introduction-to-psychology" class="view-btn" target="_blank">View on Archive</a>
                         </div>
                     </div>
                     
@@ -557,7 +557,7 @@
                                 <span>1935</span>
                                 <span>450 pages</span>
                             </div>
-                            <a href="https://archive.org/details/story-of-civilization" class="view-btn" target="_blank">View on Archive</a>
+                            <a href="https://blogs.giize.com/?r=https://archive.org/details/story-of-civilization" class="view-btn" target="_blank">View on Archive</a>
                         </div>
                     </div>
                     
@@ -574,7 +574,7 @@
                                 <span>2020</span>
                                 <span>250 pages</span>
                             </div>
-                            <a href="https://archive.org/details/science-of-cooking" class="view-btn" target="_blank">View on Archive</a>
+                            <a href="https://blogs.giize.com/?r=https://archive.org/details/science-of-cooking" class="view-btn" target="_blank">View on Archive</a>
                         </div>
                     </div>
                     
@@ -591,7 +591,7 @@
                                 <span>2019</span>
                                 <span>400 pages</span>
                             </div>
-                            <a href="https://archive.org/details/learn-python" class="view-btn" target="_blank">View on Archive</a>
+                            <a href="https://blogs.giize.com/?r=https://archive.org/details/learn-python" class="view-btn" target="_blank">View on Archive</a>
                         </div>
                     </div>
                 `;
@@ -661,11 +661,15 @@
                     const response = await fetch(pdfUrl, { method: 'HEAD' });
                     
                     if (response.ok) {
-                        return `https://blogs.giize.com/?r=${encodeURIComponent(pdfUrl)}`;
+                        return {
+                            pdfUrl: `https://blogs.giize.com/?r=${encodeURIComponent(pdfUrl)}`,
+                            viewUrl: `https://blogs.giize.com/?r=${encodeURIComponent(`https://archive.org/details/${identifier}`)}`,
+                            isPdf: true
+                        };
                     }
                     
                     // If failed, search for any PDF file in the folder
-                    const fileListUrl = `https://blogs.giize.com/?r=https://archive.org/metadata/${identifier}`;
+                    const fileListUrl = `https://archive.org/metadata/${identifier}`;
                     const fileResponse = await fetch(fileListUrl);
                     
                     if (fileResponse.ok) {
@@ -680,17 +684,27 @@
                             );
                             
                             if (pdfFile) {
-                                return `https://blogs.giize.com/?r=${encodeURIComponent(`https://archive.org/download/${identifier}/${pdfFile.name}`)}`;
+                                return {
+                                    pdfUrl: `https://blogs.giize.com/?r=${encodeURIComponent(`https://archive.org/download/${identifier}/${pdfFile.name}`)}`,
+                                    viewUrl: `https://blogs.giize.com/?r=${encodeURIComponent(`https://archive.org/details/${identifier}`)}`,
+                                    isPdf: true
+                                };
                             }
                         }
                     }
                     
                     // If no PDF found, return archive page for viewing in browser
-                    return `https://archive.org/details/${identifier}`;
+                    return {
+                        viewUrl: `https://blogs.giize.com/?r=${encodeURIComponent(`https://archive.org/details/${identifier}`)}`,
+                        isPdf: false
+                    };
                     
                 } catch (error) {
                     console.error('Error checking PDF availability:', error);
-                    return `https://archive.org/details/${identifier}`;
+                    return {
+                        viewUrl: `https://blogs.giize.com/?r=${encodeURIComponent(`https://archive.org/details/${identifier}`)}`,
+                        isPdf: false
+                    };
                 }
             }
             
@@ -718,16 +732,16 @@
                         
                         // Create promises to check PDF availability for each book
                         const bookCheckPromises = books.map(async (book) => {
-                            const pdfUrl = await checkPdfAvailability(book.identifier);
-                            return { book, pdfUrl };
+                            const urlInfo = await checkPdfAvailability(book.identifier);
+                            return { book, urlInfo };
                         });
                         
                         // Wait for all checks to complete
-                        const booksWithPdf = await Promise.all(bookCheckPromises);
+                        const booksWithUrls = await Promise.all(bookCheckPromises);
                         
                         // Display books after checking PDF availability
-                        booksWithPdf.forEach(({ book, pdfUrl }) => {
-                            const bookCard = createBookCard(book, pdfUrl);
+                        booksWithUrls.forEach(({ book, urlInfo }) => {
+                            const bookCard = createBookCard(book, urlInfo);
                             booksContainer.appendChild(bookCard);
                         });
                     }
@@ -735,7 +749,7 @@
             }
             
             // Create book card
-            function createBookCard(book, pdfUrl) {
+            function createBookCard(book, urlInfo) {
                 const card = document.createElement('div');
                 card.className = 'book-card';
                 
@@ -749,9 +763,6 @@
                 // Cover image (if available)
                 const coverImage = book.identifier ? 
                     `https://archive.org/services/img/${book.identifier}` : '';
-                
-                // Determine if the link is for a PDF file or archive page
-                const isPdf = pdfUrl.includes('blogs.giize.com');
                 
                 card.innerHTML = `
                     <div class="book-cover">
@@ -770,12 +781,12 @@
                             <span>${fileSize}</span>
                         </div>
                         <div class="book-actions">
-                            ${isPdf ? 
-                                `<a href="${pdfUrl}" class="download-btn" target="_blank">Download Book</a>` : 
+                            ${urlInfo.isPdf ? 
+                                `<a href="${urlInfo.pdfUrl}" class="download-btn" target="_blank">Download Book</a>` : 
                                 ''
                             }
-                            <a href="${pdfUrl}" class="view-btn" target="_blank">
-                                ${isPdf ? 'View on Archive' : 'View Details'}
+                            <a href="${urlInfo.viewUrl}" class="view-btn" target="_blank">
+                                View Details
                             </a>
                         </div>
                     </div>
