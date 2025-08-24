@@ -346,32 +346,6 @@
             flex-direction: column;
         }
         
-        .url-debug {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 5px;
-            padding: 15px;
-            margin: 20px 0;
-            font-family: monospace;
-            font-size: 0.9rem;
-        }
-        
-        .url-debug h3 {
-            margin-bottom: 10px;
-            color: #856404;
-        }
-        
-        .debug-info {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 10px;
-        }
-        
-        .debug-label {
-            font-weight: bold;
-            color: #856404;
-        }
-        
         @media (max-width: 768px) {
             .search-input {
                 width: 60%;
@@ -435,23 +409,6 @@
     </header>
     
     <main class="container">
-        <div class="url-debug" id="url-debug" style="display: none;">
-            <h3>URL Parameter Debug Information</h3>
-            <div class="debug-info">
-                <span class="debug-label">Full URL:</span>
-                <span id="debug-full-url"></span>
-                
-                <span class="debug-label">Raw Parameter:</span>
-                <span id="debug-raw-param"></span>
-                
-                <span class="debug-label">Decoded Parameter:</span>
-                <span id="debug-decoded-param"></span>
-                
-                <span class="debug-label">Final Search Query:</span>
-                <span id="debug-final-query"></span>
-            </div>
-        </div>
-        
         <div class="results-info" id="results-info">
             <p>Search for books through the global archive</p>
         </div>
@@ -502,21 +459,6 @@
             const noResults = document.getElementById('no-results');
             const mainHeading = document.getElementById('main-heading');
             const cacheInfo = document.getElementById('cache-info');
-            const urlDebug = document.getElementById('url-debug');
-            const debugFullUrl = document.getElementById('debug-full-url');
-            const debugRawParam = document.getElementById('debug-raw-param');
-            const debugDecodedParam = document.getElementById('debug-decoded-param');
-            const debugFinalQuery = document.getElementById('debug-final-query');
-            
-            // Show debug info for URLs with encoding issues
-            const showDebug = window.location.href.includes('%253F') || 
-                             window.location.href.includes('%2520') ||
-                             window.location.href.includes('%2525');
-            
-            if (showDebug) {
-                urlDebug.style.display = 'block';
-                debugFullUrl.textContent = window.location.href;
-            }
             
             // Function to safely decode URL parameters (handles double encoding)
             function safelyDecodeURIComponent(param) {
@@ -546,10 +488,6 @@
                 // Check for 'q' parameter first
                 let query = urlParams.get('q');
                 if (query) {
-                    if (showDebug) {
-                        debugRawParam.textContent = query;
-                        debugDecodedParam.textContent = safelyDecodeURIComponent(query);
-                    }
                     return safelyDecodeURIComponent(query);
                 }
                 
@@ -560,10 +498,6 @@
                     // Try to extract the query using regex
                     const match = search.match(/(?:\?|%3F)q=([^&]+)/);
                     if (match && match[1]) {
-                        if (showDebug) {
-                            debugRawParam.textContent = match[1];
-                            debugDecodedParam.textContent = safelyDecodeURIComponent(match[1]);
-                        }
                         return safelyDecodeURIComponent(match[1]);
                     }
                 }
@@ -571,10 +505,6 @@
                 // If no query parameter found, check the whole search string
                 if (search.length > 1) {
                     const potentialQuery = search.substring(1); // Remove the leading '?'
-                    if (showDebug) {
-                        debugRawParam.textContent = potentialQuery;
-                        debugDecodedParam.textContent = safelyDecodeURIComponent(potentialQuery);
-                    }
                     return safelyDecodeURIComponent(potentialQuery);
                 }
                 
@@ -620,9 +550,6 @@
             
             if (searchQuery) {
                 searchInput.value = searchQuery;
-                if (showDebug) {
-                    debugFinalQuery.textContent = searchQuery;
-                }
                 // Automatically search when page loads if there's a search parameter
                 setTimeout(() => {
                     searchBooks(searchQuery, true);
