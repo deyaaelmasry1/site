@@ -4,7 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archive Library - Free Book Downloads</title>
-    <meta name="description" content="Search, browse and download books for free from Internet Archive">
+    <meta name="description" content="Search, browse and download books for free from Internet Archive. Discover millions of books across all genres.">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="free books, book downloads, ebook library, archive.org books, online library">
+    <meta name="author" content="Archive Library">
+    <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="7 days">
+    <link rel="canonical" href="https://www.booketab.22web.org/books.html">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Archive Library - Free Book Downloads">
+    <meta property="og:description" content="Search, browse and download books for free from Internet Archive">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.booketab.22web.org/books.html">
+    <meta property="og:image" content="https://archive.org/images/logo.png">
+    <meta property="og:site_name" content="Archive Library">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Archive Library - Free Book Downloads">
+    <meta name="twitter:description" content="Search, browse and download books for free from Internet Archive">
+    <meta name="twitter:image" content="https://archive.org/images/logo.png">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Archive Library",
+      "url": "https://www.booketab.22web.org/books.html",
+      "description": "Search, browse and download books for free from Internet Archive",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -272,6 +313,7 @@
             padding: 40px;
             font-size: 1.2rem;
             color: #7f8c8d;
+            display: none;
         }
         
         .loading i {
@@ -304,6 +346,8 @@
             display: flex;
             gap: 20px;
             margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         
         .footer-links a {
@@ -319,6 +363,7 @@
         .copyright {
             color: #bdc3c7;
             font-size: 0.9rem;
+            margin: 5px 0;
         }
         
         .no-results {
@@ -326,6 +371,7 @@
             padding: 40px;
             color: #7f8c8d;
             font-size: 1.2rem;
+            display: none;
         }
         
         .no-results i {
@@ -339,11 +385,80 @@
             margin: 10px 0;
             color: #7f8c8d;
             font-size: 0.9rem;
+            display: none;
         }
         
         .book-actions {
             display: flex;
             flex-direction: column;
+        }
+        
+        .seo-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            display: none;
+        }
+        
+        .seo-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #8e44ad;
+        }
+        
+        .seo-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .seo-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #8e44ad;
+        }
+        
+        .seo-box h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .seo-box h3 i {
+            color: #8e44ad;
+        }
+        
+        .seo-box p {
+            color: #5a6a7c;
+            line-height: 1.6;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #5a6a7c;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumb a {
+            color: #8e44ad;
+            text-decoration: none;
+        }
+        
+        .breadcrumb span {
+            margin: 0 10px;
+        }
+        
+        .query-highlight {
+            color: #8e44ad;
+            font-weight: bold;
         }
         
         @media (max-width: 768px) {
@@ -361,6 +476,10 @@
             
             .share-link {
                 max-width: 100%;
+            }
+            
+            .seo-content {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -409,11 +528,15 @@
     </header>
     
     <main class="container">
+        <div class="breadcrumb">
+            <a href="#">Home</a> <span>/</span> <a href="#">Books</a> <span>/</span> <span>Search</span>
+        </div>
+        
         <div class="results-info" id="results-info">
             <p>Search for books through the global archive</p>
         </div>
         
-        <div class="cache-info" id="cache-info" style="display: none;">
+        <div class="cache-info" id="cache-info">
             <p>Showing results from cache</p>
         </div>
         
@@ -421,14 +544,21 @@
             <!-- Sample books will be loaded here -->
         </div>
         
-        <div class="loading" id="loading" style="display: none;">
+        <div class="loading" id="loading">
             <i class="fas fa-spinner"></i>
             <p>Searching the archive, please wait...</p>
         </div>
         
-        <div class="no-results" id="no-results" style="display: none;">
+        <div class="no-results" id="no-results">
             <i class="fas fa-search"></i>
             <p>No results found for your search</p>
+        </div>
+        
+        <div class="seo-section" id="seo-section">
+            <h2 id="seo-title">About Our Free Book Library</h2>
+            <div class="seo-content" id="seo-content">
+                <!-- Dynamic SEO content will be loaded here -->
+            </div>
         </div>
     </main>
     
@@ -438,10 +568,14 @@
                 <div class="footer-links">
                     <a href="#">About</a>
                     <a href="#">Terms & Conditions</a>
+                    <a href="#">Privacy Policy</a>
                     <a href="#">Contact Us</a>
+                    <a href="#">FAQ</a>
+                    <a href="#">Sitemap</a>
                 </div>
                 <p class="copyright">All Rights Reserved © 2023 Archive Library</p>
                 <p class="copyright">This site uses the API provided by archive.org</p>
+                <p class="copyright">Designed for book lovers and knowledge seekers</p>
             </div>
         </div>
     </footer>
@@ -459,6 +593,9 @@
             const noResults = document.getElementById('no-results');
             const mainHeading = document.getElementById('main-heading');
             const cacheInfo = document.getElementById('cache-info');
+            const seoSection = document.getElementById('seo-section');
+            const seoTitle = document.getElementById('seo-title');
+            const seoContent = document.getElementById('seo-content');
             
             // Function to safely decode URL parameters (handles double encoding)
             function safelyDecodeURIComponent(param) {
@@ -545,6 +682,100 @@
                 }
             }
             
+            // Function to update SEO section based on search query
+            function updateSEOSection(query, resultsCount, books) {
+                seoSection.style.display = 'block';
+                
+                if (query) {
+                    seoTitle.innerHTML = `About <span class="query-highlight">${query}</span> Books`;
+                    
+                    // Generate dynamic SEO content based on the search query
+                    let seoHTML = '';
+                    
+                    if (resultsCount > 0) {
+                        // Get unique authors from results
+                        const authors = [...new Set(books.map(book => book.creator).filter(Boolean))];
+                        const authorsList = authors.length > 0 ? 
+                            authors.slice(0, 3).join(', ') + (authors.length > 3 ? ' and more' : '') : 
+                            'various authors';
+                        
+                        // Get date range from results
+                        const dates = books.map(book => book.date).filter(Boolean).sort();
+                        const dateRange = dates.length > 0 ? 
+                            `from ${dates[0]} to ${dates[dates.length - 1]}` : 
+                            'from various time periods';
+                        
+                        seoHTML = `
+                            <div class="seo-box">
+                                <h3><i class="fas fa-database"></i> Collection Information</h3>
+                                <p>Our library contains ${resultsCount} books related to <span class="query-highlight">${query}</span> 
+                                by ${authorsList}, published ${dateRange}. These books are available for free download in various formats.</p>
+                            </div>
+                            <div class="seo-box">
+                                <h3><i class="fas fa-download"></i> Download Options</h3>
+                                <p>All <span class="query-highlight">${query}</span> books in our collection are available for free download 
+                                in PDF, EPUB, and other formats. Simply click the download button next to any book to get your free copy.</p>
+                            </div>
+                            <div class="seo-box">
+                                <h3><i class="fas fa-search"></i> Search Tips</h3>
+                                <p>To find more books about <span class="query-highlight">${query}</span>, try using related keywords or 
+                                author names. You can also filter results by publication date or sort by popularity to find the most relevant books.</p>
+                            </div>
+                            <div class="seo-box">
+                                <h3><i class="fas fa-copyright"></i> Usage Rights</h3>
+                                <p>All <span class="query-highlight">${query}</span> books available through our service are either in the 
+                                public domain or made available with appropriate permissions. You can freely download and use these books for personal or educational purposes.</p>
+                            </div>
+                        `;
+                    } else {
+                        seoHTML = `
+                            <div class="seo-box">
+                                <h3><i class="fas fa-database"></i> Collection Information</h3>
+                                <p>While we don't have specific books about <span class="query-highlight">${query}</span> in our current collection, 
+                                our library contains millions of other books across all genres. Try searching for related topics or browse our popular categories.</p>
+                            </div>
+                            <div class="seo-box">
+                                <h3><i class="fas fa-search"></i> Search Suggestions</h3>
+                                <p>For <span class="query-highlight">${query}</span>, try using different keywords or related terms. 
+                                You can also browse by category or check out our most popular books to discover new reading material.</p>
+                            </div>
+                            <div class="seo-box">
+                                <h3><i class="fas fa-clock"></i> Check Back Later</h3>
+                                <p>Our collection is constantly growing as we add new books from Archive.org. 
+                                Check back later to see if we've added books about <span class="query-highlight">${query}</span>.</p>
+                            </div>
+                            <div class="seo-box">
+                                <h3><i class="fas fa-question-circle"></i> Need Help?</h3>
+                                <p>If you're looking for a specific book about <span class="query-highlight">${query}</span>, 
+                                feel free to contact us. We might be able to help you find it or suggest similar books in our collection.</p>
+                            </div>
+                        `;
+                    }
+                    
+                    seoContent.innerHTML = seoHTML;
+                } else {
+                    seoTitle.textContent = 'About Our Free Book Library';
+                    seoContent.innerHTML = `
+                        <div class="seo-box">
+                            <h3><i class="fas fa-database"></i> Massive Collection</h3>
+                            <p>Our library provides access to millions of free books, documents, and resources from Archive.org's extensive digital collection. Discover rare books, academic texts, fiction, and non-fiction works.</p>
+                        </div>
+                        <div class="seo-box">
+                            <h3><i class="fas fa-download"></i> Easy Downloads</h3>
+                            <p>Download books in various formats including PDF, EPUB, and MOBI. Our platform makes it easy to find and access the books you need for research, education, or entertainment.</p>
+                        </div>
+                        <div class="seo-box">
+                            <h3><i class="fas fa-search"></i> Advanced Search</h3>
+                            <p>Use our powerful search technology to find books by title, author, subject, or keywords. Filter results by publication date, language, or media type to find exactly what you're looking for.</p>
+                        </div>
+                        <div class="seo-box">
+                            <h3><i class="fas fa-copyright"></i> Legal Access</h3>
+                            <p>All books available through our service are either in the public domain or made available with appropriate permissions. We respect copyright laws and intellectual property rights.</p>
+                        </div>
+                    `;
+                }
+            }
+            
             // Check for search parameter in URL on page load
             const searchQuery = getSearchQueryFromURL();
             
@@ -557,19 +788,30 @@
             } else {
                 // Display some popular books when page loads without a search
                 displayPopularBooks();
+                updateSEOSection(null, 0, []);
             }
             
             // Function to update page title and description
             function updatePageMetadata(query, resultsCount) {
                 if (query) {
-                    document.title = `Download: ${query} - Archive Library`;
+                    document.title = `Download ${query} - Free Books | Archive Library`;
                     document.querySelector('meta[name="description"]').setAttribute('content', 
-                        `Download ${query} from Archive Library. ${resultsCount > 0 ? `Download ${resultsCount} books for free` : 'No results found'}`);
+                        `Download ${query} for free from Archive Library. Access ${resultsCount > 0 ? `${resultsCount} books` : 'our collection'} in various formats.`);
                     mainHeading.textContent = `Download: ${query}`;
+                    
+                    // Update canonical URL
+                    document.querySelector('link[rel="canonical"]').setAttribute('href', 
+                        `https://www.booketab.22web.org/books.html?q=${encodeURIComponent(query)}`);
+                    
+                    // Update Open Graph and Twitter metadata
+                    document.querySelector('meta[property="og:title"]').setAttribute('content', `Download ${query} - Free Books | Archive Library`);
+                    document.querySelector('meta[property="og:url"]').setAttribute('content', 
+                        `https://www.booketab.22web.org/books.html?q=${encodeURIComponent(query)}`);
+                    document.querySelector('meta[name="twitter:title"]').setAttribute('content', `Download ${query} - Free Books | Archive Library`);
                 } else {
                     document.title = 'Archive Library - Free Book Downloads';
                     document.querySelector('meta[name="description"]').setAttribute('content', 
-                        'Search, browse and download books for free from Internet Archive');
+                        'Search, browse and download books for free from Internet Archive. Discover millions of books across all genres.');
                     mainHeading.textContent = 'Archive Library';
                 }
             }
@@ -696,6 +938,7 @@
                     console.error('Error:', error);
                     resultsInfo.textContent = `An error occurred while searching: ${error.message}`;
                     updatePageMetadata(query, 0);
+                    updateSEOSection(query, 0, []);
                 } finally {
                     // Hide loading message
                     loading.style.display = 'none';
@@ -768,6 +1011,7 @@
                     resultsInfo.textContent = `No results found for: "${query}"`;
                     noResults.style.display = 'block';
                     updatePageMetadata(query, 0);
+                    updateSEOSection(query, 0, []);
                 } else {
                     // Filter results for books only (mediatype = texts)
                     const books = data.response.docs.filter(item => item.mediatype === 'texts');
@@ -776,9 +1020,11 @@
                         resultsInfo.textContent = `No books found for: "${query}"`;
                         noResults.style.display = 'block';
                         updatePageMetadata(query, 0);
+                        updateSEOSection(query, 0, []);
                     } else {
                         resultsInfo.textContent = `Download ${books.length} results for: "${query}"`;
                         updatePageMetadata(query, books.length);
+                        updateSEOSection(query, books.length, books);
                         
                         // Create promises to check PDF availability for each book
                         const bookCheckPromises = books.map(async (book) => {
