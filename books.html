@@ -461,6 +461,62 @@
             font-weight: bold;
         }
         
+        .exact-match-badge {
+            background: #27ae60;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        
+        .exact-match-section {
+            margin-bottom: 30px;
+        }
+        
+        .exact-match-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #27ae60;
+        }
+        
+        .exact-match-header h2 {
+            color: #2c3e50;
+            margin-right: 15px;
+        }
+        
+        .exact-match-header .badge {
+            background: #27ae60;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .other-results-header {
+            display: flex;
+            align-items: center;
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #8e44ad;
+        }
+        
+        .other-results-header h2 {
+            color: #2c3e50;
+            margin-right: 15px;
+        }
+        
+        .other-results-header .badge {
+            background: #8e44ad;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
         @media (max-width: 768px) {
             .search-input {
                 width: 60%;
@@ -540,8 +596,12 @@
             <p>Showing results from cache</p>
         </div>
         
-        <div class="books-grid" id="books-container">
-            <!-- Sample books will be loaded here -->
+        <div id="exact-matches-container" class="exact-match-section"></div>
+        
+        <div id="other-results-container">
+            <div class="books-grid" id="books-container">
+                <!-- Sample books will be loaded here -->
+            </div>
         </div>
         
         <div class="loading" id="loading">
@@ -585,6 +645,7 @@
             const searchBtn = document.getElementById('search-btn');
             const searchInput = document.getElementById('search-input');
             const booksContainer = document.getElementById('books-container');
+            const exactMatchesContainer = document.getElementById('exact-matches-container');
             const loading = document.getElementById('loading');
             const resultsInfo = document.getElementById('results-info');
             const shareSection = document.getElementById('share-section');
@@ -889,6 +950,72 @@
                 `;
             }
             
+            // Function to calculate relevance score for a book
+            function calculateRelevanceScore(book, query) {
+                let score = 0;
+                const queryLower = query.toLowerCase();
+                const title = (book.title || '').toLowerCase();
+                const author = (book.creator || '').toLowerCase();
+                
+                // Exact match in title
+                if (title === queryLower) {
+                    score += 100;
+                }
+                
+                // Exact match in author
+                if (author === queryLower) {
+                    score += 90;
+                }
+                
+                // Title starts with query
+                if (title.startsWith(queryLower)) {
+                    score += 30;
+                }
+                
+                // Author starts with query
+                if (author.startsWith(queryLower)) {
+                    score += 25;
+                }
+                
+                // Title contains all query words
+                const queryWords = queryLower.split(/\s+/);
+                const allWordsInTitle = queryWords.every(word => title.includes(word));
+                if (allWordsInTitle) {
+                    score += 20;
+                }
+                
+                // Author contains all query words
+                const allWordsInAuthor = queryWords.every(word => author.includes(word));
+                if (allWordsInAuthor) {
+                    score += 15;
+                }
+                
+                // Title contains any query word
+                const someWordsInTitle = queryWords.some(word => title.includes(word));
+                if (someWordsInTitle) {
+                    score += 10;
+                }
+                
+                // Author contains any query word
+                const someWordsInAuthor = queryWords.some(word => author.includes(word));
+                if (someWordsInAuthor) {
+                    score += 5;
+                }
+                
+                // More recent publications get a slight boost
+                if (book.date) {
+                    const year = parseInt(book.date);
+                    if (!isNaN(year) && year > 1900) {
+                        const currentYear = new Date().getFullYear();
+                        const age = currentYear - year;
+                        if (age < 10) score += 5;
+                        else if (age < 20) score += 3;
+                    }
+                }
+                
+                return score;
+            }
+            
             // Function to search using API
             async function searchBooks(query, isInitialLoad = false) {
                 // Check for cached results
@@ -913,6 +1040,7 @@
                 
                 // Show loading message
                 booksContainer.style.display = 'none';
+                exactMatchesContainer.style.display = 'none';
                 noResults.style.display = 'none';
                 cacheInfo.style.display = 'none';
                 loading.style.display = 'block';
@@ -920,7 +1048,7 @@
                 
                 try {
                     // Use archive.org API for search including format field for file information
-                    const response = await fetch(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(query)}&fl[]=identifier,title,creator,date,item_size,mediatype,format&output=json&rows=20`);
+                    const response = await fetch(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(query)}&fl[]=identifier,title,creator,date,item_size,mediatype,format&output=json&rows=50`);
                     
                     if (!response.ok) {
                         throw new Error('Failed to fetch data from the archive');
@@ -1005,6 +1133,7 @@
             async function displayResults(data, query) {
                 // Clear old content
                 booksContainer.innerHTML = '';
+                exactMatchesContainer.innerHTML = '';
                 
                 // Display results
                 if (data.response.docs.length === 0) {
@@ -1022,30 +1151,96 @@
                         updatePageMetadata(query, 0);
                         updateSEOSection(query, 0, []);
                     } else {
-                        resultsInfo.textContent = `Download ${books.length} results for: "${query}"`;
+                        // Calculate relevance score for each book
+                        const booksWithScores = books.map(book => {
+                            return {
+                                ...book,
+                                relevanceScore: calculateRelevanceScore(book, query)
+                            };
+                        });
+                        
+                        // Sort by relevance score (highest first)
+                        booksWithScores.sort((a, b) => b.relevanceScore - a.relevanceScore);
+                        
+                        // Separate exact matches from other results
+                        const exactMatches = booksWithScores.filter(book => book.relevanceScore >= 90);
+                        const otherResults = booksWithScores.filter(book => book.relevanceScore < 90);
+                        
+                        resultsInfo.textContent = `Found ${books.length} results for: "${query}"`;
                         updatePageMetadata(query, books.length);
                         updateSEOSection(query, books.length, books);
                         
-                        // Create promises to check PDF availability for each book
-                        const bookCheckPromises = books.map(async (book) => {
-                            const urlInfo = await checkPdfAvailability(book.identifier);
-                            return { book, urlInfo };
-                        });
+                        // Display exact matches first
+                        if (exactMatches.length > 0) {
+                            exactMatchesContainer.style.display = 'block';
+                            
+                            const exactMatchesHeader = document.createElement('div');
+                            exactMatchesHeader.className = 'exact-match-header';
+                            exactMatchesHeader.innerHTML = `
+                                <h2>Exact Matches</h2>
+                                <div class="badge">${exactMatches.length} found</div>
+                            `;
+                            exactMatchesContainer.appendChild(exactMatchesHeader);
+                            
+                            const exactMatchesGrid = document.createElement('div');
+                            exactMatchesGrid.className = 'books-grid';
+                            exactMatchesContainer.appendChild(exactMatchesGrid);
+                            
+                            // Create promises to check PDF availability for each exact match
+                            const exactMatchPromises = exactMatches.map(async (book) => {
+                                const urlInfo = await checkPdfAvailability(book.identifier);
+                                return { book, urlInfo };
+                            });
+                            
+                            // Wait for all checks to complete
+                            const exactMatchesWithUrls = await Promise.all(exactMatchPromises);
+                            
+                            // Display exact matches
+                            exactMatchesWithUrls.forEach(({ book, urlInfo }) => {
+                                const bookCard = createBookCard(book, urlInfo, true);
+                                exactMatchesGrid.appendChild(bookCard);
+                            });
+                        } else {
+                            exactMatchesContainer.style.display = 'none';
+                        }
                         
-                        // Wait for all checks to complete
-                        const booksWithUrls = await Promise.all(bookCheckPromises);
-                        
-                        // Display books after checking PDF availability
-                        booksWithUrls.forEach(({ book, urlInfo }) => {
-                            const bookCard = createBookCard(book, urlInfo);
-                            booksContainer.appendChild(bookCard);
-                        });
+                        // Display other results
+                        if (otherResults.length > 0) {
+                            if (exactMatches.length > 0) {
+                                const otherResultsHeader = document.createElement('div');
+                                otherResultsHeader.className = 'other-results-header';
+                                otherResultsHeader.innerHTML = `
+                                    <h2>Other Results</h2>
+                                    <div class="badge">${otherResults.length} found</div>
+                                `;
+                                booksContainer.parentNode.insertBefore(otherResultsHeader, booksContainer);
+                            }
+                            
+                            // Create promises to check PDF availability for each other result
+                            const otherResultsPromises = otherResults.map(async (book) => {
+                                const urlInfo = await checkPdfAvailability(book.identifier);
+                                return { book, urlInfo };
+                            });
+                            
+                            // Wait for all checks to complete
+                            const otherResultsWithUrls = await Promise.all(otherResultsPromises);
+                            
+                            // Display other results
+                            otherResultsWithUrls.forEach(({ book, urlInfo }) => {
+                                const bookCard = createBookCard(book, urlInfo, false);
+                                booksContainer.appendChild(bookCard);
+                            });
+                        } else if (exactMatches.length === 0) {
+                            // No results at all
+                            resultsInfo.textContent = `No books found for: "${query}"`;
+                            noResults.style.display = 'block';
+                        }
                     }
                 }
             }
             
             // Create book card
-            function createBookCard(book, urlInfo) {
+            function createBookCard(book, urlInfo, isExactMatch) {
                 const card = document.createElement('div');
                 card.className = 'book-card';
                 
@@ -1060,6 +1255,11 @@
                 const coverImage = book.identifier ? 
                     `https://archive.org/services/img/${book.identifier}` : '';
                 
+                // Highlight exact matches
+                const titleHtml = isExactMatch ? 
+                    `${book.title || 'No title'} <span class="exact-match-badge">Exact Match</span>` : 
+                    (book.title || 'No title');
+                
                 card.innerHTML = `
                     <div class="book-cover">
                         ${coverImage ? 
@@ -1070,7 +1270,7 @@
                         }
                     </div>
                     <div class="book-details">
-                        <h3 class="book-title">${book.title || 'No title'}</h3>
+                        <h3 class="book-title">${titleHtml}</h3>
                         <p class="book-author">${book.creator || 'Unknown author'}</p>
                         <div class="book-meta">
                             <span>${book.date || 'Unknown date'}</span>
