@@ -278,6 +278,7 @@
             cursor: pointer;
             font-size: 0.9rem;
             transition: all 0.3s;
+            display: none;
         }
         
         .toggle-filters:hover {
@@ -353,6 +354,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s;
+            background: linear-gradient(45deg, #8e44ad, #3498db);
         }
         
         .book-card:hover .book-cover img {
@@ -538,6 +540,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         .footer-links {
@@ -685,244 +689,6 @@
             transform: translateY(-3px);
         }
         
-        /* Book Info Page Styles */
-        .book-info-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .book-info-header {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-        
-        .book-info-cover {
-            flex: 0 0 300px;
-            height: 400px;
-            background: #f1f5f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .book-info-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .book-info-details {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .book-info-title {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-        
-        .book-info-author {
-            font-size: 1.3rem;
-            color: #7f8c8d;
-            margin-bottom: 20px;
-        }
-        
-        .book-info-meta {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .info-meta-item {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .info-meta-value {
-            font-weight: bold;
-            color: #2c3e50;
-            font-size: 1.1rem;
-            display: block;
-            margin-bottom: 5px;
-        }
-        
-        .info-meta-label {
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-        
-        .book-info-actions {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-        
-        .info-download-btn {
-            padding: 15px 25px;
-            background: #8e44ad;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-        
-        .info-download-btn:hover {
-            background: #6c3483;
-        }
-        
-        .info-view-btn {
-            padding: 15px 25px;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-        
-        .info-view-btn:hover {
-            background: #2980b9;
-        }
-        
-        .book-info-content {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-        
-        .info-section {
-            margin-bottom: 25px;
-        }
-        
-        .info-section h3 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e8e8e8;
-        }
-        
-        .info-section p {
-            color: #5a6a7c;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        
-        .related-books {
-            margin-top: 40px;
-        }
-        
-        .related-books h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #8e44ad;
-        }
-        
-        @media (max-width: 768px) {
-            .search-input {
-                width: 60%;
-            }
-            
-            .books-grid {
-                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            }
-            
-            .share-section {
-                flex-direction: column;
-            }
-            
-            .share-link {
-                max-width: 100%;
-            }
-            
-            .seo-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .book-info-header {
-                flex-direction: column;
-            }
-            
-            .book-info-cover {
-                align-self: center;
-            }
-            
-            .advanced-filters {
-                padding: 15px;
-            }
-            
-            .filter-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .book-info-cover {
-                flex: 0 0 250px;
-                height: 350px;
-            }
-            
-            .book-info-title {
-                font-size: 1.8rem;
-            }
-            
-            .book-info-meta {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .search-input {
-                width: 50%;
-            }
-            
-            .books-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .logo h1 {
-                font-size: 1.5rem;
-            }
-            
-            .book-info-cover {
-                flex: 0 0 200px;
-                height: 280px;
-            }
-            
-            .book-info-title {
-                font-size: 1.5rem;
-            }
-            
-            .book-info-meta {
-                grid-template-columns: 1fr;
-            }
-            
-            .book-info-actions {
-                flex-direction: column;
-            }
-        }
-        
         /* Accessibility improvements */
         @media (prefers-reduced-motion: reduce) {
             * {
@@ -951,6 +717,50 @@
         a:focus {
             outline: 2px solid #8e44ad;
             outline-offset: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .search-input {
+                width: 60%;
+            }
+            
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            
+            .share-section {
+                flex-direction: column;
+            }
+            
+            .share-link {
+                max-width: 100%;
+            }
+            
+            .seo-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .advanced-filters {
+                padding: 15px;
+            }
+            
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .search-input {
+                width: 50%;
+            }
+            
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo h1 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -1029,138 +839,55 @@
     </header>
     
     <main class="container">
-        <!-- Book Info Page Content (initially hidden) -->
-        <div id="book-info-page" style="display: none;">
-            <div class="breadcrumb" aria-label="Breadcrumb">
-                <a href="#" id="back-to-search">Home</a> <span>/</span> <a href="#" id="back-to-results">Search Results</a> <span>/</span> <span id="current-book-title">Book Details</span>
-            </div>
-            
-            <div class="book-info-container">
-                <div class="book-info-header">
-                    <div class="book-info-cover">
-                        <img id="info-cover-img" src="" alt="">
-                        <div class="placeholder" id="info-cover-placeholder" style="display: none;">
-                            <i class="fas fa-book" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="book-info-details">
-                        <h1 class="book-info-title" id="info-title"></h1>
-                        <p class="book-info-author" id="info-author"></p>
-                        
-                        <div class="book-info-meta">
-                            <div class="info-meta-item">
-                                <span class="info-meta-value" id="info-date"></span>
-                                <span class="info-meta-label">Published</span>
-                            </div>
-                            <div class="info-meta-item">
-                                <span class="info-meta-value" id="info-pages"></span>
-                                <span class="info-meta-label">Pages</span>
-                            </div>
-                            <div class="info-meta-item">
-                                <span class="info-meta-value" id="info-size"></span>
-                                <span class="info-meta-label">File Size</span>
-                            </div>
-                            <div class="info-meta-item">
-                                <span class="info-meta-value" id="info-format"></span>
-                                <span class="info-meta-label">Format</span>
-                            </div>
-                        </div>
-                        
-                        <div class="book-info-actions">
-                            <a href="#" class="info-download-btn" id="info-download-btn" target="_blank">
-                                <i class="fas fa-download" aria-hidden="true"></i> Download
-                            </a>
-                            <a href="#" class="info-view-btn" id="info-view-btn" target="_blank">
-                                <i class="fas fa-external-link-alt" aria-hidden="true"></i> View on Archive.org
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="book-info-content">
-                    <div class="info-section">
-                        <h3>Description</h3>
-                        <p id="info-description">No description available.</p>
-                    </div>
-                    
-                    <div class="info-section" id="info-subjects-section" style="display: none;">
-                        <h3>Subjects</h3>
-                        <p id="info-subjects"></p>
-                    </div>
-                    
-                    <div class="info-section" id="info-publisher-section" style="display: none;">
-                        <h3>Publisher</h3>
-                        <p id="info-publisher"></p>
-                    </div>
-                    
-                    <div class="info-section" id="info-language-section" style="display: none;">
-                        <h3>Language</h3>
-                        <p id="info-language"></p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="related-books">
-                <h2>Related Books</h2>
-                <div class="books-grid" id="related-books-container">
-                    <!-- Related books will be loaded here -->
-                </div>
-            </div>
+        <div class="breadcrumb" aria-label="Breadcrumb">
+            <a href="#">Home</a> <span>/</span> <a href="#">Books</a> <span>/</span> <span>Search</span>
         </div>
         
-        <!-- Search Results Page Content -->
-        <div id="search-results-page">
-            <div class="breadcrumb" aria-label="Breadcrumb">
-                <a href="#">Home</a> <span>/</span> <a href="#">Books</a> <span>/</span> <span>Search</span>
-            </div>
-            
-            <div class="results-info" id="results-info">
-                <p>Search for books through the global archive</p>
-            </div>
-            
-            <div class="cache-info" id="cache-info">
-                <p>Showing results from cache</p>
-            </div>
-            
-            <div class="sort-options" id="sort-options" style="display: none;">
-                <span>Sort by:</span>
-                <button class="sort-btn active" data-sort="relevance">Relevance</button>
-                <button class="sort-btn" data-sort="newest">Newest</button>
-                <button class="sort-btn" data-sort="oldest">Oldest</button>
-                <button class="sort-btn" data-sort="title">Title</button>
-                <button class="sort-btn" data-sort="author">Author</button>
-            </div>
-            
-            <div class="books-grid" id="books-container">
-                <!-- Sample books will be loaded here -->
-            </div>
-            
-            <div class="pagination" id="pagination" style="display: none;">
-                <button class="pagination-btn disabled" id="prev-page" aria-label="Previous page">
-                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
-                </button>
-                <span class="pagination-info" id="pagination-info"></span>
-                <button class="pagination-btn" id="next-page" aria-label="Next page">
-                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                </button>
-            </div>
-            
-            <div class="loading" id="loading">
-                <i class="fas fa-spinner" aria-hidden="true"></i>
-                <p>Searching the archive, please wait...</p>
-            </div>
-            
-            <div class="no-results" id="no-results">
-                <i class="fas fa-search" aria-hidden="true"></i>
-                <p>No results found for your search</p>
-            </div>
-            
-            <div class="seo-section" id="seo-section">
-                <h2 id="seo-title">About Our Free Book Library</h2>
-                <div class="seo-content" id="seo-content">
-                    <!-- Dynamic SEO content will be loaded here -->
-                </div>
+        <div class="results-info" id="results-info">
+            <p>Search for books through the global archive</p>
+        </div>
+        
+        <div class="cache-info" id="cache-info">
+            <p>Showing results from cache</p>
+        </div>
+        
+        <div class="sort-options" id="sort-options" style="display: none;">
+            <span>Sort by:</span>
+            <button class="sort-btn active" data-sort="relevance">Relevance</button>
+            <button class="sort-btn" data-sort="newest">Newest</button>
+            <button class="sort-btn" data-sort="oldest">Oldest</button>
+            <button class="sort-btn" data-sort="title">Title</button>
+            <button class="sort-btn" data-sort="author">Author</button>
+        </div>
+        
+        <div class="books-grid" id="books-container">
+            <!-- Sample books will be loaded here -->
+        </div>
+        
+        <div class="pagination" id="pagination" style="display: none;">
+            <button class="pagination-btn disabled" id="prev-page" aria-label="Previous page">
+                <i class="fas fa-chevron-left" aria-hidden="true"></i>
+            </button>
+            <span class="pagination-info" id="pagination-info"></span>
+            <button class="pagination-btn" id="next-page" aria-label="Next page">
+                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+            </button>
+        </div>
+        
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner" aria-hidden="true"></i>
+            <p>Searching the archive, please wait...</p>
+        </div>
+        
+        <div class="no-results" id="no-results">
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <p>No results found for your search</p>
+        </div>
+        
+        <div class="seo-section" id="seo-section">
+            <h2 id="seo-title">About Our Free Book Library</h2>
+            <div class="seo-content" id="seo-content">
+                <!-- Dynamic SEO content will be loaded here -->
             </div>
         </div>
     </main>
@@ -1214,38 +941,12 @@
             const paginationInfo = document.getElementById('pagination-info');
             const backToTop = document.getElementById('back-to-top');
             
-            // Book info page elements
-            const searchResultsPage = document.getElementById('search-results-page');
-            const bookInfoPage = document.getElementById('book-info-page');
-            const backToSearch = document.getElementById('back-to-search');
-            const backToResults = document.getElementById('back-to-results');
-            const currentBookTitle = document.getElementById('current-book-title');
-            const infoCoverImg = document.getElementById('info-cover-img');
-            const infoCoverPlaceholder = document.getElementById('info-cover-placeholder');
-            const infoTitle = document.getElementById('info-title');
-            const infoAuthor = document.getElementById('info-author');
-            const infoDate = document.getElementById('info-date');
-            const infoPages = document.getElementById('info-pages');
-            const infoSize = document.getElementById('info-size');
-            const infoFormat = document.getElementById('info-format');
-            const infoDownloadBtn = document.getElementById('info-download-btn');
-            const infoViewBtn = document.getElementById('info-view-btn');
-            const infoDescription = document.getElementById('info-description');
-            const infoSubjectsSection = document.getElementById('info-subjects-section');
-            const infoSubjects = document.getElementById('info-subjects');
-            const infoPublisherSection = document.getElementById('info-publisher-section');
-            const infoPublisher = document.getElementById('info-publisher');
-            const infoLanguageSection = document.getElementById('info-language-section');
-            const infoLanguage = document.getElementById('info-language');
-            const relatedBooksContainer = document.getElementById('related-books-container');
-            
             // State variables
             let currentPage = 1;
             let totalPages = 1;
             let currentResults = [];
             let currentSort = 'relevance';
             let currentQuery = '';
-            let currentBook = null;
             
             // Popular search suggestions
             const popularSearches = [
@@ -1275,228 +976,34 @@
                 return decoded;
             }
             
-            // Function to extract parameters from URL
-            function getParameterFromURL(param) {
+            // Function to extract search query from URL
+            function getSearchQueryFromURL() {
                 const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get(param);
-            }
-            
-            // Check URL on page load to determine if we should show search results or book info
-            function checkURLParameters() {
-                const searchQuery = getParameterFromURL('q');
-                const infoQuery = getParameterFromURL('info');
                 
-                if (infoQuery) {
-                    // We need to show book info page
-                    showBookInfoPage(infoQuery);
-                } else if (searchQuery) {
-                    // We need to show search results
-                    searchInput.value = safelyDecodeURIComponent(searchQuery);
-                    setTimeout(() => {
-                        searchBooks(searchInput.value, true);
-                    }, 100);
-                } else {
-                    // Display some popular books when page loads without a search
-                    displayPopularBooks();
-                    updateSEOSection(null, 0, []);
+                // Check for 'q' parameter first
+                let query = urlParams.get('q');
+                if (query) {
+                    return safelyDecodeURIComponent(query);
                 }
-            }
-            
-            // Function to show book info page
-            async function showBookInfoPage(identifier) {
-                // Show loading state
-                searchResultsPage.style.display = 'none';
-                bookInfoPage.style.display = 'block';
-                loading.style.display = 'block';
                 
-                try {
-                    // Fetch book details from archive.org API
-                    const metadataUrl = `https://archive.org/metadata/${identifier}`;
-                    const response = await fetch(metadataUrl);
-                    
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch book details');
+                // Handle cases where the URL might have a malformed parameter
+                // For example: example.com?%3Fq=search+term
+                const search = window.location.search;
+                if (search.includes('%3Fq=') || search.includes('?q=')) {
+                    // Try to extract the query using regex
+                    const match = search.match(/(?:\?|%3F)q=([^&]+)/);
+                    if (match && match[1]) {
+                        return safelyDecodeURIComponent(match[1]);
                     }
-                    
-                    const data = await response.json();
-                    currentBook = data;
-                    
-                    // Update book info page with data
-                    updateBookInfoPage(data);
-                    
-                    // Try to find related books
-                    await loadRelatedBooks(data);
-                    
-                } catch (error) {
-                    console.error('Error loading book details:', error);
-                    bookInfoPage.innerHTML = `
-                        <div class="container">
-                            <div class="breadcrumb" aria-label="Breadcrumb">
-                                <a href="#" id="back-to-search">Home</a> <span>/</span> <span>Error</span>
-                            </div>
-                            <div class="no-results" style="display: block;">
-                                <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-                                <p>Failed to load book details. Please try again later.</p>
-                                <a href="books.html" class="view-btn" style="display: inline-block; width: auto; margin-top: 20px;">Back to Search</a>
-                            </div>
-                        </div>
-                    `;
-                } finally {
-                    loading.style.display = 'none';
-                }
-            }
-            
-            // Function to update book info page with data
-            function updateBookInfoPage(data) {
-                const metadata = data.metadata || {};
-                const files = data.files || [];
-                
-                // Update breadcrumb
-                if (currentQuery) {
-                    backToResults.setAttribute('href', `books.html?q=${encodeURIComponent(currentQuery)}`);
-                    backToResults.style.display = 'inline';
-                } else {
-                    backToResults.style.display = 'none';
                 }
                 
-                // Update page title
-                document.title = `${metadata.title || 'Unknown Book'} | Archive Library`;
-                
-                // Update book title
-                infoTitle.textContent = metadata.title || 'Unknown Title';
-                currentBookTitle.textContent = metadata.title || 'Unknown Title';
-                
-                // Update book author
-                infoAuthor.textContent = metadata.creator ? `by ${metadata.creator}` : 'Author Unknown';
-                
-                // Update book cover
-                if (metadata.identifier) {
-                    const coverUrl = `https://archive.org/services/img/${metadata.identifier}`;
-                    infoCoverImg.src = coverUrl;
-                    infoCoverImg.onerror = function() {
-                        this.style.display = 'none';
-                        infoCoverPlaceholder.style.display = 'flex';
-                    };
-                } else {
-                    infoCoverImg.style.display = 'none';
-                    infoCoverPlaceholder.style.display = 'flex';
+                // If no query parameter found, check the whole search string
+                if (search.length > 1) {
+                    const potentialQuery = search.substring(1); // Remove the leading '?'
+                    return safelyDecodeURIComponent(potentialQuery);
                 }
                 
-                // Update metadata
-                infoDate.textContent = metadata.date || 'Unknown';
-                
-                // Try to calculate page count from files
-                const textFile = files.find(file => file.format && (
-                    file.format.includes('Text') || 
-                    file.format.includes('PDF') || 
-                    file.name.toLowerCase().includes('page')
-                ));
-                infoPages.textContent = textFile && textFile.length ? 
-                    Math.round(parseInt(textFile.length) / 1500) + ' pages' : 'Unknown';
-                
-                // Calculate size
-                const totalSize = files.reduce((sum, file) => sum + (parseInt(file.size) || 0), 0);
-                infoSize.textContent = totalSize ? 
-                    `${Math.round(totalSize / (1024 * 1024))} MB` : 'Unknown';
-                
-                // Find main format
-                const mainFormat = files.find(file => file.source === 'original')?.format || 
-                                 files[0]?.format || 'Unknown';
-                infoFormat.textContent = mainFormat;
-                
-                // Update download and view buttons
-                if (metadata.identifier) {
-                    infoDownloadBtn.href = `https://blogs.giize.com/?r=https://archive.org/download/${metadata.identifier}`;
-                    infoViewBtn.href = `https://blogs.giize.com/?r=https://archive.org/details/${metadata.identifier}`;
-                }
-                
-                // Update description
-                if (metadata.description) {
-                    infoDescription.textContent = typeof metadata.description === 'string' ? 
-                        metadata.description : metadata.description.join(' ');
-                } else {
-                    infoDescription.textContent = 'No description available.';
-                }
-                
-                // Update subjects
-                if (metadata.subject) {
-                    infoSubjects.textContent = typeof metadata.subject === 'string' ? 
-                        metadata.subject : metadata.subject.join(', ');
-                    infoSubjectsSection.style.display = 'block';
-                } else {
-                    infoSubjectsSection.style.display = 'none';
-                }
-                
-                // Update publisher
-                if (metadata.publisher) {
-                    infoPublisher.textContent = metadata.publisher;
-                    infoPublisherSection.style.display = 'block';
-                } else {
-                    infoPublisherSection.style.display = 'none';
-                }
-                
-                // Update language
-                if (metadata.language) {
-                    infoLanguage.textContent = metadata.language;
-                    infoLanguageSection.style.display = 'block';
-                } else {
-                    infoLanguageSection.style.display = 'none';
-                }
-            }
-            
-            // Function to load related books
-            async function loadRelatedBooks(data) {
-                const metadata = data.metadata || {};
-                
-                // Try to find related books based on subject or creator
-                let relatedQuery = '';
-                
-                if (metadata.subject) {
-                    const subjects = typeof metadata.subject === 'string' ? 
-                        [metadata.subject] : metadata.subject;
-                    relatedQuery = subjects[0];
-                } else if (metadata.creator) {
-                    relatedQuery = metadata.creator;
-                } else {
-                    // No good way to find related books
-                    document.querySelector('.related-books').style.display = 'none';
-                    return;
-                }
-                
-                try {
-                    // Use archive.org API for search
-                    const response = await fetch(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(relatedQuery)}&fl[]=identifier,title,creator,date,item_size,mediatype,format,description&output=json&rows=4`);
-                    
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch related books');
-                    }
-                    
-                    const result = await response.json();
-                    
-                    // Filter results for books only (mediatype = texts) and exclude current book
-                    const books = result.response.docs.filter(item => 
-                        item.mediatype === 'texts' && 
-                        item.identifier !== metadata.identifier
-                    );
-                    
-                    if (books.length === 0) {
-                        document.querySelector('.related-books').style.display = 'none';
-                        return;
-                    }
-                    
-                    // Display related books
-                    relatedBooksContainer.innerHTML = '';
-                    
-                    for (const book of books.slice(0, 4)) {
-                        const urlInfo = await checkPdfAvailability(book.identifier);
-                        const bookCard = createBookCard(book, urlInfo);
-                        relatedBooksContainer.appendChild(bookCard);
-                    }
-                    
-                } catch (error) {
-                    console.error('Error loading related books:', error);
-                    document.querySelector('.related-books').style.display = 'none';
-                }
+                return null;
             }
             
             // Function to cache results in localStorage
@@ -1564,7 +1071,7 @@
                             </div>
                             <div class="seo-box">
                                 <h3><i class="fas fa-download" aria-hidden="true"></i> Download Options</h3>
-                                <p>All <span class="query-highlight">${query}</span> books in our collection are available for free download 
+                                <p>All <span class="query-highlight">${query</span> books in our collection are available for free download 
                                 in PDF, EPUB, and other formats. Simply click the download button next to any book to get your free copy.</p>
                             </div>
                             <div class="seo-box">
@@ -1627,8 +1134,20 @@
                 }
             }
             
-            // Check for parameters in URL on page load
-            checkURLParameters();
+            // Check for search parameter in URL on page load
+            const searchQuery = getSearchQueryFromURL();
+            
+            if (searchQuery) {
+                searchInput.value = searchQuery;
+                // Automatically search when page loads if there's a search parameter
+                setTimeout(() => {
+                    searchBooks(searchQuery, true);
+                }, 100);
+            } else {
+                // Display some popular books when page loads without a search
+                displayPopularBooks();
+                updateSEOSection(null, 0, []);
+            }
             
             // Function to update page title and description
             function updatePageMetadata(query, resultsCount) {
@@ -1661,7 +1180,7 @@
                     <div class="book-card">
                         <div class="book-cover">
                             <div class="placeholder">
-                                <i class="fas fa-book" aria-hidden="true"></i>
+                                <i class="fas fa-book"></i>
                             </div>
                         </div>
                         <div class="book-details">
@@ -1671,18 +1190,15 @@
                                 <span>2015</span>
                                 <span>300 pages</span>
                             </div>
-                            <p class="book-description">A comprehensive guide to the fundamentals of psychology, covering major theories and concepts in the field.</p>
-                            <div class="book-actions">
-                                <a href="books.html?info=introduction-to-psychology" class="info-btn" target="_blank">More Info</a>
-                                <a href="https://blogs.giize.com/?r=https://archive.org/details/introduction-to-psychology" class="view-btn" target="_blank">View on Archive</a>
-                            </div>
+                            <a href="books.html?info=introduction-to-psychology" class="info-btn" target="_blank">More Info</a>
+                            <a href="https://blogs.giize.com/?r=https://archive.org/details/introduction-to-psychology" class="view-btn" target="_blank">View on Archive</a>
                         </div>
                     </div>
                     
                     <div class="book-card">
                         <div class="book-cover">
                             <div class="placeholder">
-                                <i class="fas fa-book" aria-hidden="true"></i>
+                                <i class="fas fa-book"></i>
                             </div>
                         </div>
                         <div class="book-details">
@@ -1692,18 +1208,15 @@
                                 <span>1935</span>
                                 <span>450 pages</span>
                             </div>
-                            <p class="book-description">A monumental work that surveys the history of civilization from ancient times to the modern era.</p>
-                            <div class="book-actions">
-                                <a href="books.html?info=story-of-civilization" class="info-btn" target="_blank">More Info</a>
-                                <a href="https://blogs.giize.com/?r=https://archive.org/details/story-of-civilization" class="view-btn" target="_blank">View on Archive</a>
-                            </div>
+                            <a href="books.html?info=story-of-civilization" class="info-btn" target="_blank">More Info</a>
+                            <a href="https://blogs.giize.com/?r=https://archive.org/details/story-of-civilization" class="view-btn" target="_blank">View on Archive</a>
                         </div>
                     </div>
                     
                     <div class="book-card">
                         <div class="book-cover">
                             <div class="placeholder">
-                                <i class="fas fa-book" aria-hidden="true"></i>
+                                <i class="fas fa-book"></i>
                             </div>
                         </div>
                         <div class="book-details">
@@ -1713,18 +1226,15 @@
                                 <span>2020</span>
                                 <span>250 pages</span>
                             </div>
-                            <p class="book-description">Explore the scientific principles behind cooking techniques and ingredients for better culinary results.</p>
-                            <div class="book-actions">
-                                <a href="books.html?info=science-of-cooking" class="info-btn" target="_blank">More Info</a>
-                                <a href="https://blogs.giize.com/?r=https://archive.org/details/science-of-cooking" class="view-btn" target="_blank">View on Archive</a>
-                            </div>
+                            <a href="books.html?info=science-of-cooking" class="info-btn" target="_blank">More Info</a>
+                            <a href="https://blogs.giize.com/?r=https://archive.org/details/science-of-cooking" class="view-btn" target="_blank">View on Archive</a>
                         </div>
                     </div>
                     
                     <div class="book-card">
                         <div class="book-cover">
                             <div class="placeholder">
-                                <i class="fas fa-book" aria-hidden="true"></i>
+                                <i class="fas fa-book"></i>
                             </div>
                         </div>
                         <div class="book-details">
@@ -1734,11 +1244,8 @@
                                 <span>2019</span>
                                 <span>400 pages</span>
                             </div>
-                            <p class="book-description">A beginner-friendly guide to Python programming with practical examples and exercises.</p>
-                            <div class="book-actions">
-                                <a href="books.html?info=learn-python" class="info-btn" target="_blank">More Info</a>
-                                <a href="https://blogs.giize.com/?r=https://archive.org/details/learn-python" class="view-btn" target="_blank">View on Archive</a>
-                            </div>
+                            <a href="books.html?info=learn-python" class="info-btn" target="_blank">More Info</a>
+                            <a href="https://blogs.giize.com/?r=https://archive.org/details/learn-python" class="view-btn" target="_blank">View on Archive</a>
                         </div>
                     </div>
                 `;
@@ -1746,8 +1253,6 @@
             
             // Function to search using API
             async function searchBooks(query, isInitialLoad = false) {
-                currentQuery = query;
-                
                 // Check for cached results
                 const cachedResults = getCachedResults(query);
                 let fromCache = false;
@@ -1777,7 +1282,7 @@
                 
                 try {
                     // Use archive.org API for search including format field for file information
-                    const response = await fetch(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(query)}&fl[]=identifier,title,creator,date,item_size,mediatype,format,description&output=json&rows=50`);
+                    const response = await fetch(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(query)}&fl[]=identifier,title,creator,date,item_size,mediatype,format&output=json&rows=20`);
                     
                     if (!response.ok) {
                         throw new Error('Failed to fetch data from the archive');
@@ -1840,21 +1345,6 @@
                                     isPdf: true
                                 };
                             }
-                            
-                            // Search for EPUB files
-                            const epubFile = fileData.files.find(file => 
-                                file.name.toLowerCase().endsWith('.epub') || 
-                                (file.format && file.format.toLowerCase().includes('epub'))
-                            );
-                            
-                            if (epubFile) {
-                                return {
-                                    pdfUrl: `https://blogs.giize.com/?r=${encodeURIComponent(`https://archive.org/download/${identifier}/${epubFile.name}`)}`,
-                                    viewUrl: `https://blogs.giize.com/?r=${encodeURIComponent(`https://archive.org/details/${identifier}`)}`,
-                                    isPdf: false,
-                                    format: 'EPUB'
-                                };
-                            }
                         }
                     }
                     
@@ -1882,8 +1372,6 @@
                 if (data.response.docs.length === 0) {
                     resultsInfo.textContent = `No results found for: "${query}"`;
                     noResults.style.display = 'block';
-                    sortOptions.style.display = 'none';
-                    pagination.style.display = 'none';
                     updatePageMetadata(query, 0);
                     updateSEOSection(query, 0, []);
                 } else {
@@ -1893,109 +1381,29 @@
                     if (books.length === 0) {
                         resultsInfo.textContent = `No books found for: "${query}"`;
                         noResults.style.display = 'block';
-                        sortOptions.style.display = 'none';
-                        pagination.style.display = 'none';
                         updatePageMetadata(query, 0);
                         updateSEOSection(query, 0, []);
                     } else {
-                        resultsInfo.textContent = `Found ${books.length} results for: "${query}"`;
-                        sortOptions.style.display = 'flex';
+                        resultsInfo.textContent = `Download ${books.length} results for: "${query}"`;
                         updatePageMetadata(query, books.length);
                         updateSEOSection(query, books.length, books);
                         
-                        // Store current results for sorting and pagination
-                        currentResults = books;
-                        totalPages = Math.ceil(books.length / 12); // 12 items per page
-                        currentPage = 1;
+                        // Create promises to check PDF availability for each book
+                        const bookCheckPromises = books.map(async (book) => {
+                            const urlInfo = await checkPdfAvailability(book.identifier);
+                            return { book, urlInfo };
+                        });
                         
-                        // Update pagination
-                        updatePagination();
+                        // Wait for all checks to complete
+                        const booksWithUrls = await Promise.all(bookCheckPromises);
                         
-                        // Apply current sort
-                        sortResults(currentSort);
+                        // Display books after checking PDF availability
+                        booksWithUrls.forEach(({ book, urlInfo }) => {
+                            const bookCard = createBookCard(book, urlInfo);
+                            booksContainer.appendChild(bookCard);
+                        });
                     }
                 }
-            }
-            
-            // Function to sort results
-            function sortResults(sortBy) {
-                currentSort = sortBy;
-                
-                // Update sort buttons
-                document.querySelectorAll('.sort-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.dataset.sort === sortBy) {
-                        btn.classList.add('active');
-                    }
-                });
-                
-                // Sort the results
-                switch(sortBy) {
-                    case 'newest':
-                        currentResults.sort((a, b) => (b.date || '0') - (a.date || '0'));
-                        break;
-                    case 'oldest':
-                        currentResults.sort((a, b) => (a.date || '0') - (b.date || '0'));
-                        break;
-                    case 'title':
-                        currentResults.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
-                        break;
-                    case 'author':
-                        currentResults.sort((a, b) => (a.creator || '').localeCompare(b.creator || ''));
-                        break;
-                    case 'relevance':
-                    default:
-                        // Default order (relevance as returned by API)
-                        break;
-                }
-                
-                // Display current page
-                displayCurrentPage();
-            }
-            
-            // Function to display current page of results
-            async function displayCurrentPage() {
-                // Clear old content
-                booksContainer.innerHTML = '';
-                
-                // Calculate start and end indices
-                const itemsPerPage = 12;
-                const startIndex = (currentPage - 1) * itemsPerPage;
-                const endIndex = Math.min(startIndex + itemsPerPage, currentResults.length);
-                const pageResults = currentResults.slice(startIndex, endIndex);
-                
-                // Create promises to check PDF availability for each book
-                const bookCheckPromises = pageResults.map(async (book) => {
-                    const urlInfo = await checkPdfAvailability(book.identifier);
-                    return { book, urlInfo };
-                });
-                
-                // Wait for all checks to complete
-                const booksWithUrls = await Promise.all(bookCheckPromises);
-                
-                // Display books after checking PDF availability
-                booksWithUrls.forEach(({ book, urlInfo }) => {
-                    const bookCard = createBookCard(book, urlInfo);
-                    booksContainer.appendChild(bookCard);
-                });
-                
-                // Update pagination info
-                paginationInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-                
-                // Show/hide pagination buttons
-                prevPage.classList.toggle('disabled', currentPage === 1);
-                nextPage.classList.toggle('disabled', currentPage === totalPages);
-                
-                // Show pagination if there are multiple pages
-                pagination.style.display = totalPages > 1 ? 'flex' : 'none';
-            }
-            
-            // Function to update pagination
-            function updatePagination() {
-                paginationInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-                prevPage.classList.toggle('disabled', currentPage === 1);
-                nextPage.classList.toggle('disabled', currentPage === totalPages);
-                pagination.style.display = totalPages > 1 ? 'flex' : 'none';
             }
             
             // Create book card
@@ -2010,14 +1418,6 @@
                     fileSize = `${sizeInMB} MB`;
                 }
                 
-                // Format badge text
-                let formatBadge = '';
-                if (urlInfo.isPdf) {
-                    formatBadge = 'PDF';
-                } else if (urlInfo.format) {
-                    formatBadge = urlInfo.format;
-                }
-                
                 // Cover image (if available)
                 const coverImage = book.identifier ? 
                     `https://archive.org/services/img/${book.identifier}` : '';
@@ -2027,10 +1427,9 @@
                         ${coverImage ? 
                             `<img src="${coverImage}" alt="${book.title || 'Book cover'}" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\"placeholder\"><i class=\"fas fa-book\"></i></div>';">` :
                             `<div class="placeholder">
-                                <i class="fas fa-book" aria-hidden="true"></i>
+                                <i class="fas fa-book"></i>
                             </div>`
                         }
-                        ${formatBadge ? `<span class="book-format-badge">${formatBadge}</span>` : ''}
                     </div>
                     <div class="book-details">
                         <h3 class="book-title">${book.title || 'No title'}</h3>
@@ -2039,7 +1438,6 @@
                             <span>${book.date || 'Unknown date'}</span>
                             <span>${fileSize}</span>
                         </div>
-                        ${book.description ? `<p class="book-description">${book.description}</p>` : ''}
                         <div class="book-actions">
                             ${urlInfo.isPdf ? 
                                 `<a href="${urlInfo.pdfUrl}" class="download-btn" target="_blank">Download Book</a>` : 
@@ -2047,50 +1445,13 @@
                             }
                             <a href="books.html?info=${book.identifier}" class="info-btn" target="_blank">More Info</a>
                             <a href="${urlInfo.viewUrl}" class="view-btn" target="_blank">
-                                View on Archive
+                                View Details
                             </a>
                         </div>
                     </div>
                 `;
                 
                 return card;
-            }
-            
-            // Function to show search suggestions
-            function showSearchSuggestions() {
-                const query = searchInput.value.trim().toLowerCase();
-                
-                if (query.length < 2) {
-                    searchSuggestions.style.display = 'none';
-                    return;
-                }
-                
-                // Filter popular searches based on query
-                const filteredSuggestions = popularSearches.filter(
-                    term => term.toLowerCase().includes(query)
-                );
-                
-                if (filteredSuggestions.length === 0) {
-                    searchSuggestions.style.display = 'none';
-                    return;
-                }
-                
-                // Display suggestions
-                searchSuggestions.innerHTML = filteredSuggestions
-                    .map(term => `<div class="suggestion-item">${term}</div>`)
-                    .join('');
-                
-                searchSuggestions.style.display = 'block';
-                
-                // Add event listeners to suggestion items
-                const suggestionItems = searchSuggestions.querySelectorAll('.suggestion-item');
-                suggestionItems.forEach(item => {
-                    item.addEventListener('click', () => {
-                        searchInput.value = item.textContent;
-                        searchSuggestions.style.display = 'none';
-                        searchBooks(item.textContent);
-                    });
-                });
             }
             
             // Search when clicking the search button
@@ -2104,17 +1465,6 @@
             searchInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter' && searchInput.value.trim() !== '') {
                     searchBooks(searchInput.value);
-                    searchSuggestions.style.display = 'none';
-                }
-            });
-            
-            // Show search suggestions as user types
-            searchInput.addEventListener('input', showSearchSuggestions);
-            
-            // Hide suggestions when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
-                    searchSuggestions.style.display = 'none';
                 }
             });
             
@@ -2123,7 +1473,7 @@
                 navigator.clipboard.writeText(shareLink.textContent).then(() => {
                     // Temporarily change button text to indicate link was copied
                     const originalText = copyBtn.innerHTML;
-                    copyBtn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Copied!';
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
                     
                     setTimeout(() => {
                         copyBtn.innerHTML = originalText;
@@ -2132,7 +1482,7 @@
                     console.error('Failed to copy: ', err);
                     alert('Failed to copy link. Please try again.');
                 });
-            }
+            });
             
             // Activate/deactivate filter buttons
             const filterBtns = document.querySelectorAll('.filter-btn');
@@ -2140,71 +1490,9 @@
                 btn.addEventListener('click', function() {
                     filterBtns.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
-                    
-                    // Apply filter (this is just UI for now - would need actual filtering implementation)
-                    const filter = this.dataset.filter;
-                    // In a real implementation, you would filter the results here
                 });
             });
-            
-            // Toggle advanced filters
-            toggleFilters.addEventListener('click', () => {
-                const isVisible = advancedFilters.style.display === 'block';
-                advancedFilters.style.display = isVisible ? 'none' : 'block';
-                toggleFilters.innerHTML = isVisible ? 
-                    '<i class="fas fa-sliders-h" aria-hidden="true"></i> Advanced Filters' : 
-                    '<i class="fas fa-times" aria-hidden="true"></i> Close Filters';
-            });
-            
-            // Apply advanced filters
-            const languageFilter = document.getElementById('language-filter');
-            const yearFrom = document.getElementById('year-from');
-            const yearTo = document.getElementById('year-to');
-            const formatFilter = document.getElementById('format-filter');
-            
-            [languageFilter, yearFrom, yearTo, formatFilter].forEach(filter => {
-                filter.addEventListener('change', applyAdvancedFilters);
-            });
-            
-            function applyAdvancedFilters() {
-                // This would filter the currentResults based on selected criteria
-                // For now, we'll just log the values
-                console.log('Applying filters:', {
-                    language: languageFilter.value,
-                    yearFrom: yearFrom.value,
-                    yearTo: yearTo.value,
-                    format: formatFilter.value
-                });
-                
-                // In a real implementation, you would filter currentResults here
-                // and then call displayCurrentPage() to update the display
-            }
-            
-            // Sort options
-            const sortBtns = document.querySelectorAll('.sort-btn');
-            sortBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    sortResults(btn.dataset.sort);
-                });
-            });
-            
-            // Pagination
-            prevPage.addEventListener('click', () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    displayCurrentPage();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            });
-            
-            nextPage.addEventListener('click', () => {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    displayCurrentPage();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            });
-            
+
             // Back to top button
             window.addEventListener('scroll', () => {
                 if (window.pageYOffset > 300) {
@@ -2217,19 +1505,20 @@
             backToTop.addEventListener('click', () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
-            
-            // Navigation for book info page
-            backToSearch.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.location.href = 'books.html';
-            });
-            
-            backToResults.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (currentQuery) {
-                    window.location.href = `books.html?q=${encodeURIComponent(currentQuery)}`;
+
+            // Handle browser back/forward buttons
+            window.addEventListener('popstate', function(event) {
+                const searchQuery = getSearchQueryFromURL();
+                if (searchQuery) {
+                    searchInput.value = searchQuery;
+                    searchBooks(searchQuery, true);
                 } else {
-                    window.location.href = 'books.html';
+                    // Clear results if no search query
+                    booksContainer.innerHTML = '';
+                    resultsInfo.textContent = 'Search for books through the global archive';
+                    shareSection.style.display = 'none';
+                    displayPopularBooks();
+                    updateSEOSection(null, 0, []);
                 }
             });
         });
