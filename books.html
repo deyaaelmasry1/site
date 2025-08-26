@@ -257,12 +257,14 @@
             margin-bottom: 5px;
             font-weight: 500;
             color: #2c3e50;
+            font-size: 0.9rem;
         }
         
         .filter-group select, .filter-group input {
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            font-size: 0.9rem;
         }
         
         .toggle-filters {
@@ -1671,7 +1673,7 @@
                             </div>
                             <p class="book-description">A comprehensive guide to the fundamentals of psychology, covering major theories and concepts in the field.</p>
                             <div class="book-actions">
-                                <a href="books.html?info=introduction-to-psychology" class="info-btn">More Info</a>
+                                <a href="books.html?info=introduction-to-psychology" class="info-btn" target="_blank">More Info</a>
                                 <a href="https://blogs.giize.com/?r=https://archive.org/details/introduction-to-psychology" class="view-btn" target="_blank">View on Archive</a>
                             </div>
                         </div>
@@ -1692,7 +1694,7 @@
                             </div>
                             <p class="book-description">A monumental work that surveys the history of civilization from ancient times to the modern era.</p>
                             <div class="book-actions">
-                                <a href="books.html?info=story-of-civilization" class="info-btn">More Info</a>
+                                <a href="books.html?info=story-of-civilization" class="info-btn" target="_blank">More Info</a>
                                 <a href="https://blogs.giize.com/?r=https://archive.org/details/story-of-civilization" class="view-btn" target="_blank">View on Archive</a>
                             </div>
                         </div>
@@ -1713,7 +1715,7 @@
                             </div>
                             <p class="book-description">Explore the scientific principles behind cooking techniques and ingredients for better culinary results.</p>
                             <div class="book-actions">
-                                <a href="books.html?info=science-of-cooking" class="info-btn">More Info</a>
+                                <a href="books.html?info=science-of-cooking" class="info-btn" target="_blank">More Info</a>
                                 <a href="https://blogs.giize.com/?r=https://archive.org/details/science-of-cooking" class="view-btn" target="_blank">View on Archive</a>
                             </div>
                         </div>
@@ -1734,7 +1736,7 @@
                             </div>
                             <p class="book-description">A beginner-friendly guide to Python programming with practical examples and exercises.</p>
                             <div class="book-actions">
-                                <a href="books.html?info=learn-python" class="info-btn">More Info</a>
+                                <a href="books.html?info=learn-python" class="info-btn" target="_blank">More Info</a>
                                 <a href="https://blogs.giize.com/?r=https://archive.org/details/learn-python" class="view-btn" target="_blank">View on Archive</a>
                             </div>
                         </div>
@@ -2043,7 +2045,7 @@
                                 `<a href="${urlInfo.pdfUrl}" class="download-btn" target="_blank">Download Book</a>` : 
                                 ''
                             }
-                            <a href="books.html?info=${book.identifier}" class="info-btn">More Info</a>
+                            <a href="books.html?info=${book.identifier}" class="info-btn" target="_blank">More Info</a>
                             <a href="${urlInfo.viewUrl}" class="view-btn" target="_blank">
                                 View on Archive
                             </a>
@@ -2130,7 +2132,7 @@
                     console.error('Failed to copy: ', err);
                     alert('Failed to copy link. Please try again.');
                 });
-            });
+            }
             
             // Activate/deactivate filter buttons
             const filterBtns = document.querySelectorAll('.filter-btn');
