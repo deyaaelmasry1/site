@@ -10,11 +10,14 @@
     <meta name="keywords" content="free books, book downloads, ebook library, archive.org books, online library">
     <meta name="author" content="Archive Library">
     <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="7 days">
+    <link rel="canonical" href="https://www.booketab.22web.org/books.html">
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Archive Library - Free Book Downloads">
     <meta property="og:description" content="Search, browse and download books for free from Internet Archive">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.booketab.22web.org/books.html">
     <meta property="og:image" content="https://archive.org/images/logo.png">
     <meta property="og:site_name" content="Archive Library">
     
@@ -23,6 +26,25 @@
     <meta name="twitter:title" content="Archive Library - Free Book Downloads">
     <meta name="twitter:description" content="Search, browse and download books for free from Internet Archive">
     <meta name="twitter:image" content="https://archive.org/images/logo.png">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Archive Library",
+      "url": "https://www.booketab.22web.org/books.html",
+      "description": "Search, browse and download books for free from Internet Archive",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "permissions": "browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -439,77 +461,6 @@
             font-weight: bold;
         }
         
-        .exact-match-badge {
-            background: #27ae60;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            margin-left: 8px;
-            vertical-align: middle;
-        }
-        
-        .exact-match-section {
-            margin-bottom: 30px;
-        }
-        
-        .exact-match-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #27ae60;
-        }
-        
-        .exact-match-header h2 {
-            color: #2c3e50;
-            margin-right: 15px;
-        }
-        
-        .exact-match-header .badge {
-            background: #27ae60;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .other-results-header {
-            display: flex;
-            align-items: center;
-            margin: 30px 0 15px 0;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #8e44ad;
-        }
-        
-        .other-results-header h2 {
-            color: #2c3e50;
-            margin-right: 15px;
-        }
-        
-        .other-results-header .badge {
-            background: #8e44ad;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .error-message {
-            background: #ffe6e6;
-            border: 1px solid #ffcccc;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            text-align: center;
-            color: #d63333;
-        }
-        
-        .error-message i {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-        
         @media (max-width: 768px) {
             .search-input {
                 width: 60%;
@@ -589,14 +540,8 @@
             <p>Showing results from cache</p>
         </div>
         
-        <div id="error-container"></div>
-        
-        <div id="exact-matches-container" class="exact-match-section"></div>
-        
-        <div id="other-results-container">
-            <div class="books-grid" id="books-container">
-                <!-- Sample books will be loaded here -->
-            </div>
+        <div class="books-grid" id="books-container">
+            <!-- Sample books will be loaded here -->
         </div>
         
         <div class="loading" id="loading">
@@ -640,7 +585,6 @@
             const searchBtn = document.getElementById('search-btn');
             const searchInput = document.getElementById('search-input');
             const booksContainer = document.getElementById('books-container');
-            const exactMatchesContainer = document.getElementById('exact-matches-container');
             const loading = document.getElementById('loading');
             const resultsInfo = document.getElementById('results-info');
             const shareSection = document.getElementById('share-section');
@@ -652,72 +596,14 @@
             const seoSection = document.getElementById('seo-section');
             const seoTitle = document.getElementById('seo-title');
             const seoContent = document.getElementById('seo-content');
-            const errorContainer = document.getElementById('error-container');
             
-            // Mock data for demonstration
-            const mockBooks = [
-                {
-                    identifier: "introduction-to-psychology",
-                    title: "Introduction to Psychology",
-                    creator: "Ali Ahmed",
-                    date: "2015",
-                    item_size: "10485760",
-                    mediatype: "texts",
-                    format: "PDF"
-                },
-                {
-                    identifier: "story-of-civilization",
-                    title: "The Story of Civilization",
-                    creator: "Will Durant",
-                    date: "1935",
-                    item_size: "20971520",
-                    mediatype: "texts",
-                    format: "PDF"
-                },
-                {
-                    identifier: "science-of-cooking",
-                    title: "The Science of Cooking",
-                    creator: "Mohamed El-Sayed",
-                    date: "2020",
-                    item_size: "15728640",
-                    mediatype: "texts",
-                    format: "PDF"
-                },
-                {
-                    identifier: "learn-python",
-                    title: "Learn Python Programming",
-                    creator: "Ahmed Mohamed",
-                    date: "2019",
-                    item_size: "12582912",
-                    mediatype: "texts",
-                    format: "PDF"
-                },
-                {
-                    identifier: "history-of-art",
-                    title: "History of Art",
-                    creator: "E.H. Gombrich",
-                    date: "1950",
-                    item_size: "31457280",
-                    mediatype: "texts",
-                    format: "PDF"
-                },
-                {
-                    identifier: "data-science-handbook",
-                    title: "Data Science Handbook",
-                    creator: "Field Cady",
-                    date: "2017",
-                    item_size: "18874368",
-                    mediatype: "texts",
-                    format: "PDF"
-                }
-            ];
-            
-            // Function to safely decode URL parameters
+            // Function to safely decode URL parameters (handles double encoding)
             function safelyDecodeURIComponent(param) {
                 if (!param) return '';
                 
                 let decoded = param;
                 try {
+                    // Keep decoding until the string doesn't change
                     let previous;
                     do {
                         previous = decoded;
@@ -725,6 +611,7 @@
                     } while (decoded !== previous && /%[0-9A-Fa-f]{2}/.test(decoded));
                 } catch (e) {
                     console.error('Error decoding URL parameter:', e);
+                    // If decoding fails, return the original with + replaced by spaces
                     decoded = param.replace(/\+/g, ' ');
                 }
                 
@@ -735,21 +622,26 @@
             function getSearchQueryFromURL() {
                 const urlParams = new URLSearchParams(window.location.search);
                 
+                // Check for 'q' parameter first
                 let query = urlParams.get('q');
                 if (query) {
                     return safelyDecodeURIComponent(query);
                 }
                 
+                // Handle cases where the URL might have a malformed parameter
+                // For example: example.com?%3Fq=search+term
                 const search = window.location.search;
                 if (search.includes('%3Fq=') || search.includes('?q=')) {
+                    // Try to extract the query using regex
                     const match = search.match(/(?:\?|%3F)q=([^&]+)/);
                     if (match && match[1]) {
                         return safelyDecodeURIComponent(match[1]);
                     }
                 }
                 
+                // If no query parameter found, check the whole search string
                 if (search.length > 1) {
-                    const potentialQuery = search.substring(1);
+                    const potentialQuery = search.substring(1); // Remove the leading '?'
                     return safelyDecodeURIComponent(potentialQuery);
                 }
                 
@@ -777,6 +669,7 @@
                     
                     const cache = JSON.parse(cached);
                     const now = new Date().getTime();
+                    // Check if data is older than 24 hours
                     if (now - cache.timestamp > 24 * 60 * 60 * 1000) {
                         localStorage.removeItem(`bookSearch_${query}`);
                         return null;
@@ -796,14 +689,17 @@
                 if (query) {
                     seoTitle.innerHTML = `About <span class="query-highlight">${query}</span> Books`;
                     
+                    // Generate dynamic SEO content based on the search query
                     let seoHTML = '';
                     
                     if (resultsCount > 0) {
+                        // Get unique authors from results
                         const authors = [...new Set(books.map(book => book.creator).filter(Boolean))];
                         const authorsList = authors.length > 0 ? 
                             authors.slice(0, 3).join(', ') + (authors.length > 3 ? ' and more' : '') : 
                             'various authors';
                         
+                        // Get date range from results
                         const dates = books.map(book => book.date).filter(Boolean).sort();
                         const dateRange = dates.length > 0 ? 
                             `from ${dates[0]} to ${dates[dates.length - 1]}` : 
@@ -885,10 +781,12 @@
             
             if (searchQuery) {
                 searchInput.value = searchQuery;
+                // Automatically search when page loads if there's a search parameter
                 setTimeout(() => {
                     searchBooks(searchQuery, true);
                 }, 100);
             } else {
+                // Display some popular books when page loads without a search
                 displayPopularBooks();
                 updateSEOSection(null, 0, []);
             }
@@ -900,6 +798,16 @@
                     document.querySelector('meta[name="description"]').setAttribute('content', 
                         `Download ${query} for free from Archive Library. Access ${resultsCount > 0 ? `${resultsCount} books` : 'our collection'} in various formats.`);
                     mainHeading.textContent = `Download: ${query}`;
+                    
+                    // Update canonical URL
+                    document.querySelector('link[rel="canonical"]').setAttribute('href', 
+                        `https://www.booketab.22web.org/books.html?q=${encodeURIComponent(query)}`);
+                    
+                    // Update Open Graph and Twitter metadata
+                    document.querySelector('meta[property="og:title"]').setAttribute('content', `Download ${query} - Free Books | Archive Library`);
+                    document.querySelector('meta[property="og:url"]').setAttribute('content', 
+                        `https://www.booketab.22web.org/books.html?q=${encodeURIComponent(query)}`);
+                    document.querySelector('meta[name="twitter:title"]').setAttribute('content', `Download ${query} - Free Books | Archive Library`);
                 } else {
                     document.title = 'Archive Library - Free Book Downloads';
                     document.querySelector('meta[name="description"]').setAttribute('content', 
@@ -922,10 +830,9 @@
                             <p class="book-author">Ali Ahmed</p>
                             <div class="book-meta">
                                 <span>2015</span>
-                                <span>10 MB</span>
+                                <span>300 pages</span>
                             </div>
-                            <a href="#" class="download-btn">Download Book</a>
-                            <a href="#" class="view-btn">View Details</a>
+                            <a href="https://blogs.giize.com/?r=https://archive.org/details/introduction-to-psychology" class="view-btn" target="_blank">View on Archive</a>
                         </div>
                     </div>
                     
@@ -940,10 +847,9 @@
                             <p class="book-author">Will Durant</p>
                             <div class="book-meta">
                                 <span>1935</span>
-                                <span>20 MB</span>
+                                <span>450 pages</span>
                             </div>
-                            <a href="#" class="download-btn">Download Book</a>
-                            <a href="#" class="view-btn">View Details</a>
+                            <a href="https://blogs.giize.com/?r=https://archive.org/details/story-of-civilization" class="view-btn" target="_blank">View on Archive</a>
                         </div>
                     </div>
                     
@@ -958,10 +864,9 @@
                             <p class="book-author">Mohamed El-Sayed</p>
                             <div class="book-meta">
                                 <span>2020</span>
-                                <span>15 MB</span>
+                                <span>250 pages</span>
                             </div>
-                            <a href="#" class="download-btn">Download Book</a>
-                            <a href="#" class="view-btn">View Details</a>
+                            <a href="https://blogs.giize.com/?r=https://archive.org/details/science-of-cooking" class="view-btn" target="_blank">View on Archive</a>
                         </div>
                     </div>
                     
@@ -976,94 +881,27 @@
                             <p class="book-author">Ahmed Mohamed</p>
                             <div class="book-meta">
                                 <span>2019</span>
-                                <span>12 MB</span>
+                                <span>400 pages</span>
                             </div>
-                            <a href="#" class="download-btn">Download Book</a>
-                            <a href="#" class="view-btn">View Details</a>
+                            <a href="https://blogs.giize.com/?r=https://archive.org/details/learn-python" class="view-btn" target="_blank">View on Archive</a>
                         </div>
                     </div>
                 `;
             }
             
-            // Function to calculate relevance score for a book
-            function calculateRelevanceScore(book, query) {
-                let score = 0;
-                const queryLower = query.toLowerCase();
-                const title = (book.title || '').toLowerCase();
-                const author = (book.creator || '').toLowerCase();
-                
-                if (title === queryLower) {
-                    score += 100;
-                }
-                
-                if (author === queryLower) {
-                    score += 90;
-                }
-                
-                if (title.startsWith(queryLower)) {
-                    score += 30;
-                }
-                
-                if (author.startsWith(queryLower)) {
-                    score += 25;
-                }
-                
-                const queryWords = queryLower.split(/\s+/);
-                const allWordsInTitle = queryWords.every(word => title.includes(word));
-                if (allWordsInTitle) {
-                    score += 20;
-                }
-                
-                const allWordsInAuthor = queryWords.every(word => author.includes(word));
-                if (allWordsInAuthor) {
-                    score += 15;
-                }
-                
-                const someWordsInTitle = queryWords.some(word => title.includes(word));
-                if (someWordsInTitle) {
-                    score += 10;
-                }
-                
-                const someWordsInAuthor = queryWords.some(word => author.includes(word));
-                if (someWordsInAuthor) {
-                    score += 5;
-                }
-                
-                if (book.date) {
-                    const year = parseInt(book.date);
-                    if (!isNaN(year) && year > 1900) {
-                        const currentYear = new Date().getFullYear();
-                        const age = currentYear - year;
-                        if (age < 10) score += 5;
-                        else if (age < 20) score += 3;
-                    }
-                }
-                
-                return score;
-            }
-            
-            // Function to show error message
-            function showError(message) {
-                errorContainer.innerHTML = `
-                    <div class="error-message">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Search Error</h3>
-                        <p>${message}</p>
-                        <p>Please try again or use the mock results below</p>
-                    </div>
-                `;
-                errorContainer.style.display = 'block';
-            }
-            
-            // Function to hide error message
-            function hideError() {
-                errorContainer.style.display = 'none';
-                errorContainer.innerHTML = '';
-            }
-            
             // Function to search using API
             async function searchBooks(query, isInitialLoad = false) {
-                hideError();
+                // Check for cached results
+                const cachedResults = getCachedResults(query);
+                let fromCache = false;
+                
+                if (cachedResults && !isInitialLoad) {
+                    // Use cached results
+                    displayResults(cachedResults, query);
+                    fromCache = true;
+                    cacheInfo.style.display = 'block';
+                    return;
+                }
                 
                 // Update URL with search parameter
                 const newUrl = window.location.origin + window.location.pathname + '?q=' + encodeURIComponent(query);
@@ -1075,15 +913,14 @@
                 
                 // Show loading message
                 booksContainer.style.display = 'none';
-                exactMatchesContainer.style.display = 'none';
                 noResults.style.display = 'none';
                 cacheInfo.style.display = 'none';
                 loading.style.display = 'block';
                 resultsInfo.textContent = `Searching for: "${query}"`;
                 
                 try {
-                    // Try to fetch from the API
-                    const response = await fetch(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(query)}&fl[]=identifier,title,creator,date,item_size,mediatype,format&output=json&rows=50`);
+                    // Use archive.org API for search including format field for file information
+                    const response = await fetch(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(query)}&fl[]=identifier,title,creator,date,item_size,mediatype,format&output=json&rows=20`);
                     
                     if (!response.ok) {
                         throw new Error('Failed to fetch data from the archive');
@@ -1098,25 +935,12 @@
                     displayResults(data, query);
                     
                 } catch (error) {
-                    console.error('API Error:', error);
-                    
-                    // Show error message
-                    showError(`Could not connect to Archive.org. Error: ${error.message}`);
-                    
-                    // Use mock data as fallback
-                    const mockData = {
-                        response: {
-                            docs: mockBooks.filter(book => 
-                                book.title.toLowerCase().includes(query.toLowerCase()) || 
-                                book.creator.toLowerCase().includes(query.toLowerCase())
-                            )
-                        }
-                    };
-                    
-                    // Display mock results
-                    displayResults(mockData, query, true);
-                    
+                    console.error('Error:', error);
+                    resultsInfo.textContent = `An error occurred while searching: ${error.message}`;
+                    updatePageMetadata(query, 0);
+                    updateSEOSection(query, 0, []);
                 } finally {
+                    // Hide loading message
                     loading.style.display = 'none';
                     booksContainer.style.display = 'grid';
                 }
@@ -1124,25 +948,63 @@
             
             // Function to check PDF availability
             async function checkPdfAvailability(identifier) {
-                // For demo purposes, we'll assume PDF is available
-                return {
-                    pdfUrl: `https://blogs.giize.com/?r=https://archive.org/download/${identifier}/${identifier}.pdf`,
-                    viewUrl: `https://blogs.giize.com/?r=https://archive.org/details/${identifier}`,
-                    isPdf: true
-                };
+                try {
+                    // Try to access PDF file directly
+                    const pdfUrl = `https://archive.org/download/${identifier}/${identifier}.pdf`;
+                    const response = await fetch(pdfUrl, { method: 'HEAD' });
+                    
+                    if (response.ok) {
+                        return {
+                            pdfUrl: `https://blogs.giize.com/?r=${encodeURIComponent(pdfUrl)}`,
+                            viewUrl: `https://blogs.giize.com/?r=${encodeURIComponent(`https://archive.org/details/${identifier}`)}`,
+                            isPdf: true
+                        };
+                    }
+                    
+                    // If failed, search for any PDF file in the folder
+                    const fileListUrl = `https://archive.org/metadata/${identifier}`;
+                    const fileResponse = await fetch(fileListUrl);
+                    
+                    if (fileResponse.ok) {
+                        const fileData = await fileResponse.json();
+                        
+                        if (fileData.files) {
+                            // Search for any PDF file
+                            const pdfFile = fileData.files.find(file => 
+                                file.name.toLowerCase().endsWith('.pdf') && 
+                                file.format && 
+                                file.format.toLowerCase().includes('pdf')
+                            );
+                            
+                            if (pdfFile) {
+                                return {
+                                    pdfUrl: `https://blogs.giize.com/?r=${encodeURIComponent(`https://archive.org/download/${identifier}/${pdfFile.name}`)}`,
+                                    viewUrl: `https://blogs.giize.com/?r=${encodeURIComponent(`https://archive.org/details/${identifier}`)}`,
+                                    isPdf: true
+                                };
+                            }
+                        }
+                    }
+                    
+                    // If no PDF found, return archive page for viewing in browser
+                    return {
+                        viewUrl: `https://blogs.giize.com/?r=${encodeURIComponent(`https://archive.org/details/${identifier}`)}`,
+                        isPdf: false
+                    };
+                    
+                } catch (error) {
+                    console.error('Error checking PDF availability:', error);
+                    return {
+                        viewUrl: `https://blogs.giize.com/?r=${encodeURIComponent(`https://archive.org/details/${identifier}`)}`,
+                        isPdf: false
+                    };
+                }
             }
             
             // Function to display results
-            async function displayResults(data, query, isMockData = false) {
+            async function displayResults(data, query) {
                 // Clear old content
                 booksContainer.innerHTML = '';
-                exactMatchesContainer.innerHTML = '';
-                
-                if (isMockData) {
-                    resultsInfo.innerHTML = `Showing mock results for: "${query}" <span style="font-size: 0.8rem; color: #8e44ad;">(Archive.org connection failed)</span>`;
-                } else {
-                    resultsInfo.textContent = `Found ${data.response.docs.length} results for: "${query}"`;
-                }
                 
                 // Display results
                 if (data.response.docs.length === 0) {
@@ -1160,95 +1022,30 @@
                         updatePageMetadata(query, 0);
                         updateSEOSection(query, 0, []);
                     } else {
-                        // Calculate relevance score for each book
-                        const booksWithScores = books.map(book => {
-                            return {
-                                ...book,
-                                relevanceScore: calculateRelevanceScore(book, query)
-                            };
-                        });
-                        
-                        // Sort by relevance score (highest first)
-                        booksWithScores.sort((a, b) => b.relevanceScore - a.relevanceScore);
-                        
-                        // Separate exact matches from other results
-                        const exactMatches = booksWithScores.filter(book => book.relevanceScore >= 90);
-                        const otherResults = booksWithScores.filter(book => book.relevanceScore < 90);
-                        
+                        resultsInfo.textContent = `Download ${books.length} results for: "${query}"`;
                         updatePageMetadata(query, books.length);
                         updateSEOSection(query, books.length, books);
                         
-                        // Display exact matches first
-                        if (exactMatches.length > 0) {
-                            exactMatchesContainer.style.display = 'block';
-                            
-                            const exactMatchesHeader = document.createElement('div');
-                            exactMatchesHeader.className = 'exact-match-header';
-                            exactMatchesHeader.innerHTML = `
-                                <h2>Exact Matches</h2>
-                                <div class="badge">${exactMatches.length} found</div>
-                            `;
-                            exactMatchesContainer.appendChild(exactMatchesHeader);
-                            
-                            const exactMatchesGrid = document.createElement('div');
-                            exactMatchesGrid.className = 'books-grid';
-                            exactMatchesContainer.appendChild(exactMatchesGrid);
-                            
-                            // Create promises to check PDF availability for each exact match
-                            const exactMatchPromises = exactMatches.map(async (book) => {
-                                const urlInfo = await checkPdfAvailability(book.identifier);
-                                return { book, urlInfo };
-                            });
-                            
-                            // Wait for all checks to complete
-                            const exactMatchesWithUrls = await Promise.all(exactMatchPromises);
-                            
-                            // Display exact matches
-                            exactMatchesWithUrls.forEach(({ book, urlInfo }) => {
-                                const bookCard = createBookCard(book, urlInfo, true);
-                                exactMatchesGrid.appendChild(bookCard);
-                            });
-                        } else {
-                            exactMatchesContainer.style.display = 'none';
-                        }
+                        // Create promises to check PDF availability for each book
+                        const bookCheckPromises = books.map(async (book) => {
+                            const urlInfo = await checkPdfAvailability(book.identifier);
+                            return { book, urlInfo };
+                        });
                         
-                        // Display other results
-                        if (otherResults.length > 0) {
-                            if (exactMatches.length > 0) {
-                                const otherResultsHeader = document.createElement('div');
-                                otherResultsHeader.className = 'other-results-header';
-                                otherResultsHeader.innerHTML = `
-                                    <h2>Other Results</h2>
-                                    <div class="badge">${otherResults.length} found</div>
-                                `;
-                                booksContainer.parentNode.insertBefore(otherResultsHeader, booksContainer);
-                            }
-                            
-                            // Create promises to check PDF availability for each other result
-                            const otherResultsPromises = otherResults.map(async (book) => {
-                                const urlInfo = await checkPdfAvailability(book.identifier);
-                                return { book, urlInfo };
-                            });
-                            
-                            // Wait for all checks to complete
-                            const otherResultsWithUrls = await Promise.all(otherResultsPromises);
-                            
-                            // Display other results
-                            otherResultsWithUrls.forEach(({ book, urlInfo }) => {
-                                const bookCard = createBookCard(book, urlInfo, false);
-                                booksContainer.appendChild(bookCard);
-                            });
-                        } else if (exactMatches.length === 0) {
-                            // No results at all
-                            resultsInfo.textContent = `No books found for: "${query}"`;
-                            noResults.style.display = 'block';
-                        }
+                        // Wait for all checks to complete
+                        const booksWithUrls = await Promise.all(bookCheckPromises);
+                        
+                        // Display books after checking PDF availability
+                        booksWithUrls.forEach(({ book, urlInfo }) => {
+                            const bookCard = createBookCard(book, urlInfo);
+                            booksContainer.appendChild(bookCard);
+                        });
                     }
                 }
             }
             
             // Create book card
-            function createBookCard(book, urlInfo, isExactMatch) {
+            function createBookCard(book, urlInfo) {
                 const card = document.createElement('div');
                 card.className = 'book-card';
                 
@@ -1263,11 +1060,6 @@
                 const coverImage = book.identifier ? 
                     `https://archive.org/services/img/${book.identifier}` : '';
                 
-                // Highlight exact matches
-                const titleHtml = isExactMatch ? 
-                    `${book.title || 'No title'} <span class="exact-match-badge">Exact Match</span>` : 
-                    (book.title || 'No title');
-                
                 card.innerHTML = `
                     <div class="book-cover">
                         ${coverImage ? 
@@ -1278,7 +1070,7 @@
                         }
                     </div>
                     <div class="book-details">
-                        <h3 class="book-title">${titleHtml}</h3>
+                        <h3 class="book-title">${book.title || 'No title'}</h3>
                         <p class="book-author">${book.creator || 'Unknown author'}</p>
                         <div class="book-meta">
                             <span>${book.date || 'Unknown date'}</span>
