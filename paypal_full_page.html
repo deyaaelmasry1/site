@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PayPal Payment</title>
+
+  <script src="https://www.paypal.com/sdk/js?client-id=BAAEQizQvJaLGEQRO1Ebtd_JMd7Kkk29QCfCLh_mwWLtHZST3v6C0R1HCFB6Se1n8KoNHmocew9PXN0tJE&components=hosted-buttons&disable-funding=venmo&currency=USD"> </script>
+
+  <style>
+    body {
+      background: #f8f8f8;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .box {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      width: 360px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <h2>Pay with PayPal</h2>
+    <div id="paypal-container-QN6HP7Z3GFRB8"></div>
+  </div>
+
+  <script>
+    paypal.HostedButtons({
+      hostedButtonId: "QN6HP7Z3GFRB8",
+    }).render("#paypal-container-QN6HP7Z3GFRB8");
+  </script>
+
+</body>
+</html>
